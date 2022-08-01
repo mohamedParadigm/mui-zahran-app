@@ -1,0 +1,20 @@
+:root {
+  --main-color: #ce1717;
+  --bdRadius: 10px;
+}
+/* Scroll Bar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background-color: #eee;
+  border-radius: var(--bdRadius);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--main-color);
+  border-radius: var(--bdRadius);
+}
+img {
+  -o-object-fit: contain;
+  object-fit: contain;
+}
