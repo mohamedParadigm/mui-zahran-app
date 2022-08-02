@@ -25,6 +25,8 @@ const theme = createTheme({
       textTransform: "capitalize",
     },
     h4: {
+      fontSize: "1.5rem",
+      fontWeight: "700",
       textTransform: "capitalize",
     },
     h5: {

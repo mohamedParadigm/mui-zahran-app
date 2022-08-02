@@ -8,16 +8,12 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import MenuList from "@mui/material/MenuList";
-import Fade from "@mui/material/Fade";
 // Icons
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 // Components
 import MuiTooltip from "../../../../components/shared/MuiTooltip";
+import AccountMenu from "./AccountMenu";
 
 const OptionsStyle = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -40,6 +36,8 @@ const OptionsSection = () => {
 
   const handleToggleAccountMenu = () => setShowAccountMenu((prev) => !prev);
 
+  const [user, setUser] = useState(true);
+
   return (
     <OptionsStyle>
       <Box
@@ -55,48 +53,9 @@ const OptionsSection = () => {
           aria-haspopup="true"
           aria-expanded={showAccountMenu ? "true" : undefined}
         >
-          login / register
+          {user ? "welcome mohamed" : "login / register"}
         </Button>
-        <Fade in={showAccountMenu} mountOnEnter unmountOnExit>
-          <Paper sx={{ position: "absolute", zIndex: 10 }}>
-            <MenuList>
-              <MenuItem>
-                <NextLink href="/login" passHref>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    disableElevation
-                    fullWidth
-                    component="a"
-                  >
-                    sign in
-                  </Button>
-                </NextLink>
-              </MenuItem>
-              <Typography
-                textTransform="capitalize"
-                fontSize="12px"
-                component="li"
-                px="16px"
-              >
-                new user ?
-              </Typography>
-              <MenuItem>
-                <NextLink href="/register" passHref>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    disableElevation
-                    fullWidth
-                    component="a"
-                  >
-                    create an account
-                  </Button>
-                </NextLink>
-              </MenuItem>
-            </MenuList>
-          </Paper>
-        </Fade>
+        <AccountMenu showAccountMenu={showAccountMenu} />
       </Box>
       <MuiTooltip title="Your Cart" arrow>
         <IconButton color="inherit">

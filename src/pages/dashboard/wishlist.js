@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 // Icons
 import DeleteIcon from "@mui/icons-material/Delete";
 // Components
-import DashboardLayout from "../../modules/layout/DashboardLayout";
+import DashboardLayout from "../../modules/dashboard/DashboardLayout";
 import MuiTooltip from "../../components/shared/MuiTooltip";
 
 const SoldOut = styled("span")(({ theme }) => ({

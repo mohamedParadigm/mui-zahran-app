@@ -9,7 +9,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 // Components
 import Header from "./header/Header";
 import ScrollToTop from "../../components/shared/ScrollToTop";
-import Footer from "./Footer";
+import Footer from "./footer/Footer";
 
 const Layout = (props) => {
   const {
@@ -19,6 +19,8 @@ const Layout = (props) => {
     title,
     description,
     children,
+    scrollOffset = 16,
+    footerOtherStyle
   } = props;
 
   return (
@@ -32,10 +34,10 @@ const Layout = (props) => {
       <Stack minHeight="100vh">
         <Header layoutType={layoutType} elevationOption={elevationOption} />
         <Box flexGrow={1}>{children}</Box>
-        <Footer layoutType={layoutType} />
+        <Footer layoutType={layoutType} otherStyle={footerOtherStyle} />
 
         {scrollToTopOption && (
-          <ScrollToTop {...props}>
+          <ScrollToTop {...props} scrollOffset={scrollOffset}>
             <Fab color="primary" size="small" aria-label="scroll back to top">
               <KeyboardArrowUpIcon />
             </Fab>

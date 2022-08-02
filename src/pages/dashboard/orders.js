@@ -13,7 +13,7 @@ import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 // Components
-import DashboardLayout from "../../modules/layout/DashboardLayout";
+import DashboardLayout from "../../modules/dashboard/DashboardLayout";
 import MuiTooltip from "../../components/shared/MuiTooltip";
 import RenameOrderDialog from "../../components/RenameOrderDialog";
 

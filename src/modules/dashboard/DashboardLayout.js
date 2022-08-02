@@ -15,7 +15,7 @@ import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 // Components
-import Layout from "./Layout";
+import Layout from "../layout/Layout";
 
 const tabs = [
   { icon: <PersonOutlinedIcon />, label: "Profile", slug: "profile" },

@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 // Components
-import DashboardLayout from "../../modules/layout/DashboardLayout";
+import DashboardLayout from "../../modules/dashboard/DashboardLayout";
 
 const Profile = () => {
   const handleProfileSubmit = (e) => {

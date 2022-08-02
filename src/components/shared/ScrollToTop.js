@@ -5,7 +5,7 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Zoom from "@mui/material/Zoom";
 import Box from "@mui/material/Box";
 
-const ScrollToTop = ({ children }) => {
+const ScrollToTop = ({ scrollOffset, children }) => {
   const [windowHeight, setWindowHeight] = useState(100);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const ScrollToTop = ({ children }) => {
       <Box
         onClick={handleClick}
         role="presentation"
-        sx={{ position: "fixed", bottom: 16, left: 16 }}
+        sx={{ position: "fixed", bottom: scrollOffset, left: 16 }}
       >
         {children}
       </Box>

@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 // Components
-import DashboardLayout from "../../modules/layout/DashboardLayout";
+import DashboardLayout from "../../modules/dashboard/DashboardLayout";
 
 const ChangePassword = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);

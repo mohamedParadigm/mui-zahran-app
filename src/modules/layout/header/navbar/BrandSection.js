@@ -197,6 +197,7 @@ const BrandSection = () => {
             alt="zahran logo"
             width={100}
             height={34}
+            priority
           />
         </Link>
       </NextLink>
