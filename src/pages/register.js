@@ -34,11 +34,12 @@ const Wrapper = styled(Paper)(({ theme }) => ({
 
 const Register = () => {
   const router = useRouter();
+  const { redirect } = router.query;
   const [showPassword, setShowPassword] = useState(false);
 
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
-    router.push("/dashboard/profile");
+    router.push(redirect ? `/${redirect}` : "/dashboard/profile");
   };
 
   return (
@@ -57,7 +58,10 @@ const Register = () => {
           </Typography>
           <Typography textAlign="center" variant="subtitle2" mb={3}>
             Already have an account?{" "}
-            <NextLink href="/login" passHref>
+            <NextLink
+              href={redirect ? `/login?redirect=${redirect}` : "/login"}
+              passHref
+            >
               <Link underline="none" variant="button">
                 Sign in
               </Link>

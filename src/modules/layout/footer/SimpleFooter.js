@@ -8,9 +8,14 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 
-const SimpleFooter = () => {
+const SimpleFooter = ({ otherStyle }) => {
   return (
-    <Paper component="footer" square sx={{ py: "4px" }} variant="outlined">
+    <Paper
+      component="footer"
+      square
+      sx={{ py: "4px", ...otherStyle }}
+      variant="outlined"
+    >
       <Container>
         <Grid
           container

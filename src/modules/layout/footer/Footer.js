@@ -445,7 +445,7 @@ const Footer = ({ layoutType, otherStyle }) => {
       </Box>
     );
   } else {
-    return <SimpleFooter />;
+    return <SimpleFooter otherStyle={otherStyle} />;
   }
 };
 

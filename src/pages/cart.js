@@ -1,4 +1,5 @@
 // Internals
+import { useRouter } from "next/router";
 import NextLink from "next/link";
 // MUI
 import { styled } from "@mui/material/styles";
@@ -43,8 +44,19 @@ const FixedMobileButton = styled(Box)(({ theme }) => ({
 }));
 
 const Cart = () => {
+  const router = useRouter();
+
+  const handleCheckoutItems = (e) => {
+    e.preventDefault();
+    router.push("/shipping");
+  };
+
   return (
-    <Layout title="Cart" elevationOption={true} footerOtherStyle={{marginBottom: {xs: "56px", md: 0}}}>
+    <Layout
+      title="Cart"
+      elevationOption={true}
+      footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
+    >
       <Container sx={{ py: 3 }}>
         <Grid container spacing={3}>
           <Grid item xs={12} md>
@@ -269,7 +281,7 @@ const Cart = () => {
               position={{ md: "sticky" }}
               top={80}
             >
-              <Paper sx={{ borderRadius: 2, p: 2, mb: 2 }}>
+              <Paper elevation={6} sx={{ borderRadius: 2, p: 2, mb: 2 }}>
                 <Typography component="h2" variant="h5" mb={2}>
                   Coupon Code
                 </Typography>
@@ -295,41 +307,33 @@ const Cart = () => {
                   variant="standard"
                 />
               </Paper>
-              <Paper sx={{ borderRadius: 2, p: 2 }}>
-                <Typography component="h2" variant="h5">
+              <Paper elevation={6} sx={{ borderRadius: 2 }}>
+                <Typography component="h2" variant="h5" px={2} pt={2}>
                   order summary
                 </Typography>
                 <List>
-                  <ListItem
-                    sx={{ justifyContent: "space-between", px: 0, py: 0.5 }}
-                  >
+                  <ListItem sx={{ justifyContent: "space-between", py: 0.5 }}>
                     <Typography variant="body2" textTransform="capitalize">
                       Grocery Subtotal{" "}
                       <span style={{ opacity: 0.7 }}>(1 Item)</span>
                     </Typography>
                     <Typography variant="body2">677.79 EGP</Typography>
                   </ListItem>
-                  <ListItem
-                    sx={{ justifyContent: "space-between", px: 0, py: 0.5 }}
-                  >
+                  <ListItem sx={{ justifyContent: "space-between", py: 0.5 }}>
                     <Typography variant="body2" textTransform="capitalize">
                       household Subtotal{" "}
                       <span style={{ opacity: 0.7 }}>(1 Item)</span>
                     </Typography>
                     <Typography variant="body2">677.79 EGP</Typography>
                   </ListItem>
-                  <ListItem
-                    sx={{ justifyContent: "space-between", px: 0, py: 0.5 }}
-                  >
+                  <ListItem sx={{ justifyContent: "space-between", py: 0.5 }}>
                     <Typography variant="body2" textTransform="capitalize">
                       vat
                     </Typography>
                     <Typography variant="body2">94.89 EGP</Typography>
                   </ListItem>
                   <Divider sx={{ my: 1 }} />
-                  <ListItem
-                    sx={{ justifyContent: "space-between", px: 0, py: 0.5 }}
-                  >
+                  <ListItem sx={{ justifyContent: "space-between", py: 0.5 }}>
                     <Typography
                       variant="body1"
                       textTransform="capitalize"
@@ -341,12 +345,15 @@ const Cart = () => {
                       772.68 EGP
                     </Typography>
                   </ListItem>
-                  <ListItem sx={{ px: 0, display: { xs: "none", md: "flex" } }}>
-                    <NextLink href="/checkout" passHref>
-                      <Button variant="contained" color="primary" fullWidth>
-                        proceed to checkout
-                      </Button>
-                    </NextLink>
+                  <ListItem sx={{ display: { xs: "none", md: "flex" } }}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      fullWidth
+                      onClick={handleCheckoutItems}
+                    >
+                      proceed to checkout
+                    </Button>
                   </ListItem>
                   <Box display={{ xs: "none", md: "block" }}>
                     <NextLink href="/" passHref>
@@ -375,7 +382,12 @@ const Cart = () => {
               772.68 EGP
             </Typography>
           </Box>
-          <Button variant="contained" color="secondary" fullWidth>
+          <Button
+            variant="contained"
+            color="secondary"
+            fullWidth
+            onClick={handleCheckoutItems}
+          >
             Checkout 2 Items
           </Button>
         </FixedMobileButton>
