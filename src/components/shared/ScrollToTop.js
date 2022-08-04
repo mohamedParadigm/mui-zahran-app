@@ -35,7 +35,7 @@ const ScrollToTop = ({ scrollOffset, children }) => {
       <Box
         onClick={handleClick}
         role="presentation"
-        sx={{ position: "fixed", bottom: scrollOffset, left: 16 }}
+        sx={{ position: "fixed", left: 16, ...scrollOffset }}
       >
         {children}
       </Box>

@@ -43,7 +43,12 @@ const Register = () => {
   };
 
   return (
-    <Layout title="Register" elevationOption={false}>
+    <Layout
+      title="Register"
+      elevationOption={false}
+      footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
+      scrollOffset={{ bottom: { xs: 70, md: 16 } }}
+    >
       <Container sx={{ py: 3 }}>
         <Wrapper sx={{ p: 3 }} elevation={4}>
           <Typography

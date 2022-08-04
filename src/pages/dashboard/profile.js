@@ -14,7 +14,14 @@ const Profile = () => {
   };
 
   return (
-    <DashboardLayout title="Profile" elevationOption={false} activeTab={0}>
+    <DashboardLayout
+      title="Profile"
+      elevationOption={false}
+      activeTab={0}
+      BottomNavigationValue={4}
+      footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
+      scrollOffset={{bottom: {xs: 70, md: 16}}}
+    >
       <Box>
         <Typography variant="h5" component="h2" textTransform="capitalize">
           Profile

@@ -1,6 +1,8 @@
 // Internals
 import Head from "next/head";
 // MUI
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
@@ -10,6 +12,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Header from "./header/Header";
 import ScrollToTop from "../../components/shared/ScrollToTop";
 import Footer from "./footer/Footer";
+import BottomNavigation from "./BottomNavigation";
 
 const Layout = (props) => {
   const {
@@ -20,8 +23,13 @@ const Layout = (props) => {
     description,
     children,
     scrollOffset = 16,
-    footerOtherStyle
+    footerOtherStyle,
+    showBottomNav = true,
+    BottomNavigationValue = null,
   } = props;
+
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <>
@@ -42,6 +50,10 @@ const Layout = (props) => {
               <KeyboardArrowUpIcon />
             </Fab>
           </ScrollToTop>
+        )}
+
+        {showBottomNav && matches && (
+          <BottomNavigation BottomNavigationValue={BottomNavigationValue} />
         )}
       </Stack>
     </>

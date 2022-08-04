@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Grid";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -104,7 +105,7 @@ const BrandSection = () => {
             backgroundColor: (theme) => theme.palette.primary.main,
           }}
         >
-          <Stack direction="row" spacing={2}>
+          <Stack direction="row" spacing={2} flexGrow={1}>
             <NextLink href="/" passHref>
               <Link underline="none" display="flex">
                 <Image
@@ -115,7 +116,7 @@ const BrandSection = () => {
                 />
               </Link>
             </NextLink>
-            <Box>
+            <Box flexGrow={1}>
               <Typography
                 textTransform="capitalize"
                 variant="subtitle2"
@@ -124,27 +125,36 @@ const BrandSection = () => {
               >
                 Welcome, To Zahran
               </Typography>
-              <NextLink href="/register" passHref>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  disableElevation
-                  sx={{ marginRight: 1 }}
-                  component="a"
-                >
-                  sign up
-                </Button>
-              </NextLink>
-              <NextLink href="/login" passHref>
-                <Button
-                  variant="outlined"
-                  color="inherit"
-                  disableElevation
-                  component="a"
-                >
-                  sign in
-                </Button>
-              </NextLink>
+              <Box
+                display="flex"
+                gap={1}
+                alignItems="center"
+                justifyContent="space-between"
+                flexWrap="wrap"
+              >
+                <NextLink href="/register" passHref>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    disableElevation
+                    component="a"
+                    size="small"
+                  >
+                    sign up
+                  </Button>
+                </NextLink>
+                <NextLink href="/login" passHref>
+                  <Button
+                    variant="outlined"
+                    color="inherit"
+                    disableElevation
+                    component="a"
+                    size="small"
+                  >
+                    sign in
+                  </Button>
+                </NextLink>
+              </Box>
             </Box>
           </Stack>
           <IconButton

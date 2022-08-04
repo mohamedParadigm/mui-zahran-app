@@ -35,6 +35,9 @@ const Orders = () => {
       elevationOption={false}
       activeTab={3}
       maxWidth={700}
+      BottomNavigationValue={4}
+      footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
+      scrollOffset={{bottom: {xs: 70, md: 16}}}
     >
       <Box mb={3}>
         <Typography variant="h5" component="h2" textTransform="capitalize">

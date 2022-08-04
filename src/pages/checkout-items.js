@@ -55,7 +55,8 @@ const CheckoutItems = () => {
       layoutType="alt"
       title="Checkout Items"
       footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
-      scrollOffset={70}
+      showBottomNav={false}
+      scrollOffset={{bottom: {xs: 70, md: 16}}}
     >
       <Container sx={{ py: 4 }}>
         <Box mb={3}>

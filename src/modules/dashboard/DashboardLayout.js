@@ -44,7 +44,7 @@ const TabStyle = styled(Tabs)(({ theme }) => ({
 }));
 
 const DashboardLayout = (props) => {
-  const { title, elevationOption, activeTab, children, maxWidth = 600 } = props;
+  const { title, elevationOption, activeTab, children, maxWidth = 600, ...other } = props;
 
   const router = useRouter();
 
@@ -57,7 +57,7 @@ const DashboardLayout = (props) => {
   };
 
   return (
-    <Layout title={title} elevationOption={elevationOption}>
+    <Layout title={title} elevationOption={elevationOption} {...other}>
       <Container sx={{ py: 3 }}>
         <Box maxWidth={maxWidth} mx="auto">
           <Typography

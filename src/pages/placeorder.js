@@ -24,6 +24,7 @@ const FixedMobileButton = styled(Box)(({ theme }) => ({
   display: "flex",
   gap: theme.spacing(1),
   alignItems: "center",
+  flexWrap: "wrap",
   [theme.breakpoints.down("md")]: {
     position: "fixed",
     zIndex: 50,
@@ -51,18 +52,13 @@ const PlaceOrder = () => {
   const handleToggleRenamingDialog = () =>
     setShowRenameOrderDialog((prev) => !prev);
 
-  const handlePaymentSubmit = (e) => {
-    e.preventDefault();
-
-    router.push("/track-order");
-  };
-
   return (
     <Layout
       layoutType="alt"
       title="Place Order"
       footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
-      scrollOffset={70}
+      showBottomNav={false}
+      scrollOffset={{bottom: {xs: 70, md: 16}}}
     >
       <Container sx={{ py: 4 }}>
         <Box mb={3}>
@@ -169,9 +165,7 @@ const PlaceOrder = () => {
                   <Typography component="h2" variant="h5">
                     Payment Method
                   </Typography>
-                  <Typography variant="body2">
-                    Credit Card
-                  </Typography>
+                  <Typography variant="body2">Credit Card</Typography>
                 </Paper>
               </Grid>
             </Grid>
@@ -248,7 +242,7 @@ const PlaceOrder = () => {
                 <Button
                   variant="outlined"
                   color="secondary"
-                  sx={{ flexGrow: 1 }}
+                  sx={{ flexGrow: 1, width: { md: "100%" } }}
                   onClick={handleToggleRenamingDialog}
                 >
                   add to favourites
@@ -262,7 +256,7 @@ const PlaceOrder = () => {
                 <Button
                   variant="contained"
                   color="secondary"
-                  sx={{ flexGrow: 1 }}
+                  sx={{ flexGrow: 1, width: { md: "100%" } }}
                   onClick={() => router.push("/track-order")}
                 >
                   track order

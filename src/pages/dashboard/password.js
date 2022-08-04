@@ -29,6 +29,9 @@ const ChangePassword = () => {
       title="Change Password"
       elevationOption={false}
       activeTab={1}
+      BottomNavigationValue={4}
+      footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
+      scrollOffset={{bottom: {xs: 70, md: 16}}}
     >
       <Box>
         <Typography variant="h5" component="h2" textTransform="capitalize">

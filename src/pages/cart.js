@@ -35,7 +35,7 @@ const FixedMobileButton = styled(Box)(({ theme }) => ({
   zIndex: 50,
   left: 0,
   right: 0,
-  bottom: 0,
+  bottom: 56,
   width: "100%",
   backgroundColor: theme.palette.common.white,
   alignItems: "center",
@@ -55,7 +55,9 @@ const Cart = () => {
     <Layout
       title="Cart"
       elevationOption={true}
-      footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
+      footerOtherStyle={{ marginBottom: { xs: "112px", md: 0 } }}
+      scrollOffset={{bottom: {xs: 120, md: 16}}}
+      BottomNavigationValue={3}
     >
       <Container sx={{ py: 3 }}>
         <Grid container spacing={3}>
@@ -289,6 +291,7 @@ const Cart = () => {
                   id="couponCode"
                   label="Coupon Code or Gift Card"
                   color="secondary"
+                  fullWidth
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">

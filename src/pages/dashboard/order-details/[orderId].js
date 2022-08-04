@@ -44,7 +44,13 @@ const OrderDetails = () => {
     setShowRenameOrderDialog((prev) => !prev);
 
   return (
-    <Layout title="Order Details" elevationOption={false}>
+    <Layout
+      title="Order Details"
+      elevationOption={false}
+      BottomNavigationValue={4}
+      footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
+      scrollOffset={{ bottom: { xs: 70, md: 16 } }}
+    >
       <Container sx={{ py: 4 }}>
         <Grid container spacing={1} alignItems="center" mb={3}>
           <Grid item xs="auto">
@@ -294,7 +300,11 @@ const OrderDetails = () => {
             </Grid>
           </Box>
           <Box>
-            <Button variant="contained" color="secondary" onClick={handleToggleRenamingDialog}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleToggleRenamingDialog}
+            >
               add to favourites
             </Button>
             <RenameOrderDialog
