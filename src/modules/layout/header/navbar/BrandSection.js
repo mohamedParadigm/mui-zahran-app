@@ -129,7 +129,6 @@ const BrandSection = () => {
                 display="flex"
                 gap={1}
                 alignItems="center"
-                justifyContent="space-between"
                 flexWrap="wrap"
               >
                 <NextLink href="/register" passHref>
