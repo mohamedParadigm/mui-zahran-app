@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 // Components
-import DashboardLayout from "../../modules/layout/DashboardLayout";
+import DashboardLayout from "../../modules/dashboard/DashboardLayout";
 import CustomRadio from "../../components/shared/CustomRadio";
 import MuiTooltip from "../../components/shared/MuiTooltip";
 import AddressDialog from "../../components/AddressDialog";
@@ -41,6 +41,9 @@ const Addresses = () => {
       elevationOption={false}
       activeTab={2}
       maxWidth={700}
+      BottomNavigationValue={4}
+      footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
+      scrollOffset={{bottom: {xs: 70, md: 16}}}
     >
       <Box mb={3}>
         <Typography variant="h5" component="h2" textTransform="capitalize">

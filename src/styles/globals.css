@@ -18,3 +18,42 @@ img {
   -o-object-fit: contain;
   object-fit: contain;
 }
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* Pluse */
+@-webkit-keyframes pulseanime {
+  0% {
+    box-shadow: 0 0 0 0 rgba(229, 71, 80, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(229, 71, 80, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(229, 71, 80, 0);
+  }
+}
+@-moz-keyframes pulseanime {
+  0% {
+    box-shadow: 0 0 0 0 rgba(229, 71, 80, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(229, 71, 80, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(229, 71, 80, 0);
+  }
+}
+@keyframes pulseanime {
+  0% {
+    box-shadow: 0 0 0 0 rgba(229, 71, 80, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(229, 71, 80, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(229, 71, 80, 0);
+  }
+}

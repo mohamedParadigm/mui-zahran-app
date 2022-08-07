@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 // Components
-import DashboardLayout from "../../modules/layout/DashboardLayout";
+import DashboardLayout from "../../modules/dashboard/DashboardLayout";
 
 const ChangePassword = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -29,6 +29,9 @@ const ChangePassword = () => {
       title="Change Password"
       elevationOption={false}
       activeTab={1}
+      BottomNavigationValue={4}
+      footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
+      scrollOffset={{bottom: {xs: 70, md: 16}}}
     >
       <Box>
         <Typography variant="h5" component="h2" textTransform="capitalize">

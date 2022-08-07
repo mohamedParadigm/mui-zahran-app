@@ -13,7 +13,7 @@ import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 // Components
-import DashboardLayout from "../../modules/layout/DashboardLayout";
+import DashboardLayout from "../../modules/dashboard/DashboardLayout";
 import MuiTooltip from "../../components/shared/MuiTooltip";
 import RenameOrderDialog from "../../components/RenameOrderDialog";
 
@@ -35,6 +35,9 @@ const Orders = () => {
       elevationOption={false}
       activeTab={3}
       maxWidth={700}
+      BottomNavigationValue={4}
+      footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
+      scrollOffset={{bottom: {xs: 70, md: 16}}}
     >
       <Box mb={3}>
         <Typography variant="h5" component="h2" textTransform="capitalize">

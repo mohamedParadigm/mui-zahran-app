@@ -15,7 +15,7 @@ import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 // Components
-import Layout from "./Layout";
+import Layout from "../layout/Layout";
 
 const tabs = [
   { icon: <PersonOutlinedIcon />, label: "Profile", slug: "profile" },
@@ -44,7 +44,7 @@ const TabStyle = styled(Tabs)(({ theme }) => ({
 }));
 
 const DashboardLayout = (props) => {
-  const { title, elevationOption, activeTab, children, maxWidth = 600 } = props;
+  const { title, elevationOption, activeTab, children, maxWidth = 600, ...other } = props;
 
   const router = useRouter();
 
@@ -57,7 +57,7 @@ const DashboardLayout = (props) => {
   };
 
   return (
-    <Layout title={title} elevationOption={elevationOption}>
+    <Layout title={title} elevationOption={elevationOption} {...other}>
       <Container sx={{ py: 3 }}>
         <Box maxWidth={maxWidth} mx="auto">
           <Typography

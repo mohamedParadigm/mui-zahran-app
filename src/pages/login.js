@@ -47,16 +47,22 @@ const FaceBookBtn = styled(Button)(({ theme }) => ({
 
 const Login = () => {
   const router = useRouter();
+  const { redirect } = router.query;
 
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    router.push("/dashboard/profile");
+    router.push(redirect ? `/${redirect}` : "/dashboard/profile");
   };
 
   return (
-    <Layout title="Login" elevationOption={false}>
+    <Layout
+      title="Login"
+      elevationOption={false}
+      footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
+      scrollOffset={{ bottom: { xs: 70, md: 16 } }}
+    >
       <Container sx={{ py: 3 }}>
         <Wrapper sx={{ p: 3 }} elevation={4}>
           <Typography
@@ -70,7 +76,10 @@ const Login = () => {
           </Typography>
           <Typography textAlign="center" variant="subtitle2" mb={3}>
             Don&apos;t have an account?{" "}
-            <NextLink href="/register" passHref>
+            <NextLink
+              href={redirect ? `/register?redirect=${redirect}` : "/register"}
+              passHref
+            >
               <Link underline="none" variant="button">
                 Sign Up
               </Link>

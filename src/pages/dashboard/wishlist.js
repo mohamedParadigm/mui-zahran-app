@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 // Icons
 import DeleteIcon from "@mui/icons-material/Delete";
 // Components
-import DashboardLayout from "../../modules/layout/DashboardLayout";
+import DashboardLayout from "../../modules/dashboard/DashboardLayout";
 import MuiTooltip from "../../components/shared/MuiTooltip";
 
 const SoldOut = styled("span")(({ theme }) => ({
@@ -30,7 +30,14 @@ const SoldOut = styled("span")(({ theme }) => ({
 
 const Wishlist = () => {
   return (
-    <DashboardLayout title="Wishlist" elevationOption={false} activeTab={4}>
+    <DashboardLayout
+      title="Wishlist"
+      elevationOption={false}
+      activeTab={4}
+      BottomNavigationValue={4}
+      footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
+      scrollOffset={{ bottom: { xs: 70, md: 16 } }}
+    >
       <Box mb={3}>
         <Typography variant="h5" component="h2" textTransform="capitalize">
           Wishlist
@@ -60,10 +67,7 @@ const Wishlist = () => {
             <Grid item xs={12} sm="auto" alignSelf="center">
               <Box position="relative" width="fit-content" mx="auto">
                 <NextLink href="/product" passHref>
-                  <Link
-                    display="flex"
-                    underline="none"
-                  >
+                  <Link display="flex" underline="none">
                     <Image
                       src="/images/products/ingredient-1.jpg"
                       alt=""
@@ -109,10 +113,7 @@ const Wishlist = () => {
             <Grid item xs={12} sm="auto" alignSelf="center">
               <Box position="relative" width="fit-content" mx="auto">
                 <NextLink href="/product" passHref>
-                  <Link
-                    display="flex"
-                    underline="none"
-                  >
+                  <Link display="flex" underline="none">
                     <Image
                       src="/images/products/ingredient-1.jpg"
                       alt=""
