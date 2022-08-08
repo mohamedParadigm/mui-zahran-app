@@ -179,21 +179,6 @@ const RecipeDetails = () => {
                 />
               </ListItem>
               <ListItem>
-                <ListItemButton component="button" sx={{ p: 0 }}>
-                  <ListItemIcon sx={{ minWidth: 30 }}>
-                    <FavoriteBorderOutlinedIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Add to Favourites"
-                    sx={{
-                      my: 0,
-                      whiteSpace: "nowrap",
-                      textTransform: "capitalize",
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
                 <ListItemButton
                   component="button"
                   sx={{ p: 0 }}

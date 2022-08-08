@@ -11,7 +11,6 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Grid";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -20,9 +19,11 @@ import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlin
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// Externals
+import useTranslation from "next-translate/useTranslation";
 // Components
-import MuiTooltip from "../../../../components/shared/MuiTooltip";
 import AddressDialog from "../../../../components/AddressDialog";
+import LanguageChanger from "../../../../components/LanguageChanger";
 
 const BrandSectionStyle = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -62,6 +63,7 @@ const addressInitialDetails = {
 };
 
 const BrandSection = () => {
+  const { t } = useTranslation("common");
   const [menuDrawerAnchor, setMenuDrawerAnchor] = useState(false);
 
   const toggleMenuDrawer = (event) => {
@@ -125,12 +127,7 @@ const BrandSection = () => {
               >
                 Welcome, To Zahran
               </Typography>
-              <Box
-                display="flex"
-                gap={1}
-                alignItems="center"
-                flexWrap="wrap"
-              >
+              <Box display="flex" gap={1} alignItems="center" flexWrap="wrap">
                 <NextLink href="/register" passHref>
                   <Button
                     variant="contained"
@@ -210,11 +207,7 @@ const BrandSection = () => {
           />
         </Link>
       </NextLink>
-      <NextLink href="/" passHref>
-        <Link underline="none" color="inherit" sx={{ display: { md: "none" } }}>
-          العربية
-        </Link>
-      </NextLink>
+      <LanguageChanger sx={{ display: { md: "none" } }} />
       <LocationTriggerStyle>
         <Button
           color="inherit"
@@ -222,21 +215,20 @@ const BrandSection = () => {
           startIcon={<AddLocationAltOutlinedIcon />}
           onClick={handleToggleAddressDialog}
         >
-          <MuiTooltip title="Smouha - Alexandria - Egypt">
-            <Typography
-              sx={{ maxWidth: { md: 200 } }}
-              whiteSpace="nowrap"
-              overflow="hidden"
-              textOverflow="ellipsis"
-            >
-              Smouha - Alexandria - Egypt
-            </Typography>
-          </MuiTooltip>
+          <Typography
+            sx={{ maxWidth: { md: 200 } }}
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            textTransform="capitalize"
+          >
+            {t("newAddress")}
+          </Typography>
         </Button>
         <AddressDialog
           showAddressDialog={showAddressDialog}
           handleToggleAddressDialog={handleToggleAddressDialog}
-          title="Add new address"
+          title={t("newAddress")}
           initialValues={addressInitialDetails}
         />
       </LocationTriggerStyle>

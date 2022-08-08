@@ -1,8 +1,9 @@
-// Components
+// MUI
 import Container from "@mui/material/Container";
-// import ProductItem from "../components/ProductItem";
-// import Recipes from "../components/Recipes";
+// Components
 import Layout from "../modules/layout/Layout";
+import ProductItem from "../components/items/product/ProductItem";
+// import Recipes from "../components/Recipes";
 
 const Home = () => {
   return (
@@ -12,8 +13,9 @@ const Home = () => {
       scrollOffset={{ bottom: { xs: 70, md: 16 } }}
       footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
     >
-      <Container>test{/* <ProductItem /> */}</Container>
-      <Container>{/* <Recipes /> */}</Container>
+      <Container sx={{py: 4}}>
+        <ProductItem />
+      </Container>
     </Layout>
   );
 };

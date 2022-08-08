@@ -1,5 +1,6 @@
 // Internals
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, useEffect } from "react";
+import { useRouter } from "next/router";
 // MUI
 import { grey } from "@mui/material/colors";
 import Dialog from "@mui/material/Dialog";
@@ -16,22 +17,61 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 // Icons
 import CloseIcon from "@mui/icons-material/Close";
+// Externals
+import useTranslation from "next-translate/useTranslation";
+// Data
+import data from "../utils/data";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
 const AddressDialog = (props) => {
-  const {
-    showAddressDialog,
-    handleToggleAddressDialog,
-    title,
-    initialValues,
-  } = props;
+  const { showAddressDialog, handleToggleAddressDialog, title, initialValues } =
+    props;
+  const { countries, cities, areas } = data;
+
+  const { locale } = useRouter();
+  const { t } = useTranslation("common");
 
   const [addressDetails, setAddressDetails] = useState(initialValues);
+  const [availableCountries, setAvailableCountries] = useState([]);
+  const [availableCities, setAvailableCities] = useState([]);
+  const [availableAreas, setAvailableAreas] = useState([]);
+
+  useEffect(() => {
+    setAvailableCountries(countries);
+  }, [countries]);
+
+  useEffect(() => {
+    const specificCities = addressDetails.country
+      ? cities.filter((el) => el.countryUniqueName === addressDetails.country)
+      : [];
+
+    setAvailableCities(specificCities);
+  }, [cities, addressDetails.country]);
+
+  useEffect(() => {
+    const specificAreas = addressDetails.city
+      ? areas.filter((el) => el.cityUniqueName === addressDetails.city)
+      : [];
+
+    setAvailableAreas(specificAreas);
+  }, [areas, addressDetails.city]);
 
   const handleAddressChange = (e) => {
     setAddressDetails((prev) => ({
@@ -81,28 +121,45 @@ const AddressDialog = (props) => {
         </IconButton>
       </DialogTitle>
       <DialogContent sx={{ padding: "1rem" }}>
-        <form onSubmit={handleAddressSubmit}>
+        <form onSubmit={handleAddressSubmit} autoComplete="off">
           <List>
             <ListItem>
-              <FormControl fullWidth>
-                <InputLabel id="selectCountryLabel">Country</InputLabel>
+              <FormControl fullWidth required>
+                <InputLabel id="selectCountryLabel">{t("country")}</InputLabel>
                 <Select
                   labelId="selectCountryLabel"
                   id="selectCountry"
                   name="country"
                   value={addressDetails.country}
-                  label="Country"
+                  label={t("country")}
                   onChange={handleAddressChange}
                   color="secondary"
+                  MenuProps={MenuProps}
                 >
-                  <MenuItem value="egypt">Egypt</MenuItem>
-                  <MenuItem value="saudi">Saudi Arabia</MenuItem>
-                  <MenuItem value="emirates">Emirates</MenuItem>
+                  {availableCountries?.length !== 0 ? (
+                    availableCountries?.map((el) => (
+                      <MenuItem
+                        key={el.id}
+                        value={el.uniqueName}
+                        sx={{ whiteSpace: "initial" }}
+                      >
+                        {el[`name_${locale}`]}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="">
+                      <CircularProgress size={20} />
+                    </MenuItem>
+                  )}
                 </Select>
               </FormControl>
             </ListItem>
             <ListItem>
-              <FormControl fullWidth>
+              <FormControl
+                fullWidth
+                required
+                disabled={!Boolean(addressDetails.country)}
+              >
                 <InputLabel id="selectCityLabel">City</InputLabel>
                 <Select
                   labelId="selectCityLabel"
@@ -112,14 +169,32 @@ const AddressDialog = (props) => {
                   label="City"
                   onChange={handleAddressChange}
                   color="secondary"
+                  MenuProps={MenuProps}
                 >
-                  <MenuItem value="cairo">Cairo</MenuItem>
-                  <MenuItem value="alex">Alexandria</MenuItem>
+                  {availableCities?.length !== 0 ? (
+                    availableCities?.map((el) => (
+                      <MenuItem
+                        key={el.id}
+                        value={el.uniqueName}
+                        sx={{ whiteSpace: "initial" }}
+                      >
+                        {el[`name_${locale}`]}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="">
+                      <CircularProgress size={20} />
+                    </MenuItem>
+                  )}
                 </Select>
               </FormControl>
             </ListItem>
             <ListItem>
-              <FormControl fullWidth>
+              <FormControl
+                fullWidth
+                required
+                disabled={!Boolean(addressDetails.city)}
+              >
                 <InputLabel id="selectAreaLabel">Area</InputLabel>
                 <Select
                   labelId="selectAreaLabel"
@@ -129,9 +204,23 @@ const AddressDialog = (props) => {
                   label="Area"
                   onChange={handleAddressChange}
                   color="secondary"
+                  MenuProps={MenuProps}
                 >
-                  <MenuItem value="smouha">Smouha</MenuItem>
-                  <MenuItem value="mahat-elraml">Mahat El Raml</MenuItem>
+                  {availableAreas?.length !== 0 ? (
+                    availableAreas?.map((el) => (
+                      <MenuItem
+                        key={el.id}
+                        value={el.uniqueName}
+                        sx={{ whiteSpace: "initial" }}
+                      >
+                        {el[`name_${locale}`]}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="">
+                      <CircularProgress size={20} />
+                    </MenuItem>
+                  )}
                 </Select>
               </FormControl>
             </ListItem>
@@ -154,12 +243,12 @@ const AddressDialog = (props) => {
                     color="secondary"
                     onClick={handleCancelAddress}
                   >
-                    Cancel
+                    {t("cancel")}
                   </Button>
                 </Grid>
                 <Grid item>
                   <Button variant="contained" color="primary" type="submit">
-                    add address
+                    {t("save")}
                   </Button>
                 </Grid>
               </Grid>
