@@ -17,6 +17,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 // Icons
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import AlarmOnOutlinedIcon from "@mui/icons-material/AlarmOnOutlined";
@@ -27,6 +28,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 // Components
 import Layout from "../../modules/layout/Layout";
 import SocialShare from "../../components/SocialShare";
+import MultipleItems from "../../components/items/MultipleItems";
 
 const CardWithOverLay = styled(CardActionArea)({
   position: "relative",
@@ -51,6 +53,27 @@ const CardInfoStyle = styled("div")({
   left: "50%",
   transform: "translate(-50%, -50%)",
 });
+
+const initialIngredients = [
+  {
+    uniqueName: "1",
+    image: "/images/products/ingredient-1.jpg",
+    label: "Fresh Garlic Local - 1kg",
+    price: 10,
+  },
+  {
+    uniqueName: "2",
+    image: "/images/products/ingredient-1.jpg",
+    label: "Fresh Garlic Local - 2kg",
+    price: 20,
+  },
+  {
+    uniqueName: "3",
+    image: "/images/products/ingredient-1.jpg",
+    label: "Fresh Garlic Local - 3kg",
+    price: 30,
+  },
+];
 
 const RecipeDetails = () => {
   const [openSocialShare, setOpenSocialShare] = useState(null);
@@ -228,35 +251,39 @@ const RecipeDetails = () => {
               Red Hot Pepper 30g
             </ListItem>
           </List>
-          <Typography component="h3" variant="h5">
-            How to Make It
-          </Typography>
-          <div>
-            <Typography component="h4" variant="h6">
-              Step 1
+          <Box mb={2}>
+            <Typography component="h3" variant="h5">
+              How to Make It
             </Typography>
-            <Typography variant="body2">
-              Mix garlic, salt, cayenne pepper and black pepper in a small bowl.
-            </Typography>
-          </div>
-          <div>
-            <Typography component="h4" variant="h6">
-              Step 2
-            </Typography>
-            <Typography variant="body2">
-              Rub the steak with this mixture to absorb it and put it in the
-              refrigerator for several hours.{" "}
-            </Typography>
-          </div>
-          <div>
-            <Typography component="h4" variant="h6">
-              Step 3
-            </Typography>
-            <Typography variant="body2">
-              Heat the grill, then put the steak inside and press it down a
-              little.
-            </Typography>
-          </div>
+            <div>
+              <Typography component="h4" variant="h6">
+                Step 1
+              </Typography>
+              <Typography variant="body2">
+                Mix garlic, salt, cayenne pepper and black pepper in a small
+                bowl.
+              </Typography>
+            </div>
+            <div>
+              <Typography component="h4" variant="h6">
+                Step 2
+              </Typography>
+              <Typography variant="body2">
+                Rub the steak with this mixture to absorb it and put it in the
+                refrigerator for several hours.{" "}
+              </Typography>
+            </div>
+            <div>
+              <Typography component="h4" variant="h6">
+                Step 3
+              </Typography>
+              <Typography variant="body2">
+                Heat the grill, then put the steak inside and press it down a
+                little.
+              </Typography>
+            </div>
+          </Box>
+          <MultipleItems items={initialIngredients} />
         </Paper>
       </Container>
     </Layout>
