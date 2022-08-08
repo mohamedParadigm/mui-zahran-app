@@ -13,6 +13,9 @@ const theme = createTheme({
     secondary: {
       main: "#212529",
     },
+    alt: {
+      main: '#707070',
+    }
   },
   typography: {
     h1: {
@@ -31,8 +34,9 @@ const theme = createTheme({
     },
     h5: {
       fontSize: "1.25rem",
-      fontWeight: "600",
+      fontWeight: "700",
       textTransform: "capitalize",
+      marginBottom: "0.5rem"
     },
     h6: {
       fontSize: "1rem",
@@ -45,6 +49,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textTransform: "capitalize",
+          height: "40px",
+          transition: "0.3s ease-in-out"
         },
       },
     },
@@ -60,3 +66,6 @@ const theme = createTheme({
 });
 
 export default theme;
+
+
+

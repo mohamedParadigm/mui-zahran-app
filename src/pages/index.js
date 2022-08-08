@@ -1,5 +1,9 @@
 // Components
+import { Container } from "@mui/system";
+import ProductItem from "../components/ProductItem";
+import Recipes from "../components/Recipes";
 import Layout from "../modules/layout/Layout";
+
 
 const Home = () => {
   return (
@@ -137,8 +141,17 @@ const Home = () => {
         risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
         cursus magna, vel scelerisque nisl consectetur et.
       </p>
+      
+      <Container>
+          <ProductItem />
+      </Container>
+      <Container>
+        {/* <Recipes /> */}
+      </Container>
     </Layout>
   );
 };
 
 export default Home;
+
+
