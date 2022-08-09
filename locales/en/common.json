@@ -1,9 +1,13 @@
 {
   "newAddress": "Add New Address",
+  "updateAddress": "Update your current address",
+  "addAddress": "Address Added Successfully",
+  "updateAddressSucc": "Address Updated Successfully",
   "country": "Country",
   "city": "City",
   "area": "Area",
   "detailedAddress": "Detailed Address",
   "save": "Save",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "reqField": "This field is required"
 }

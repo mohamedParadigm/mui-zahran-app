@@ -1,7 +1,8 @@
 // Internals
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NextLink from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 // MUI
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -21,9 +22,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // Externals
 import useTranslation from "next-translate/useTranslation";
+import { useSelector, useDispatch } from "react-redux";
+import { hasCookie, getCookie } from "cookies-next";
 // Components
 import AddressDialog from "../../../../components/AddressDialog";
 import LanguageChanger from "../../../../components/LanguageChanger";
+import { updateLocation } from "../../../../redux/features/location/locationSlice";
+// Data
+import data from "../../../../utils/data";
 
 const BrandSectionStyle = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -55,16 +61,31 @@ const iOS =
   typeof navigator !== "undefined" &&
   /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-const addressInitialDetails = {
-  country: "",
-  city: "",
-  area: "",
-  detailedAddress: "",
-};
-
 const BrandSection = () => {
+  const { locale } = useRouter();
   const { t } = useTranslation("common");
   const [menuDrawerAnchor, setMenuDrawerAnchor] = useState(false);
+
+  const { location } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (hasCookie("location")) {
+      dispatch(updateLocation(JSON.parse(getCookie("location"))));
+    }
+  }, [dispatch]);
+
+  const countryLocation =
+    location.country &&
+    data.countries.find((el) => el.uniqueName === location.country)[
+      `name_${locale}`
+    ];
+  const cityLocation =
+    location.city &&
+    data.cities.find((el) => el.uniqueName === location.city)[`name_${locale}`];
+  const areaLocation =
+    location.area &&
+    data.areas.find((el) => el.uniqueName === location.area)[`name_${locale}`];
 
   const toggleMenuDrawer = (event) => {
     if (
@@ -222,14 +243,16 @@ const BrandSection = () => {
             textOverflow="ellipsis"
             textTransform="capitalize"
           >
-            {t("newAddress")}
+            {location.country
+              ? `${countryLocation} - ${cityLocation} - ${areaLocation}`
+              : t("newAddress")}
           </Typography>
         </Button>
         <AddressDialog
           showAddressDialog={showAddressDialog}
           handleToggleAddressDialog={handleToggleAddressDialog}
-          title={t("newAddress")}
-          initialValues={addressInitialDetails}
+          title={location.country ? t("updateAddress") : t("newAddress")}
+          initialValues={location}
         />
       </LocationTriggerStyle>
     </BrandSectionStyle>

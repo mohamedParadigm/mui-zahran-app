@@ -9,8 +9,12 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
+import { Provider } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Components
 import theme from "../utils/theme";
+import store from "../redux/store";
 // Styles
 import "../styles/globals.css";
 
@@ -32,12 +36,15 @@ const App = ({ Component, pageProps }) => {
   });
 
   return (
-    <CacheProvider value={cacheRtl}>
-      <ThemeProvider theme={themeWithDirection}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </CacheProvider>
+    <Provider store={store}>
+      <CacheProvider value={cacheRtl}>
+        <ThemeProvider theme={themeWithDirection}>
+          <CssBaseline />
+          <Component {...pageProps} />
+          <ToastContainer autoClose={3000} position="top-center" rtl={locale === "ar"} />
+        </ThemeProvider>
+      </CacheProvider>
+    </Provider>
   );
 };
 
