@@ -82,20 +82,25 @@ const AddressDialog = (props) => {
   }, [countries]);
 
   useEffect(() => {
+    setValue("city", "");
+    setValue("area", "");
+
     const specificCities = watchCountry
       ? cities.filter((el) => el.countryUniqueName === watchCountry)
       : [];
 
     setAvailableCities(specificCities);
-  }, [cities, watchCountry]);
+  }, [cities, watchCountry, setValue]);
 
   useEffect(() => {
+    setValue("area", "");
+
     const specificAreas = watchCity
       ? areas.filter((el) => el.cityUniqueName === watchCity)
       : [];
 
     setAvailableAreas(specificAreas);
-  }, [areas, watchCity]);
+  }, [areas, watchCity, setValue]);
 
   const handleCancelAddress = (e) => {
     e.preventDefault();
