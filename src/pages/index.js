@@ -1,7 +1,6 @@
 // Components
-import { Container } from "@mui/system";
+import Container from "@mui/material/Container";
 import ProductItem from "../components/ProductItem";
-import Recipes from "../components/Recipes";
 import Layout from "../modules/layout/Layout";
 
 
@@ -14,127 +13,7 @@ const Home = () => {
       footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
       >
       <p>
-        Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-        consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel
-        scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet
-        fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-        Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent
-        commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
-        ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
-        nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
-        Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-        risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-        cursus magna, vel scelerisque nisl consectetur et. Cras mattis
-        consectetur purus sit amet fermentum. Cras justo odio, dapibus ac
-        facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur
+       
         ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque
         nisl consectetur et. Cras mattis consectetur purus sit amet fermentum.
         Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
@@ -143,10 +22,7 @@ const Home = () => {
       </p>
       
       <Container>
-          <ProductItem />
-      </Container>
-      <Container>
-        {/* <Recipes /> */}
+        <ProductItem />
       </Container>
     </Layout>
   );

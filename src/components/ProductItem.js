@@ -14,8 +14,8 @@ import FevIcon from './FevIcon';
 const SpanHeader = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.primary.main,
     color: '#fff',
-    padding: '7px 5px',
-    borderRadius: '0px 10px 10px 0',
+    padding: '5px',
+    borderRadius: '0px 7px 7px 0',
     margin: '10px 0',
     fontSize: '0.7rem',
     width: 'fit-content'

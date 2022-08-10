@@ -8,6 +8,8 @@ import Link from "@mui/material/Link";
 // Components
 import ElevationScroll from "../../../components/shared/ElevationScroll";
 import Navbar from "./navbar/Navbar";
+import BottomHeader from "./BottomHeader";
+import categories from '../../../../data/categories.json'
 
 const Header = (props) => {
   const { layoutType, elevationOption } = props;
@@ -18,6 +20,7 @@ const Header = (props) => {
         <ElevationScroll {...props}>
           <AppBar>
             <Navbar />
+            {/* <BottomHeader categories={categories} /> */}
           </AppBar>
         </ElevationScroll>
       );
