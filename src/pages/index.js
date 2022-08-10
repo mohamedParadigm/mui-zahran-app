@@ -52,7 +52,7 @@ const Home = (props) => {
             </Typography>
           </Grid>
           <Grid item xs="auto">
-            <NextLink href="/all-categories">
+            <NextLink href="/all-products?branch=test">
               <Button variant="outlined" color="primary">{t("moreCategories")}</Button>
             </NextLink>
           </Grid>
