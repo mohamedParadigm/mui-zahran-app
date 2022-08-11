@@ -12,14 +12,10 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Stack from "@mui/material/Stack";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
 // Icons
 import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // Externals
 import useTranslation from "next-translate/useTranslation";
 import { useSelector, useDispatch } from "react-redux";
@@ -30,6 +26,7 @@ import LanguageChanger from "../../../../components/LanguageChanger";
 import { updateLocation } from "../../../../redux/features/location/locationSlice";
 // Data
 import data from "../../../../utils/data";
+import MobileMenu from "../../../../components/MobileMenu";
 
 const BrandSectionStyle = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -64,6 +61,7 @@ const iOS =
 const BrandSection = () => {
   const { locale } = useRouter();
   const { t } = useTranslation("common");
+
   const [menuDrawerAnchor, setMenuDrawerAnchor] = useState(false);
 
   const { location } = useSelector((state) => state);
@@ -182,40 +180,7 @@ const BrandSection = () => {
             <CloseIcon />
           </IconButton>
         </DrawerHeader>
-        <div>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel1a-content"
-              id="panel1a-header"
-            >
-              <Typography>Accordion 1</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls="panel2a-content"
-              id="panel2a-header"
-            >
-              <Typography>Accordion 2</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </Typography>
-            </AccordionDetails>
-          </Accordion>
-        </div>
+        <MobileMenu />
       </SwipeableDrawer>
       <NextLink href="/" passHref>
         <Link display="flex">

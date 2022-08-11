@@ -9,5 +9,10 @@
   "detailedAddress": "Detailed Address",
   "save": "Save",
   "cancel": "Cancel",
-  "reqField": "This field is required"
+  "reqField": "This field is required",
+  "allCategories": "All Categories",
+  "all": "all",
+  "home": "Home",
+  "categories": "Categories",
+  "brands": "Brands"
 }
