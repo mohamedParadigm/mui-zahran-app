@@ -197,7 +197,7 @@ const BrandSection = () => {
       <LocationTriggerStyle>
         <Button
           color="inherit"
-          sx={{ padding: 0 }}
+          sx={{ padding: 0, maxWidth: "100%" }}
           startIcon={<AddLocationAltOutlinedIcon />}
           onClick={handleToggleAddressDialog}
         >

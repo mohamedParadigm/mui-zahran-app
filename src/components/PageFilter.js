@@ -49,7 +49,6 @@ const AccordionStyle = styled(Accordion)(({ theme }) => ({
 
 const PageFilter = ({ categories }) => {
   const router = useRouter();
-  console.log(router);
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
@@ -63,7 +62,7 @@ const PageFilter = ({ categories }) => {
   };
 
   const handleCategorySelect = (uniqueName) => {
-    const isExist = router.asPath.split("/").includes(uniqueName);
+    const isExist = router?.query?.subCategory?.includes(uniqueName);
     if (isExist) {
       router.push(
         router.asPath
@@ -139,7 +138,7 @@ const PageFilter = ({ categories }) => {
                     </AccordionSummary>
                     <AccordionDetails sx={{ p: 0 }}>
                       <List>
-                        {/* <ListItem
+                        <ListItem
                           disablePadding
                           className={
                             router.query?.category === item.uniqueName ||
@@ -153,7 +152,9 @@ const PageFilter = ({ categories }) => {
                               <ListItemIcon sx={{ minWidth: 30 }}>
                                 <Checkbox
                                   checked={
-                                    router.query.category === item.uniqueName
+                                    router.query?.category ===
+                                      item.uniqueName ||
+                                    router.query.category === "all-categories"
                                   }
                                   icon={<CheckBoxOutlineBlankOutlinedIcon />}
                                   checkedIcon={<CheckBoxTwoToneIcon />}
@@ -162,46 +163,45 @@ const PageFilter = ({ categories }) => {
                                 />
                               </ListItemIcon>
                               <ListItemText
-                                primary={t("all")}
+                                primary={item[`name_${router.locale}`]}
                                 sx={{ textTransform: "capitalize" }}
                               />
                             </ListItemButton>
                           </NextLink>
-                        </ListItem> */}
+                        </ListItem>
                         {item?.children?.map((el) => (
                           <ListItem
                             key={el.id}
                             disablePadding
                             className={
-                              router.query.category === "all-categories"
+                              router?.query?.subCategory?.includes(
+                                el.uniqueName
+                              )
                                 ? "active"
                                 : ""
                             }
                           >
-                            <NextLink
-                              href={`/${item.uniqueName}/${el.uniqueName}`}
-                              passHref
+                            <ListItemButton
+                              onClick={() =>
+                                handleCategorySelect(el.uniqueName)
+                              }
                             >
-                              <ListItemButton>
-                                <ListItemIcon sx={{ minWidth: 30 }}>
-                                  <Checkbox
-                                    checked={
-                                      router?.query?.category ===
-                                        "all-categories" ||
-                                      router?.query?.category === item.uniqueName
-                                    }
-                                    icon={<CheckBoxOutlineBlankOutlinedIcon />}
-                                    checkedIcon={<CheckBoxTwoToneIcon />}
-                                    sx={{ p: 0 }}
-                                    color="secondary"
-                                  />
-                                </ListItemIcon>
-                                <ListItemText
-                                  primary={el[`name_${router.locale}`]}
-                                  sx={{ textTransform: "capitalize" }}
+                              <ListItemIcon sx={{ minWidth: 30 }}>
+                                <Checkbox
+                                  checked={router?.query?.subCategory?.includes(
+                                    el.uniqueName
+                                  )}
+                                  icon={<CheckBoxOutlineBlankOutlinedIcon />}
+                                  checkedIcon={<CheckBoxTwoToneIcon />}
+                                  sx={{ p: 0 }}
+                                  color="secondary"
                                 />
-                              </ListItemButton>
-                            </NextLink>
+                              </ListItemIcon>
+                              <ListItemText
+                                primary={el[`name_${router.locale}`]}
+                                sx={{ textTransform: "capitalize" }}
+                              />
+                            </ListItemButton>
                           </ListItem>
                         ))}
                       </List>

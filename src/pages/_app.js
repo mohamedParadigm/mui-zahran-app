@@ -12,6 +12,7 @@ import { prefixer } from "stylis";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { setCookie, hasCookie } from "cookies-next";
 // Components
 import theme from "../utils/theme";
 import store from "../redux/store";
@@ -19,7 +20,13 @@ import store from "../redux/store";
 import "../styles/globals.css";
 
 const App = ({ Component, pageProps }) => {
-  const { locale } = useRouter();
+  const { locale, defaultLocale } = useRouter();
+
+  useEffect(() => {
+    if (!hasCookie("NEXT_LOCALE")) {
+      setCookie("NEXT_LOCALE", defaultLocale, { maxAge: 60 * 6 * 24 });
+    }
+  }, [locale, defaultLocale]);
 
   useEffect(() => {
     document.querySelector("html").dir = locale === "en" ? "ltr" : "rtl";
@@ -41,7 +48,11 @@ const App = ({ Component, pageProps }) => {
         <ThemeProvider theme={themeWithDirection}>
           <CssBaseline />
           <Component {...pageProps} />
-          <ToastContainer autoClose={3000} position="top-center" rtl={locale === "ar"} />
+          <ToastContainer
+            autoClose={3000}
+            position="top-center"
+            rtl={locale === "ar"}
+          />
         </ThemeProvider>
       </CacheProvider>
     </Provider>
