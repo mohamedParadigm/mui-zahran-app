@@ -22,11 +22,11 @@ import "../styles/globals.css";
 const App = ({ Component, pageProps }) => {
   const { locale, defaultLocale } = useRouter();
 
-  useEffect(() => {
-    if (!hasCookie("NEXT_LOCALE")) {
-      setCookie("NEXT_LOCALE", defaultLocale, { maxAge: 60 * 6 * 24 });
-    }
-  }, [locale, defaultLocale]);
+  // useEffect(() => {
+  //   if (!hasCookie("NEXT_LOCALE")) {
+  //     setCookie("NEXT_LOCALE", defaultLocale, { maxAge: 60 * 6 * 24, path: "/" });
+  //   }
+  // }, [locale, defaultLocale]);
 
   useEffect(() => {
     document.querySelector("html").dir = locale === "en" ? "ltr" : "rtl";
