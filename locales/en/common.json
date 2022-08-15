@@ -14,5 +14,22 @@
   "all": "all",
   "home": "Home",
   "categories": "Categories",
-  "brands": "Brands"
+  "brands": "Brands",
+  "results": " Results for ",
+  "sortBy": {
+    "label": "Sort By",
+    "relevance": "Relevance",
+    "htl": "Price: High To Low",
+    "lth": "Price Low To High"
+  },
+  "filterBy": "Filter By",
+  "pagesDisplay": {
+    "label": "Display",
+    "perPage": " Per Page"
+  },
+  "price": "Price",
+  "from": "From",
+  "to": "To",
+  "egp": "EGP",
+  "apply": "Apply"
 }
