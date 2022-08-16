@@ -233,6 +233,7 @@ const data = {
   ],
   categories: [
     {
+      id: uniqueId(),
       name_en: "Grocery",
       name_ar: "البقالة",
       uniqueName: "grocery",
@@ -241,6 +242,7 @@ const data = {
       // seo: {},
       children: [
         {
+          id: uniqueId(),
           name_en: "Cheese",
           name_ar: "الجبن",
           uniqueName: "cheese",
@@ -249,6 +251,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Dry Food",
           name_ar: "الاطعمة الجافة",
           uniqueName: "dry-food",
@@ -257,6 +260,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Candy & Chocolate",
           name_ar: "الحلويات و الشيكولاته",
           uniqueName: "candy-chocolate",
@@ -265,6 +269,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Rice & Grains",
           name_ar: "الارز و الحبوب",
           uniqueName: "rice-grains",
@@ -273,6 +278,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Pasta & Noodles",
           name_ar: "المكرونة",
           uniqueName: "pasta-noodles",
@@ -281,6 +287,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Canned Food",
           name_ar: "الاطعمه المعلبة",
           uniqueName: "canned-food",
@@ -289,6 +296,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Oil",
           name_ar: "الزيوت",
           uniqueName: "oil",
@@ -297,6 +305,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Fruits",
           name_ar: "الفواكة",
           uniqueName: "fruits",
@@ -305,6 +314,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Backery",
           name_ar: "المخبوزات",
           uniqueName: "backery",
@@ -315,6 +325,7 @@ const data = {
       ],
     },
     {
+      id: uniqueId(),
       name_en: "Beverages",
       name_ar: "المشروبات",
       uniqueName: "beverages",
@@ -323,6 +334,7 @@ const data = {
       // seo: {},
       children: [
         {
+          id: uniqueId(),
           name_en: "Mineral Water",
           name_ar: "المياه المعدنيه",
           uniqueName: "mineral-water",
@@ -331,6 +343,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Juices",
           name_ar: "العصائر",
           uniqueName: "juices",
@@ -339,6 +352,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Soft Drinks",
           name_ar: "المشروبات الغازية",
           uniqueName: "soft-drinks",
@@ -347,6 +361,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Tea",
           name_ar: "الشاي",
           uniqueName: "tea",
@@ -355,6 +370,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Coffee",
           name_ar: "القهوة",
           uniqueName: "coffee",
@@ -365,6 +381,7 @@ const data = {
       ],
     },
     {
+      id: uniqueId(),
       name_en: "Beauty",
       name_ar: "الجمال",
       uniqueName: "beauty",
@@ -373,6 +390,7 @@ const data = {
       // seo: {},
       children: [
         {
+          id: uniqueId(),
           name_en: "Hair Care",
           name_ar: "العناية بالشعر",
           uniqueName: "hair-care",
@@ -389,6 +407,7 @@ const data = {
         //   // seo: {},
         // },
         {
+          id: uniqueId(),
           name_en: "Skin Care",
           name_ar: "العناية بالبشرة",
           uniqueName: "skin-care",
@@ -407,6 +426,7 @@ const data = {
       ],
     },
     {
+      id: uniqueId(),
       name_en: "Cleaning",
       name_ar: "التنظيف",
       uniqueName: "cleaning",
@@ -415,6 +435,7 @@ const data = {
       // seo: {},
       children: [
         {
+          id: uniqueId(),
           name_en: "Toilet Paper",
           name_ar: "ورق الحمام",
           uniqueName: "toilet-paper",
@@ -423,6 +444,7 @@ const data = {
           // seo: {},
         },
         {
+          id: uniqueId(),
           name_en: "Toilet Cleaning",
           name_ar: "منظفات الحمام",
           uniqueName: "toilet-cleaning",
@@ -449,6 +471,7 @@ const data = {
       ],
     },
     {
+      id: uniqueId(),
       name_en: "Household Appliances",
       name_ar: "مستلزمات المنزل",
       uniqueName: "household-appliances",
@@ -457,6 +480,7 @@ const data = {
       // seo: {},
       children: [
         {
+          id: uniqueId(),
           name_en: "Cookware",
           name_ar: "معدات الطبخ",
           uniqueName: "cookware",
@@ -481,6 +505,7 @@ const data = {
         //   // seo: {},
         // },
         {
+          id: uniqueId(),
           name_en: "Electronic Appliance",
           name_ar: "مستلزمات الكترونية",
           uniqueName: "electronic-appliance",
@@ -552,7 +577,7 @@ const data = {
       color: "",
       model: "",
       serialNumber: "4300007512",
-      sizes: [22,24],
+      sizes: [22, 24],
       weight: "",
       seo: {},
       brand_en: "Cook Natural",
@@ -588,53 +613,6 @@ const data = {
     },
     {
       id: uniqueId(),
-      uniqueName: "molonix-vitapress-juicer",
-      name_en: "Molonix Vitapress Juicer",
-      name_ar: "عصارة فيتابريس من مولونيكس",
-      attributes: {
-        name: "",
-        value: "",
-        uniqueName: "",
-      },
-      color: "",
-      model: "",
-      serialNumber: "1510001956",
-      sizes: [],
-      weight: "",
-      seo: {},
-      brand_en: "Juice Maker",
-      brand_ar: "عصارة",
-      brandUniueName: "juice-maker",
-      categoryName_en: "Home Appliances",
-      categoryName_ar: "أجهزة منزلية",
-      categoryUniqueName: "home-appliances",
-      images: [
-        {
-          imageAcutal: "../../images/products/p2.jpg",
-          imageThumb: "",
-          imageMedium: "",
-          prime: true,
-          type: "",
-        },
-        {
-          imageAcutal: "../../images/products/p3.jpg",
-          imageThumb: "",
-          imageMedium: "",
-          prime: true,
-          type: "",
-        },
-      ],
-      description_en: "XXL 1 L capacity that’s ideal for any occasion.",
-      description_ar: "سعة كبيرة XXL 1 لتر مثالية لأي مناسبة.",
-      Price: "899",
-      priceAfterDiscount: "355",
-      discountType: "percent", // "amount"
-      discount: "25",
-      availability: true,
-      isFeatured: "25% OFF",
-    },
-    {
-      id:uniqueId(),
       uniqueName: "molonix-vitapress-juicer",
       name_en: "Molonix Vitapress Juicer",
       name_ar: "عصارة فيتابريس من مولونيكس",

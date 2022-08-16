@@ -16,6 +16,7 @@ import CategoryItem from "../modules/home/CategoryItem";
 // Data
 import data from "../utils/data";
 import ProductItem from "../components/items/product/ProductItem";
+import checkExistingCart from '../utils/checkExistingCart'
 
 const Home = (props) => {
   const { locale } = useRouter();
@@ -23,16 +24,6 @@ const Home = (props) => {
   const { t } = useTranslation("home");
 
   const { marqueeAds, topCategories, products } = props;
-
-  const { cart } = useSelector((state) => state.cart);
-
-  const checkExistingCart = (cart, element) => {
-    if (cart.length !== 0) {
-      const amount = cart.find((item) => item.uniqueName === element.uniqueName);
-      if (amount) return amount.quantity;
-    }
-    return null;
-  };
 
   return (
     <Layout
