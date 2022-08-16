@@ -8,19 +8,32 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 // Externals
 import useTranslation from "next-translate/useTranslation";
+import { useSelector, useDispatch } from "react-redux";
 // Components
 import Layout from "../modules/layout/Layout";
 import CustomMarquee from "../modules/home/CustomMarquee";
 import CategoryItem from "../modules/home/CategoryItem";
 // Data
 import data from "../utils/data";
+import ProductItem from "../components/items/product/ProductItem";
+// import checkExistingCart from '../utils/checkExistingCart'
 
 const Home = (props) => {
   const { locale } = useRouter();
 
   const { t } = useTranslation("home");
 
-  const { marqueeAds, topCategories } = props;
+  const { cart } = useSelector((state) => state.cart);
+
+ const checkExistingCart = (cart, element) => {
+  if (cart.length !== 0) {
+    const amount = cart.find((item) => item.uniqueName === element.uniqueName);
+    if (amount) return amount.quantity;
+  }
+  return null;
+};
+
+  const { marqueeAds, topCategories, products } = props;
 
   return (
     <Layout
@@ -29,7 +42,7 @@ const Home = (props) => {
       scrollOffset={{ bottom: { xs: 70, md: 16 } }}
       footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
     >
-      {/* Marquee Ads */}
+
       <CustomMarquee>
         {marqueeAds?.map((item) => (
           <Typography key={item.id} color="primary">
@@ -53,7 +66,9 @@ const Home = (props) => {
           </Grid>
           <Grid item xs="auto">
             <NextLink href="/all-categories">
-              <Button variant="outlined" color="primary">{t("moreCategories")}</Button>
+              <Button variant="outlined" color="primary">
+                {t("moreCategories")}
+              </Button>
             </NextLink>
           </Grid>
         </Grid>
@@ -73,6 +88,16 @@ const Home = (props) => {
             </Grid>
           ))}
         </Grid>
+        <Grid container spacing={2} sx={{ mt: 5 }}>
+          {products.map((product) => (
+            <Grid item xs={3} key={product.id}>
+              <ProductItem
+                product={product}
+                quantity={checkExistingCart(cart, product)}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </Container>
     </Layout>
   );
@@ -81,9 +106,9 @@ const Home = (props) => {
 export default Home;
 
 export const getServerSideProps = (req, res) => {
-  const { marqueeAds, topCategories } = data;
+  const { marqueeAds, topCategories, products } = data;
 
   return {
-    props: { marqueeAds, topCategories },
+    props: { marqueeAds, topCategories, products },
   };
 };

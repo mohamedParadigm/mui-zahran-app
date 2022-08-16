@@ -468,7 +468,7 @@ const Category = (props) => {
                 <>
                   {updatedProducts?.map((el) => (
                     <Grid key={el.id} item xs="auto">
-                      <ProductItem />
+                      <ProductItem product={el}  />
                     </Grid>
                   ))}
                 </>
