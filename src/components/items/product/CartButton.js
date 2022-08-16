@@ -16,7 +16,7 @@ import {
   deleteFromCart,
 } from "../../../redux/features/cart/cartSlice";
 
-const CartButton = ({ product , quantity }) => {
+const CartButton = ({ product , quantity , sx = {} }) => {
 
   const { locale } = useRouter();
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ const CartButton = ({ product , quantity }) => {
           ? `${element.name_en} deleted Successfully`
           : `تم حذف ${element.name_ar} بنجاح`;
       toast.error(message, {
-        autoClose: 5000,
+        autoClose: 1000,
         position: "top-right",
         icon: <DeleteIcon style={{ color: "var(--main-color)" }} />,
       });
@@ -48,8 +48,7 @@ const CartButton = ({ product , quantity }) => {
     <ButtonGroup
       size="small"
       aria-label="small button group"
-      fullWidth
-      sx={{ alignItems: "center" }}
+      sx={{ alignItems: "center" , ...sx}}
       disableElevation
     >
       <Button
@@ -60,7 +59,7 @@ const CartButton = ({ product , quantity }) => {
         {quantity > 1 ? "-" : <DeleteIcon />}
       </Button>
 
-      <Typography flexGrow={1}>{quantity}</Typography>
+      <Typography flexGrow={1} sx={{minWidth: 40 }}>{quantity}</Typography>
       <Button
         variant="contained"
         sx={{ width: "fit-content" }}

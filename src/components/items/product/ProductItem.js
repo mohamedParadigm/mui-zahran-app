@@ -53,7 +53,6 @@ const ProductItem = ({ product, quantity }) => {
   const [img, setImg] = useState(product.images[0].imageAcutal);
   const [openButton, setOpenButton] = useState(false);
 
-  console.log(quantity);
 
   // Add to cart action
   const handleAddToCart = (element) => {
@@ -102,7 +101,9 @@ const ProductItem = ({ product, quantity }) => {
   return (
     <Card sx={{ maxWidth: 300, position: "relative", textAlign: "center" }}>
       <Header>
+        {product.isFeatured !== "" ?
         <SpanHeader>{product.isFeatured}</SpanHeader>
+        : ""}
         <FevIcon />
       </Header>
       <NextLink href="/Products" passHref>
@@ -129,29 +130,36 @@ const ProductItem = ({ product, quantity }) => {
             >
               {product[`description_${locale}`]}
             </Typography>
-            <Typography fontSize="1.1rem" fontWeight={700} color="primary.main">
-              {" "}
-              {product.priceAfterDiscount} EGP
-            </Typography>
-            <Typography
-              variant="body2"
-              component="del"
-              color="alt.main"
-              sx={{
-                textDecoration: "line-through",
-                lineHeight: "10px",
-                marginBottom: "15px",
-              }}
-            >
-              {product.Price} EGP{" "}
-            </Typography>
+            {(product.discount !== "") ?
+              <>
+              <Typography fontSize="1.1rem" fontWeight={700} color="primary.main">
+                {product.priceAfterDiscount} EGP
+              </Typography>
+              <Typography
+                variant="body2"
+                component="del"
+                color="alt.main"
+                sx={{
+                  textDecoration: "line-through",
+                  lineHeight: "10px",
+                  marginBottom: "15px",
+                }}
+              >
+                {product.Price} EGP{" "}
+              </Typography>
+              </>
+              :
+              <Typography fontSize="1.1rem" fontWeight={700} color="primary.main">
+                {product.Price} EGP
+              </Typography>        
+            }
           </CardContent>
         </CardActionArea>
       </NextLink>
 
       <CardActions>
         {quantity  ? (
-          <CartButton quantity={quantity} product={product} /> 
+          <CartButton quantity={quantity} product={product} sx={{width: '100%'}} /> 
         ) : (
           <Button
             fullWidth
