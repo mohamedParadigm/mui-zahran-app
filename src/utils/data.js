@@ -558,9 +558,9 @@ const data = {
       description_en: "High quality and long-lasting performance",
       description_ar: "طزجاجودة عالية وأداء يدوم طويلًا بفضل طبقة",
       Price: "3838",
-      priceAfterDiscount: "2299",
+      priceAfterDiscount: "",
       discountType: "percent", // "amount"
-      discount: "20",
+      discount: "",
       availability: false,
       isFeatured: "20% OFF",
     },
@@ -609,7 +609,7 @@ const data = {
       discountType: "amount", // "amount"
       discount: "50",
       availability: true,
-      isFeatured: "50% OFF",
+      isFeatured: "",
     },
     {
       id: uniqueId(),

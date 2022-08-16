@@ -9,6 +9,8 @@ import Button from "@mui/material/Button";
 // Externals
 import useTranslation from "next-translate/useTranslation";
 import { useSelector, useDispatch } from "react-redux";
+import { getCookie, hasCookie } from 'cookies-next';
+
 // Components
 import Layout from "../modules/layout/Layout";
 import CustomMarquee from "../modules/home/CustomMarquee";
@@ -16,7 +18,9 @@ import CategoryItem from "../modules/home/CategoryItem";
 // Data
 import data from "../utils/data";
 import ProductItem from "../components/items/product/ProductItem";
-// import checkExistingCart from '../utils/checkExistingCart'
+import { useEffect } from "react";
+import { createCart } from "../redux/features/cart/cartSlice";
+
 
 const Home = (props) => {
   const { locale } = useRouter();
@@ -32,8 +36,17 @@ const Home = (props) => {
   }
   return null;
 };
+  const dispatch = useDispatch()
 
   const { marqueeAds, topCategories, products } = props;
+
+  useEffect(()=> {
+    const cart = hasCookie("cart") ? JSON.parse(getCookie("cart")) : 
+    {
+      cart: [],
+    };
+    dispatch(createCart(cart))
+  }, [])
 
   return (
     <Layout

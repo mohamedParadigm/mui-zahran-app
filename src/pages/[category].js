@@ -445,11 +445,12 @@ const Category = (props) => {
               minHeight="45vh"
               mb={2}
               justifyContent="center"
+              columnSpacing={{ xs: 1, sm: 2, md: 4 }}
             >
               {updatedProducts?.length !== 0 && (
                 <>
                   {updatedProducts?.map((el) => (
-                    <Grid key={el.id} item xs="auto">
+                    <Grid key={el.id} item md={4}>
                       <ProductItem product={el}  />
                     </Grid>
                   ))}
