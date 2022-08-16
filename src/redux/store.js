@@ -12,7 +12,7 @@ const store = configureStore({
     cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(locationMiddleware),
+    getDefaultMiddleware().concat(locationMiddleware)
 });
 
 export default store;

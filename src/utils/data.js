@@ -1,3 +1,5 @@
+// Externals
+import bcrypt from "bcryptjs";
 const uniqueId = () => Math.random().toString(16).slice(2);
 
 const data = {
@@ -229,6 +231,23 @@ const data = {
       name_en: "New Damietta : Gamal Abdel Nasser Street - Central District",
       name_ar: "دمياط الجديدة : شارع جمال عبد الناصر – المنطقه المركزيه",
       cityUniqueName: "new-damietta",
+    },
+  ],
+  users: [
+    {
+      id: uniqueId(),
+      firstName: "Mohamed",
+      lastName: "Mahrous",
+      mobile: "00123456789",
+      email: "mohamed@gmail.com",
+      password: bcrypt.hashSync("123456"),
+      type: "user",
+      cart: [],
+      addresses: [],
+      orders: [],
+      favourites: [],
+      dateCreated: "2022-04-24T08:13:35.835Z",
+      dateUpdated: "2022-04-24T08:13:35.835Z"
     },
   ],
   categories: [
@@ -558,9 +577,9 @@ const data = {
       description_en: "High quality and long-lasting performance",
       description_ar: "طزجاجودة عالية وأداء يدوم طويلًا بفضل طبقة",
       Price: "3838",
-      priceAfterDiscount: "2299",
+      priceAfterDiscount: "",
       discountType: "percent", // "amount"
-      discount: "20",
+      discount: "",
       availability: false,
       isFeatured: "20% OFF",
     },
@@ -609,7 +628,7 @@ const data = {
       discountType: "amount", // "amount"
       discount: "50",
       availability: true,
-      isFeatured: "50% OFF",
+      isFeatured: "",
     },
     {
       id: uniqueId(),
@@ -821,7 +840,6 @@ const data = {
       categoryName_en: "Home Appliances",
       categoryName_ar: "أجهزة منزلية",
       categoryUniqueName: "home-appliances",
-      
       images: [
         {
           imageAcutal: "../../images/products/mug.jpg",
@@ -953,7 +971,6 @@ const data = {
       name_en: "zahran4",
       name_ar: "زهران 4",
     },
-  
   ],
 
   bannersHome: [
@@ -1147,8 +1164,6 @@ const data = {
       name_ar: "عروض زهران ",
     
     },
-   
-  
 };
 
 export default data;
