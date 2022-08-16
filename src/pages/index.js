@@ -17,6 +17,11 @@ import CustomMarquee from "../modules/home/CustomMarquee";
 import CategoryItem from "../modules/home/CategoryItem";
 // Data
 import data from "../utils/data";
+import BrandHomeSec from "../components/BrandHomeSec";
+import BannersHome from "../components/BannersHome";
+import CategorySec from "../components/CategorySec";
+import SliderCatogeryHomeSec from "../components/SliderCatogeryHomeSec";
+import MagazineSec from "../components/MagazineSec";
 import ProductItem from "../components/items/product/ProductItem";
 import { useEffect } from "react";
 import { createCart } from "../redux/features/cart/cartSlice";
@@ -27,6 +32,7 @@ const Home = (props) => {
 
   const { t } = useTranslation("home");
 
+  const { marqueeAds, topCategories, brands, bannersHome, category, category2, magazineSec , products} = props;
   const { cart } = useSelector((state) => state.cart);
 
  const checkExistingCart = (cart, element) => {
@@ -37,8 +43,6 @@ const Home = (props) => {
   return null;
 };
   const dispatch = useDispatch()
-
-  const { marqueeAds, topCategories, products } = props;
 
   useEffect(()=> {
     const cart = hasCookie("cart") ? JSON.parse(getCookie("cart")) : 
@@ -63,8 +67,9 @@ const Home = (props) => {
           </Typography>
         ))}
       </CustomMarquee>
-
-      <Container sx={{ py: 4 }}>
+      <BannersHome bannersHome={bannersHome} />
+      <Container sx={{ py: 4, width: '100%' }}>
+        <div style={{ height: '50px' }}></div>
         <Grid
           container
           spacing={1}
@@ -98,9 +103,106 @@ const Home = (props) => {
               order={item.displayOrder}
             >
               <CategoryItem item={item} />
+
             </Grid>
           ))}
         </Grid>
+        <div style={{ height: '50px' }}></div>
+        <Grid
+          container
+          spacing={1}
+          mb={3}
+          justifyContent={{ xs: "center", sm: "initial" }}
+          textAlign={{ xs: "center", sm: "initial" }}
+        >
+          <Grid item xs={12} sm>
+            <Typography component="h2" variant="h4">
+              {t("brandsHome")}
+            </Typography>
+          </Grid>
+          <Grid item xs="auto">
+            <NextLink href="/all-categories">
+              <Button variant="outlined" color="primary">{t("brandsHomelink")}</Button>
+            </NextLink>
+          </Grid>
+        </Grid>
+        <BrandHomeSec brands={brands} />
+        <div style={{ height: '50px' }}></div>
+        <div style={{ width: '100%' }}>
+          <Grid
+            container
+            spacing={1}
+            mb={3}
+            justifyContent={{ xs: "center", sm: "initial" }}
+            textAlign={{ xs: "center", sm: "initial" }}
+          >
+            <Grid item xs={12} sm>
+              <Typography component="h2" variant="h4">
+                {t("supCategories")}
+              </Typography>
+            </Grid>
+            <Grid item xs="auto">
+              <NextLink href="/all-categories">
+                <Button variant="outlined" color="primary">{t("supCategoriesLink")}</Button>
+              </NextLink>
+            </Grid>
+          </Grid>
+          <Grid sx={{ display: '-webkit-box', gap: 2, bgcolor: 'background.paper', borderRadius: 1 }} >
+            {category?.map((item) => (
+              <Grid
+                key={item.id}
+                item
+                sx={{ flexGrow: 1 }}
+              >
+                <CategorySec item={item} />
+                <SliderCatogeryHomeSec brandsCatogery={item.brandsCatogery} />
+
+              </Grid>
+            ))}
+
+          </Grid>
+
+        </div>
+       
+        <div style={{ height: '50px' }}></div>
+        <div style={{ width: '100%' }}>
+          <Grid
+            container
+            spacing={1}
+            mb={3}
+            justifyContent={{ xs: "center", sm: "initial" }}
+            textAlign={{ xs: "center", sm: "initial" }}
+          >
+            <Grid item xs={12} sm>
+              <Typography component="h2" variant="h4">
+                {t("topCategories")}
+              </Typography>
+            </Grid>
+            <Grid item xs="auto">
+              <NextLink href="/all-categories">
+                <Button variant="outlined" color="primary">{t("moreCategories")}</Button>
+              </NextLink>
+            </Grid>
+          </Grid>
+          <Grid sx={{ display: '-webkit-box', gap: 2, bgcolor: 'background.paper', borderRadius: 1 }} >
+            {category2?.map((item) => (
+              <Grid
+                key={item.id}
+                item
+                sx={{ flexGrow: 1 }}
+              >
+                <CategorySec item={item} />
+                <SliderCatogeryHomeSec brandsCatogery={item.brandsCatogery2} />
+
+              </Grid>
+            ))}
+
+          </Grid>
+        
+
+        </div>
+
+
         <Grid container spacing={2} sx={{ mt: 5 }}>
           {products.map((product) => (
             <Grid item xs={3} key={product.id}>
@@ -111,6 +213,9 @@ const Home = (props) => {
             </Grid>
           ))}
         </Grid>
+      
+           <div style={{ height: '50px' }}></div>
+        <MagazineSec item={magazineSec}/>
       </Container>
     </Layout>
   );
@@ -119,9 +224,10 @@ const Home = (props) => {
 export default Home;
 
 export const getServerSideProps = (req, res) => {
-  const { marqueeAds, topCategories, products } = data;
+
+  const { marqueeAds, topCategories, brands, bannersHome, category, category2, magazineSec , products} = data;
 
   return {
-    props: { marqueeAds, topCategories, products },
-  };
+    props: { marqueeAds, topCategories, brands, bannersHome, category, category2, magazineSec , products}
+  }
 };

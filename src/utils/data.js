@@ -715,10 +715,8 @@ const data = {
           type: "",
         },
       ],
-      description_en:
-        "+30% Powerful Airflow with 6 blades combined to aerodynamic",
-      description_ar:
-        "+ 30٪ تدفق هواء قوي مع 6 شفرات مجتمعة مع الديناميكية الهوائية",
+      description_en: "+30% Powerful Airflow with 6 blades combined to aerodynamic",
+      description_ar: "+ 30٪ تدفق هواء قوي مع 6 شفرات مجتمعة مع الديناميكية الهوائية",
       Price: "799",
       priceAfterDiscount: "",
       discountType: "percent", // "amount"
@@ -739,7 +737,7 @@ const data = {
       color: "",
       model: "",
       serialNumber: "4300000957",
-      sizes: [23, 27, 30, 33],
+      sizes: [23,27,30,33],
       weight: "4.6",
       seo: {},
       brand_en: "tefal3",
@@ -764,8 +762,7 @@ const data = {
           type: "",
         },
       ],
-      description_en:
-        "Long-lasting performance thanks to durable non-stick coated in France.",
+      description_en: "Long-lasting performance thanks to durable non-stick coated in France.",
       description_ar: " أداء طويل الأمد بفضل طلاء متين غير لاصق في فرنسا.",
       Price: "269",
       priceAfterDiscount: "",
@@ -812,8 +809,7 @@ const data = {
           type: "",
         },
       ],
-      description_en:
-        "Optimal speed and spinning force with the 2 different motor outputs.",
+      description_en: "Optimal speed and spinning force with the 2 different motor outputs.",
       description_ar: "السرعة المثلى وقوة الدوران مع مخرجين مختلفين للمحرك.",
       Price: "3,099",
       priceAfterDiscount: "2,799",
@@ -844,7 +840,6 @@ const data = {
       categoryName_en: "Home Appliances",
       categoryName_ar: "أجهزة منزلية",
       categoryUniqueName: "home-appliances",
-
       images: [
         {
           imageAcutal: "../../images/products/mug.jpg",
@@ -861,10 +856,8 @@ const data = {
           type: "",
         },
       ],
-      description_en:
-        "Take your mug on the go without worrying about leaks as it is 100% leakproof.",
-      description_ar:
-        "خذ الكوب الخاص بك أثناء التنقل دون القلق بشأن التسرب لأنه مقاوم للتسرب بنسبة 100٪.",
+      description_en: "Take your mug on the go without worrying about leaks as it is 100% leakproof.",
+      description_ar: "خذ الكوب الخاص بك أثناء التنقل دون القلق بشأن التسرب لأنه مقاوم للتسرب بنسبة 100٪.",
       Price: "559",
       priceAfterDiscount: "",
       discountType: "percent", // "amount"
@@ -979,6 +972,198 @@ const data = {
       name_ar: "زهران 4",
     },
   ],
+
+  bannersHome: [
+    {
+      id: uniqueId(),
+      image: "/images/banners-home/banner-1360x250.jpg",
+      uniqueName: "zahran-offer",
+      name_en: "zahran offer",
+      name_ar: "عروض زهران ",
+    },
+    {
+      id: uniqueId(),
+      image: "/images/banners-home/banner-1360x250.jpg",
+      uniqueName: "zahran-offer2",
+      name_en: "zahran offer2",
+      name_ar: "عروض زهران 2 ",
+    },
+ 
+  ],
+ category: [
+  
+    {
+      id: uniqueId(),
+      image: "/images/banners-home/banner-1360x250.jpg",
+      uniqueName: "zahran-offer",
+      name_en: "zahran offer",
+      name_ar: "عروض زهران ",
+      brandsCatogery: [
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-1.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-2.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-3.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+      
+      ],
+    },
+    {
+      id: uniqueId(),
+      image: "/images/banners-home/banner-1360x250.jpg",
+      uniqueName: "zahran-offer",
+      name_en: "zahran offer",
+      name_ar: "عروض زهران ",
+      brandsCatogery: [
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-1.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-2.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-3.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+      
+      ],
+    },
+ 
+  ],
+ category2: [
+  
+    {
+      id: uniqueId(),
+      image: "/images/banners-home/banner-1360x250.jpg",
+      uniqueName: "zahran-offer",
+      name_en: "zahran offer",
+      name_ar: "عروض زهران ",
+      brandsCatogery2: [
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-1.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-2.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-3.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+      
+      ],
+    },
+   
+  ],
+ magazineSec: 
+  
+    {
+      id: uniqueId(),
+      image: "/images/banners-home/banner-1360x250.jpg",
+      uniqueName: "zahran-offer",
+      name_en: "zahran offer",
+      name_ar: "عروض زهران ",
+    
+    },
 };
 
 export default data;

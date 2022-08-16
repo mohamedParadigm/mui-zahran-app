@@ -7,14 +7,13 @@ import { grey } from "@mui/material/colors";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
+ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import MuiTooltip from "../../components/shared/MuiTooltip";
 
 const CardStyle = styled(Card)(({ theme }) => ({
   transition: "0.3s ease-in-out",
   "&:hover": {
-    transform: "scale(0.98)",
+  
     "& .MuiCardContent-root": {
       color: theme.palette.primary.main,
     },
@@ -30,14 +29,15 @@ const CardStyle = styled(Card)(({ theme }) => ({
   },
 }));
 
-const CategoryItem = ({ item }) => {
+const CategorySec = ({ item }) => {
   // console.log(item)
   const { locale } = useRouter();
+
   return (
-    <MuiTooltip title={item[`name_${locale}`]} followCursor placement="top">
-      <CardStyle>
+
+        <CardStyle >
         <NextLink href={`/${item.uniqueName}`} passHref>
-          <CardActionArea>
+          <CardActionArea >
             <CardMedia
               component="img"
               height="140"
@@ -52,8 +52,9 @@ const CategoryItem = ({ item }) => {
           </CardActionArea>
         </NextLink>
       </CardStyle>
-    </MuiTooltip>
+  
+ 
   );
 };
 
-export default CategoryItem;
+export default CategorySec;
