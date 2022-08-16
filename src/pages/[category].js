@@ -31,13 +31,13 @@ import CloseIcon from "@mui/icons-material/Close";
 // Externals
 import useTranslation from "next-translate/useTranslation";
 // Components
-import Layout from "../../modules/layout/Layout";
-import CustomBreadcrumbs from "../../components/Breadcrumbs";
-import PageFilter from "../../components/PageFilter";
-import ProductItem from "../../components/items/product/ProductItem";
+import Layout from "../modules/layout/Layout";
+import CustomBreadcrumbs from "../components/Breadcrumbs";
+import PageFilter from "../components/PageFilter";
+import ProductItem from "../components/items/product/ProductItem";
 // Data
-import data from "../../utils/data";
-import CustomRadio from "../../components/shared/CustomRadio";
+import data from "../utils/data";
+import CustomRadio from "../components/shared/CustomRadio";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -80,7 +80,10 @@ const Category = (props) => {
   const breadCrumbData =
     typeof category === "string"
       ? [{ uniqueName: category, name: t("allCategories") }]
-      : [{ uniqueName: category.uniqueName, name: category[`name_${locale}`] }];
+      : category.map((el) => ({
+          uniqueName: el.uniqueName,
+          name: el[`name_${locale}`],
+        }));
 
   const handleFilterDelete = () => {
     console.log("deleted");
@@ -233,7 +236,9 @@ const Category = (props) => {
                       </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleMobileSortChange("price-htl")}>
+                      <ListItemButton
+                        onClick={() => handleMobileSortChange("price-htl")}
+                      >
                         <ListItemIcon>
                           <CustomRadio
                             name="mobile-sort"
@@ -244,7 +249,9 @@ const Category = (props) => {
                       </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                      <ListItemButton onClick={() => handleMobileSortChange("price-lth")}>
+                      <ListItemButton
+                        onClick={() => handleMobileSortChange("price-lth")}
+                      >
                         <ListItemIcon>
                           <CustomRadio
                             name="mobile-sort"
@@ -498,7 +505,7 @@ export const getServerSideProps = (req, res) => {
         childCategoryUniqueNames.indexOf(product.categoryUniqueName) !== -1
     );
 
-  const allProducts = [...categoryProducts, ...childProducts];
+  const allProducts = categoryProducts.concat(childProducts);
 
   const minPrice = allProducts.reduce((acc, cur) => {
     return parseInt(cur.priceAfterDiscount) < acc
@@ -519,6 +526,7 @@ export const getServerSideProps = (req, res) => {
     brand = "all",
     minP = minPrice,
     maxP = maxPrice,
+    subCategory,
   } = query;
 
   let updatedProducts = allProducts
@@ -541,12 +549,22 @@ export const getServerSideProps = (req, res) => {
       (a, b) => parseInt(b.priceAfterDiscount) - parseInt(a.priceAfterDiscount)
     );
   }
+  let breadCrumbCategory = [category];
+  if (subCategory) {
+    const isExist = subCategory?.split(",");
+    updatedProducts = updatedProducts.filter(
+      (el) => isExist.indexOf(el.categoryUniqueName) !== -1
+    );
 
-  console.log(updatedProducts);
+    breadCrumbCategory = [
+      ...breadCrumbCategory,
+      childCategory.filter((child) => isExist.indexOf(child.uniqueName) !== -1)[0],
+    ];
+  }
 
   return {
     props: {
-      category,
+      category: breadCrumbCategory,
       updatedProducts,
       allProductsLength: allProducts.length,
       minPrice,
