@@ -48,7 +48,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const Category = (props) => {
   const {
-    category,
+    breadCrumbCategory,
     updatedProducts,
     allProductsLength,
     minPrice = 0,
@@ -78,9 +78,17 @@ const Category = (props) => {
   };
 
   const breadCrumbData =
-    typeof category === "string"
-      ? [{ uniqueName: category, name: t("allCategories") }]
-      : category.map((el) => ({
+    typeof breadCrumbCategory === "string"
+      ? [{ uniqueName: breadCrumbCategory, name: t("allCategories") }]
+      : breadCrumbCategory.length <= 2
+      ? breadCrumbCategory.map((el) => ({
+          uniqueName: el.uniqueName,
+          name: el[`name_${locale}`],
+        }))
+      : [
+          breadCrumbCategory[0],
+          breadCrumbCategory[breadCrumbCategory.length - 1],
+        ].map((el) => ({
           uniqueName: el.uniqueName,
           name: el[`name_${locale}`],
         }));
@@ -142,9 +150,13 @@ const Category = (props) => {
   return (
     <Layout
       title={
-        typeof category === "string"
+        typeof breadCrumbCategory === "string"
           ? t("allCategories")
-          : category[`name_${locale}`]
+          : breadCrumbCategory.reduce(
+              (acc, cur, i) =>
+                `${acc} ${i !== 0 ? "|" : ""} ${cur[`name_${locale}`]}`,
+              ""
+            )
       }
       footerOtherStyle={{ marginBottom: { xs: "105px", md: 0 } }}
       scrollOffset={{ bottom: { xs: 120, md: 16 } }}
@@ -313,9 +325,15 @@ const Category = (props) => {
                     {t("results")}
                     <strong>
                       &quot;
-                      {typeof category === "string"
+                      {typeof breadCrumbCategory === "string"
                         ? t("allCategories")
-                        : category[`name_${locale}`]}
+                        : breadCrumbCategory.reduce(
+                            (acc, cur, i) =>
+                              `${acc} ${i !== 0 ? "&" : ""} ${
+                                cur[`name_${locale}`]
+                              }`,
+                            ""
+                          )}
                       &quot;
                     </strong>
                   </Typography>
@@ -549,7 +567,7 @@ export const getServerSideProps = (req, res) => {
       (a, b) => parseInt(b.priceAfterDiscount) - parseInt(a.priceAfterDiscount)
     );
   }
-  let breadCrumbCategory = [category];
+  let breadCrumbCategory = typeof category === "string" ? category : [category];
   if (subCategory) {
     const isExist = subCategory?.split(",");
     updatedProducts = updatedProducts.filter(
@@ -558,13 +576,15 @@ export const getServerSideProps = (req, res) => {
 
     breadCrumbCategory = [
       ...breadCrumbCategory,
-      childCategory.filter((child) => isExist.indexOf(child.uniqueName) !== -1)[0],
+      ...childCategory.filter(
+        (child) => isExist.indexOf(child.uniqueName) !== -1
+      ),
     ];
   }
 
   return {
     props: {
-      category: breadCrumbCategory,
+      breadCrumbCategory,
       updatedProducts,
       allProductsLength: allProducts.length,
       minPrice,

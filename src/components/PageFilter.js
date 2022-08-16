@@ -73,17 +73,18 @@ const PageFilter = (props) => {
     return isExist.indexOf(uniqueName) !== -1;
   };
 
-  const handleCategorySelect = (uniqueName) => {
+  const handleCategorySelect = (catUni, subCatUni) => {
     const isExist = router?.query?.subCategory?.split(",") || [];
     let subCategoryPath;
-    if (validateSubCategoryExist(uniqueName)) {
-      subCategoryPath = isExist.filter((el) => el !== uniqueName).join(",");
+    if (validateSubCategoryExist(subCatUni)) {
+      subCategoryPath = isExist.filter((el) => el !== subCatUni).join(",");
     } else {
-      subCategoryPath = [...isExist, uniqueName].join(",");
+      subCategoryPath = [...isExist, subCatUni].join(",");
     }
 
     const currentPath = router.pathname;
     const currentQuery = { ...router.query };
+    currentQuery.category = catUni;
     currentQuery.subCategory = subCategoryPath;
 
     router.push({
@@ -218,7 +219,7 @@ const PageFilter = (props) => {
                             >
                               <ListItemButton
                                 onClick={() =>
-                                  handleCategorySelect(el.uniqueName)
+                                  handleCategorySelect(item.uniqueName, el.uniqueName)
                                 }
                               >
                                 <ListItemIcon sx={{ minWidth: 30 }}>
