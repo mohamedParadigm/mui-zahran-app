@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 // Externals
 import useTranslation from "next-translate/useTranslation";
+import { useSelector, useDispatch } from "react-redux";
 // Components
 import Layout from "../modules/layout/Layout";
 import CustomMarquee from "../modules/home/CustomMarquee";
@@ -19,14 +20,23 @@ import BannersHome from "../components/BannersHome";
 import CategorySec from "../components/CategorySec";
 import SliderCatogeryHomeSec from "../components/SliderCatogeryHomeSec";
 import MagazineSec from "../components/MagazineSec";
+import ProductItem from "../components/items/product/ProductItem";
 
 const Home = (props) => {
   const { locale } = useRouter();
 
   const { t } = useTranslation("home");
 
-  const { marqueeAds, topCategories, brands, bannersHome, category, category2, magazineSec } = props;
-  console.log(category)
+  const { marqueeAds, topCategories, brands, bannersHome, category, category2, magazineSec , products} = props;
+  const { cart } = useSelector((state) => state.cart);
+
+ const checkExistingCart = (cart, element) => {
+  if (cart.length !== 0) {
+    const amount = cart.find((item) => item.uniqueName === element.uniqueName);
+    if (amount) return amount.quantity;
+  }
+  return null;
+};
 
   return (
     <Layout
@@ -35,7 +45,7 @@ const Home = (props) => {
       scrollOffset={{ bottom: { xs: 70, md: 16 } }}
       footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
     >
-      {/* Marquee Ads */}
+
       <CustomMarquee>
         {marqueeAds?.map((item) => (
           <Typography key={item.id} color="primary">
@@ -60,7 +70,9 @@ const Home = (props) => {
           </Grid>
           <Grid item xs="auto">
             <NextLink href="/all-categories">
-              <Button variant="outlined" color="primary">{t("moreCategories")}</Button>
+              <Button variant="outlined" color="primary">
+                {t("moreCategories")}
+              </Button>
             </NextLink>
           </Grid>
         </Grid>
@@ -137,9 +149,7 @@ const Home = (props) => {
           </Grid>
 
         </div>
-        <div style={{ height: '50px' }}></div>
-
-        <MagazineSec item={magazineSec}/>
+       
         <div style={{ height: '50px' }}></div>
         <div style={{ width: '100%' }}>
           <Grid
@@ -174,9 +184,24 @@ const Home = (props) => {
             ))}
 
           </Grid>
+        
 
         </div>
 
+
+        <Grid container spacing={2} sx={{ mt: 5 }}>
+          {products.map((product) => (
+            <Grid item xs={3} key={product.id}>
+              <ProductItem
+                product={product}
+                quantity={checkExistingCart(cart, product)}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      
+           <div style={{ height: '50px' }}></div>
+        <MagazineSec item={magazineSec}/>
       </Container>
     </Layout>
   );
@@ -185,9 +210,10 @@ const Home = (props) => {
 export default Home;
 
 export const getServerSideProps = (req, res) => {
-  const { marqueeAds, topCategories, brands, bannersHome, category, category2, magazineSec } = data;
+
+  const { marqueeAds, topCategories, brands, bannersHome, category, category2, magazineSec , products} = data;
 
   return {
-    props: { marqueeAds, topCategories, brands, bannersHome, category, category2, magazineSec },
-  };
+    props: { marqueeAds, topCategories, brands, bannersHome, category, category2, magazineSec , products}
+  }
 };

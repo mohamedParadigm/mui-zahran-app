@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
+import { useSelector, useDispatch } from "react-redux";
 // Icons
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
@@ -37,6 +38,9 @@ const OptionsSection = () => {
 
   const [user, setUser] = useState(true);
 
+  const { cart } = useSelector((state) => state.cart);
+
+
   return (
     <OptionsStyle>
       <Box
@@ -58,7 +62,7 @@ const OptionsSection = () => {
       </Box>
       <MuiTooltip title="Your Cart" arrow>
         <IconButton color="inherit">
-          <StyledBadge badgeContent={0} showZero>
+          <StyledBadge badgeContent={cart.length} showZero>
             <AddShoppingCartOutlinedIcon />
           </StyledBadge>
         </IconButton>

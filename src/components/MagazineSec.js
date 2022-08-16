@@ -5,8 +5,8 @@ import NextLink from "next/link";
 import { styled } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 import Card from "@mui/material/Card";
-// import CardActionArea from "@mui/material/CardActionArea";
-// import CardMedia from "@mui/material/CardMedia";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 

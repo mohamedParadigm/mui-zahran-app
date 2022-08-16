@@ -23,7 +23,6 @@ import FormHelperText from "@mui/material/FormHelperText";
 import CloseIcon from "@mui/icons-material/Close";
 // Externals
 import useTranslation from "next-translate/useTranslation";
-import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { updateLocation } from "../redux/features/location/locationSlice";
 import { toast } from "react-toastify";
@@ -46,8 +45,13 @@ const MenuProps = {
 };
 
 const AddressDialog = (props) => {
-  const { showAddressDialog, handleToggleAddressDialog, title, initialValues } =
-    props;
+  const {
+    showAddressDialog,
+    handleToggleAddressDialog,
+    title,
+    initialValues,
+    type,
+  } = props;
   const { countries, cities, areas } = data;
 
   const dispatch = useDispatch();
@@ -55,69 +59,113 @@ const AddressDialog = (props) => {
   const { locale } = useRouter();
   const { t } = useTranslation("common");
 
-  const {
-    handleSubmit,
-    control,
-    watch,
-    reset,
-    setValue,
-    formState: { errors },
-  } = useForm({ defaultValues: initialValues });
-  const watchCountry = watch("country");
-  const watchCity = watch("city");
+  const [values, setValues] = useState(initialValues);
+
+  useEffect(() => {
+    setValues({...initialValues})
+  }, [initialValues]);
+  
+  const [errors, setErrors] = useState({
+    country: "",
+    city: "",
+    area: "",
+    detailedAddress: "",
+  });
 
   const [availableCountries, setAvailableCountries] = useState([]);
   const [availableCities, setAvailableCities] = useState([]);
   const [availableAreas, setAvailableAreas] = useState([]);
 
   useEffect(() => {
-    setValue("country", initialValues.country);
-    setValue("city", initialValues.city);
-    setValue("area", initialValues.area);
-    setValue("detailedAddress", initialValues.detailedAddress);
-  }, [initialValues, setValue]);
-
-  useEffect(() => {
     setAvailableCountries(countries);
   }, [countries]);
 
   useEffect(() => {
-    setValue("city", "");
-    setValue("area", "");
-
-    const specificCities = watchCountry
-      ? cities.filter((el) => el.countryUniqueName === watchCountry)
+    const specificCities = values.country
+      ? cities.filter((el) => el.countryUniqueName === values.country)
       : [];
 
     setAvailableCities(specificCities);
-  }, [cities, watchCountry, setValue]);
+  }, [cities, values.country]);
 
   useEffect(() => {
-    setValue("area", "");
-
-    const specificAreas = watchCity
-      ? areas.filter((el) => el.cityUniqueName === watchCity)
+    const specificAreas = values.city
+      ? areas.filter((el) => el.cityUniqueName === values.city)
       : [];
 
     setAvailableAreas(specificAreas);
-  }, [areas, watchCity, setValue]);
+  }, [areas, values.city]);
 
   const handleCancelAddress = (e) => {
     e.preventDefault();
-    reset(initialValues);
+    setValues({...initialValues});
     handleToggleAddressDialog();
   };
 
-  const handleAddressSubmit = (data) => {
-    if (JSON.stringify(data) === JSON.stringify(initialValues)) {
-      handleToggleAddressDialog();
-      return;
+  const validate = (selectValues = values) => {
+    const temp = { ...errors };
+
+    "country" in selectValues &&
+      (temp.country = selectValues.country ? "" : t("reqField"));
+
+    "city" in selectValues &&
+      (temp.city = selectValues.city ? "" : t("reqField"));
+
+    "area" in selectValues &&
+      (temp.area = selectValues.area ? "" : t("reqField"));
+
+    setErrors({ ...temp });
+
+    if (selectValues === values)
+      return Object.values(temp).every((x) => x === "");
+  };
+
+  const handleCountryChange = (e) => {
+    setValues((prev) => ({
+      ...prev,
+      city: "",
+      area: "",
+      country: e.target.value,
+    }));
+
+    validate({ country: e.target.value });
+  };
+
+  const handleCityChange = (e) => {
+    setValues((prev) => ({
+      ...prev,
+      area: "",
+      city: e.target.value,
+    }));
+
+    validate({ city: e.target.value });
+  };
+
+  const handleAreaChange = (e) => {
+    setValues((prev) => ({
+      ...prev,
+      area: e.target.value,
+    }));
+
+    validate({ area: e.target.value });
+  };
+
+  const handleAddressSubmit = (e) => {
+    e.preventDefault();
+
+    if (validate()) {
+      if (JSON.stringify(values) === JSON.stringify(initialValues)) {
+        handleToggleAddressDialog();
+        return;
+      }
+      if (type === "location") {
+        dispatch(updateLocation(values));
+        handleToggleAddressDialog();
+        toast.success(
+          initialValues.country ? t("updateAddressSucc") : t("addAddress")
+        );
+      }
     }
-    dispatch(updateLocation(data));
-    handleToggleAddressDialog();
-    toast.success(
-      initialValues.country ? t("updateAddressSucc") : t("addAddress")
-    );
   };
 
   return (
@@ -147,44 +195,39 @@ const AddressDialog = (props) => {
         </IconButton>
       </DialogTitle>
       <DialogContent sx={{ padding: "1rem" }}>
-        <form onSubmit={handleSubmit(handleAddressSubmit)} autoComplete="off">
+        <form onSubmit={handleAddressSubmit} autoComplete="off">
           <List>
             <ListItem>
               <FormControl fullWidth error={Boolean(errors.country)}>
                 <InputLabel id="selectCountryLabel">{t("country")}</InputLabel>
-                <Controller
+                <Select
+                  labelId="selectCountryLabel"
+                  id="selectCountry"
                   name="country"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      labelId="selectCountryLabel"
-                      id="selectCountry"
-                      label={t("country")}
-                      color="secondary"
-                      MenuProps={MenuProps}
-                      {...field}
-                    >
-                      {availableCountries?.length !== 0 ? (
-                        availableCountries?.map((el) => (
-                          <MenuItem
-                            key={el.id}
-                            value={el.uniqueName}
-                            sx={{ whiteSpace: "initial" }}
-                          >
-                            {el[`name_${locale}`]}
-                          </MenuItem>
-                        ))
-                      ) : (
-                        <MenuItem value="">
-                          <CircularProgress size={20} />
-                        </MenuItem>
-                      )}
-                    </Select>
+                  label={t("country")}
+                  color="secondary"
+                  MenuProps={MenuProps}
+                  value={values.country}
+                  onChange={handleCountryChange}
+                >
+                  {availableCountries?.length !== 0 ? (
+                    availableCountries?.map((el) => (
+                      <MenuItem
+                        key={el.id}
+                        value={el.uniqueName}
+                        sx={{ whiteSpace: "initial" }}
+                      >
+                        {el[`name_${locale}`]}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="">
+                      <CircularProgress size={20} />
+                    </MenuItem>
                   )}
-                />
+                </Select>
                 {errors.country && (
-                  <FormHelperText>{t("reqField")}</FormHelperText>
+                  <FormHelperText>{errors.country}</FormHelperText>
                 )}
               </FormControl>
             </ListItem>
@@ -192,40 +235,35 @@ const AddressDialog = (props) => {
               <FormControl
                 fullWidth
                 error={Boolean(errors.city)}
-                disabled={!Boolean(watchCountry)}
+                disabled={!Boolean(values.country)}
               >
                 <InputLabel id="selectCityLabel">{t("city")}</InputLabel>
-                <Controller
+                <Select
+                  labelId="selectCityLabel"
+                  id="selectCity"
                   name="city"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      labelId="selectCityLabel"
-                      id="selectCity"
-                      label={t("city")}
-                      color="secondary"
-                      MenuProps={MenuProps}
-                      {...field}
-                    >
-                      {availableCities?.length !== 0 ? (
-                        availableCities?.map((el) => (
-                          <MenuItem
-                            key={el.id}
-                            value={el.uniqueName}
-                            sx={{ whiteSpace: "initial" }}
-                          >
-                            {el[`name_${locale}`]}
-                          </MenuItem>
-                        ))
-                      ) : (
-                        <MenuItem value="">
-                          <CircularProgress size={20} />
-                        </MenuItem>
-                      )}
-                    </Select>
+                  label={t("city")}
+                  color="secondary"
+                  MenuProps={MenuProps}
+                  value={values.city}
+                  onChange={handleCityChange}
+                >
+                  {availableCities?.length !== 0 ? (
+                    availableCities?.map((el) => (
+                      <MenuItem
+                        key={el.id}
+                        value={el.uniqueName}
+                        sx={{ whiteSpace: "initial" }}
+                      >
+                        {el[`name_${locale}`]}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="">
+                      <CircularProgress size={20} />
+                    </MenuItem>
                   )}
-                />
+                </Select>
                 {errors.city && (
                   <FormHelperText>{t("reqField")}</FormHelperText>
                 )}
@@ -235,59 +273,55 @@ const AddressDialog = (props) => {
               <FormControl
                 fullWidth
                 error={Boolean(errors.area)}
-                disabled={!Boolean(watchCity)}
+                disabled={!Boolean(values.city)}
               >
                 <InputLabel id="selectAreaLabel">{t("area")}</InputLabel>
-                <Controller
+                <Select
+                  labelId="selectAreaLabel"
+                  id="selectArea"
                   name="area"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <Select
-                      labelId="selectAreaLabel"
-                      id="selectArea"
-                      label={t("area")}
-                      color="secondary"
-                      MenuProps={MenuProps}
-                      {...field}
-                    >
-                      {availableAreas?.length !== 0 ? (
-                        availableAreas?.map((el) => (
-                          <MenuItem
-                            key={el.id}
-                            value={el.uniqueName}
-                            sx={{ whiteSpace: "initial" }}
-                          >
-                            {el[`name_${locale}`]}
-                          </MenuItem>
-                        ))
-                      ) : (
-                        <MenuItem value="">
-                          <CircularProgress size={20} />
-                        </MenuItem>
-                      )}
-                    </Select>
+                  label={t("area")}
+                  color="secondary"
+                  MenuProps={MenuProps}
+                  value={values.area}
+                  onChange={handleAreaChange}
+                >
+                  {availableAreas?.length !== 0 ? (
+                    availableAreas?.map((el) => (
+                      <MenuItem
+                        key={el.id}
+                        value={el.uniqueName}
+                        sx={{ whiteSpace: "initial" }}
+                      >
+                        {el[`name_${locale}`]}
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="">
+                      <CircularProgress size={20} />
+                    </MenuItem>
                   )}
-                />
+                </Select>
                 {errors.area && (
                   <FormHelperText>{t("reqField")}</FormHelperText>
                 )}
               </FormControl>
             </ListItem>
             <ListItem>
-              <Controller
+              <TextField
+                id="detailedAddress"
                 name="detailedAddress"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    id="detailedAddress"
-                    label={t("detailedAddress")}
-                    variant="outlined"
-                    fullWidth
-                    color="secondary"
-                    {...field}
-                  />
-                )}
+                label={t("detailedAddress")}
+                variant="outlined"
+                fullWidth
+                color="secondary"
+                value={values.detailedAddress}
+                onChange={(e) =>
+                  setValues((prev) => ({
+                    ...prev,
+                    detailedAddress: e.target.value,
+                  }))
+                }
               />
             </ListItem>
             <ListItem>

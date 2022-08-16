@@ -33,7 +33,6 @@ const CardStyle = styled(Card)(({ theme }) => ({
 const CategoryItem = ({ item }) => {
   // console.log(item)
   const { locale } = useRouter();
-
   return (
     <MuiTooltip title={item[`name_${locale}`]} followCursor placement="top">
       <CardStyle>

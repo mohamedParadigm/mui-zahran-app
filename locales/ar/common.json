@@ -9,5 +9,27 @@
   "detailedAddress": "تفاصيل العنوان",
   "save": "حفظ",
   "cancel": "الغاء",
-  "reqField": "الحقل مطلوب"
+  "reqField": "الحقل مطلوب",
+  "allCategories": "جميع الفئات",
+  "all": "الكل",
+  "home": "الصفحة الرئيسية",
+  "categories": "الفئات",
+  "brands": "الماركات",
+  "results": " منتج ل ",
+  "sortBy": {
+    "label": "التصنيف حسب",
+    "relevance": "الاكثر تطابقا",
+    "htl": "السعر من الاعلى ل الاقل",
+    "lth": "السعر من الاقل ل الاعلى"
+  },
+  "filterBy": "فرز حسب",
+  "pagesDisplay": {
+    "label": "عرض",
+    "perPage": " فى الصفحة"
+  },
+  "price": "السعر",
+  "from": "من",
+  "to": "الى",
+  "egp": "جنيه",
+  "apply": "بحث"
 }

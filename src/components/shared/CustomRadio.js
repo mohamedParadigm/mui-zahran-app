@@ -5,8 +5,6 @@ import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 import TaskAltTwoToneIcon from '@mui/icons-material/TaskAltTwoTone';
 
 const CustomRadio = (props) => {
-  // const { checked = false, name, ...other } = props;
-
   return (
     <Radio
       color="primary"
