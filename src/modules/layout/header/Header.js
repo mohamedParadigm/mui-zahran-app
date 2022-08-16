@@ -18,7 +18,7 @@ const Header = (props) => {
     if (elevationOption) {
       return (
         <ElevationScroll {...props}>
-          <AppBar>
+          <AppBar id="fixedAppBar">
             <Navbar />
             {/* <BottomHeader categories={categories} /> */}
           </AppBar>

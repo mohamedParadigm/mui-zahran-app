@@ -1,7 +1,8 @@
 // Internals
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NextLink from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 // MUI
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -11,7 +12,6 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Grid";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -20,9 +20,16 @@ import AddLocationAltOutlinedIcon from "@mui/icons-material/AddLocationAltOutlin
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// Externals
+import useTranslation from "next-translate/useTranslation";
+import { useSelector, useDispatch } from "react-redux";
+import { hasCookie, getCookie } from "cookies-next";
 // Components
-import MuiTooltip from "../../../../components/shared/MuiTooltip";
 import AddressDialog from "../../../../components/AddressDialog";
+import LanguageChanger from "../../../../components/LanguageChanger";
+import { updateLocation } from "../../../../redux/features/location/locationSlice";
+// Data
+import data from "../../../../utils/data";
 
 const BrandSectionStyle = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -54,15 +61,31 @@ const iOS =
   typeof navigator !== "undefined" &&
   /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-const addressInitialDetails = {
-  country: "",
-  city: "",
-  area: "",
-  detailedAddress: "",
-};
-
 const BrandSection = () => {
+  const { locale } = useRouter();
+  const { t } = useTranslation("common");
   const [menuDrawerAnchor, setMenuDrawerAnchor] = useState(false);
+
+  const { location } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (hasCookie("location")) {
+      dispatch(updateLocation(JSON.parse(getCookie("location"))));
+    }
+  }, [dispatch]);
+
+  const countryLocation =
+    location.country &&
+    data.countries.find((el) => el.uniqueName === location.country)[
+      `name_${locale}`
+    ];
+  const cityLocation =
+    location.city &&
+    data.cities.find((el) => el.uniqueName === location.city)[`name_${locale}`];
+  const areaLocation =
+    location.area &&
+    data.areas.find((el) => el.uniqueName === location.area)[`name_${locale}`];
 
   const toggleMenuDrawer = (event) => {
     if (
@@ -125,13 +148,7 @@ const BrandSection = () => {
               >
                 Welcome, To Zahran
               </Typography>
-              <Box
-                display="flex"
-                gap={1}
-                alignItems="center"
-                justifyContent="space-between"
-                flexWrap="wrap"
-              >
+              <Box display="flex" gap={1} alignItems="center" flexWrap="wrap">
                 <NextLink href="/register" passHref>
                   <Button
                     variant="contained"
@@ -211,11 +228,7 @@ const BrandSection = () => {
           />
         </Link>
       </NextLink>
-      <NextLink href="/" passHref>
-        <Link underline="none" color="inherit" sx={{ display: { md: "none" } }}>
-          العربية
-        </Link>
-      </NextLink>
+      <LanguageChanger sx={{ display: { md: "none" } }} />
       <LocationTriggerStyle>
         <Button
           color="inherit"
@@ -223,22 +236,23 @@ const BrandSection = () => {
           startIcon={<AddLocationAltOutlinedIcon />}
           onClick={handleToggleAddressDialog}
         >
-          <MuiTooltip title="Smouha - Alexandria - Egypt">
-            <Typography
-              sx={{ maxWidth: { md: 200 } }}
-              whiteSpace="nowrap"
-              overflow="hidden"
-              textOverflow="ellipsis"
-            >
-              Smouha - Alexandria - Egypt
-            </Typography>
-          </MuiTooltip>
+          <Typography
+            sx={{ maxWidth: { md: 200 } }}
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            textTransform="capitalize"
+          >
+            {location.country
+              ? `${countryLocation} - ${cityLocation} - ${areaLocation}`
+              : t("newAddress")}
+          </Typography>
         </Button>
         <AddressDialog
           showAddressDialog={showAddressDialog}
           handleToggleAddressDialog={handleToggleAddressDialog}
-          title="Add new address"
-          initialValues={addressInitialDetails}
+          title={location.country ? t("updateAddress") : t("newAddress")}
+          initialValues={location}
         />
       </LocationTriggerStyle>
     </BrandSectionStyle>

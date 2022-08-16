@@ -1,19 +1,19 @@
 // Internals
 import { useState } from "react";
-import NextLink from "next/link";
 // MUI
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
-import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
+import { useSelector, useDispatch } from "react-redux";
 // Icons
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 // Components
 import MuiTooltip from "../../../../components/shared/MuiTooltip";
 import AccountMenu from "./AccountMenu";
+import LanguageChanger from "../../../../components/LanguageChanger";
 
 const OptionsStyle = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -38,6 +38,9 @@ const OptionsSection = () => {
 
   const [user, setUser] = useState(true);
 
+  const { cart } = useSelector((state) => state.cart);
+
+
   return (
     <OptionsStyle>
       <Box
@@ -59,16 +62,12 @@ const OptionsSection = () => {
       </Box>
       <MuiTooltip title="Your Cart" arrow>
         <IconButton color="inherit">
-          <StyledBadge badgeContent={0} showZero>
+          <StyledBadge badgeContent={cart.length} showZero>
             <AddShoppingCartOutlinedIcon />
           </StyledBadge>
         </IconButton>
       </MuiTooltip>
-      <NextLink href="/" passHref>
-        <Link underline="none" color="inherit" ml={1}>
-          العربية
-        </Link>
-      </NextLink>
+      <LanguageChanger sx={{ ml: 1 }} />
     </OptionsStyle>
   );
 };

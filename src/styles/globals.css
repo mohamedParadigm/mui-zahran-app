@@ -23,6 +23,10 @@ ul, ol {
   padding: 0;
   list-style: none;
 }
+.MuiBreadcrumbs-separator {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
 /* Pluse */
 @-webkit-keyframes pulseanime {
   0% {

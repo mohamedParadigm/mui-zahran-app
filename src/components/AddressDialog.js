@@ -1,5 +1,6 @@
 // Internals
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, useEffect } from "react";
+import { useRouter } from "next/router";
 // MUI
 import { grey } from "@mui/material/colors";
 import Dialog from "@mui/material/Dialog";
@@ -16,42 +17,107 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import FormHelperText from "@mui/material/FormHelperText";
 // Icons
 import CloseIcon from "@mui/icons-material/Close";
+// Externals
+import useTranslation from "next-translate/useTranslation";
+import { useForm, Controller } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { updateLocation } from "../redux/features/location/locationSlice";
+import { toast } from "react-toastify";
+// Data
+import data from "../utils/data";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 2.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
 const AddressDialog = (props) => {
+  const { showAddressDialog, handleToggleAddressDialog, title, initialValues } =
+    props;
+  const { countries, cities, areas } = data;
+
+  const dispatch = useDispatch();
+
+  const { locale } = useRouter();
+  const { t } = useTranslation("common");
+
   const {
-    showAddressDialog,
-    handleToggleAddressDialog,
-    title,
-    initialValues,
-  } = props;
+    handleSubmit,
+    control,
+    watch,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({ defaultValues: initialValues });
+  const watchCountry = watch("country");
+  const watchCity = watch("city");
 
-  const [addressDetails, setAddressDetails] = useState(initialValues);
+  const [availableCountries, setAvailableCountries] = useState([]);
+  const [availableCities, setAvailableCities] = useState([]);
+  const [availableAreas, setAvailableAreas] = useState([]);
 
-  const handleAddressChange = (e) => {
-    setAddressDetails((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  useEffect(() => {
+    setValue("country", initialValues.country);
+    setValue("city", initialValues.city);
+    setValue("area", initialValues.area);
+    setValue("detailedAddress", initialValues.detailedAddress);
+  }, [initialValues, setValue]);
+
+  useEffect(() => {
+    setAvailableCountries(countries);
+  }, [countries]);
+
+  useEffect(() => {
+    setValue("city", "");
+    setValue("area", "");
+
+    const specificCities = watchCountry
+      ? cities.filter((el) => el.countryUniqueName === watchCountry)
+      : [];
+
+    setAvailableCities(specificCities);
+  }, [cities, watchCountry, setValue]);
+
+  useEffect(() => {
+    setValue("area", "");
+
+    const specificAreas = watchCity
+      ? areas.filter((el) => el.cityUniqueName === watchCity)
+      : [];
+
+    setAvailableAreas(specificAreas);
+  }, [areas, watchCity, setValue]);
 
   const handleCancelAddress = (e) => {
     e.preventDefault();
-
-    setAddressDetails(initialValues);
-
+    reset(initialValues);
     handleToggleAddressDialog();
   };
 
-  const handleAddressSubmit = (e) => {
-    e.preventDefault();
-
-    console.log("submitted");
+  const handleAddressSubmit = (data) => {
+    if (JSON.stringify(data) === JSON.stringify(initialValues)) {
+      handleToggleAddressDialog();
+      return;
+    }
+    dispatch(updateLocation(data));
+    handleToggleAddressDialog();
+    toast.success(
+      initialValues.country ? t("updateAddressSucc") : t("addAddress")
+    );
   };
 
   return (
@@ -81,69 +147,147 @@ const AddressDialog = (props) => {
         </IconButton>
       </DialogTitle>
       <DialogContent sx={{ padding: "1rem" }}>
-        <form onSubmit={handleAddressSubmit}>
+        <form onSubmit={handleSubmit(handleAddressSubmit)} autoComplete="off">
           <List>
             <ListItem>
-              <FormControl fullWidth>
-                <InputLabel id="selectCountryLabel">Country</InputLabel>
-                <Select
-                  labelId="selectCountryLabel"
-                  id="selectCountry"
+              <FormControl fullWidth error={Boolean(errors.country)}>
+                <InputLabel id="selectCountryLabel">{t("country")}</InputLabel>
+                <Controller
                   name="country"
-                  value={addressDetails.country}
-                  label="Country"
-                  onChange={handleAddressChange}
-                  color="secondary"
-                >
-                  <MenuItem value="egypt">Egypt</MenuItem>
-                  <MenuItem value="saudi">Saudi Arabia</MenuItem>
-                  <MenuItem value="emirates">Emirates</MenuItem>
-                </Select>
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      labelId="selectCountryLabel"
+                      id="selectCountry"
+                      label={t("country")}
+                      color="secondary"
+                      MenuProps={MenuProps}
+                      {...field}
+                    >
+                      {availableCountries?.length !== 0 ? (
+                        availableCountries?.map((el) => (
+                          <MenuItem
+                            key={el.id}
+                            value={el.uniqueName}
+                            sx={{ whiteSpace: "initial" }}
+                          >
+                            {el[`name_${locale}`]}
+                          </MenuItem>
+                        ))
+                      ) : (
+                        <MenuItem value="">
+                          <CircularProgress size={20} />
+                        </MenuItem>
+                      )}
+                    </Select>
+                  )}
+                />
+                {errors.country && (
+                  <FormHelperText>{t("reqField")}</FormHelperText>
+                )}
               </FormControl>
             </ListItem>
             <ListItem>
-              <FormControl fullWidth>
-                <InputLabel id="selectCityLabel">City</InputLabel>
-                <Select
-                  labelId="selectCityLabel"
-                  id="selectCity"
-                  name="city"
-                  value={addressDetails.city}
-                  label="City"
-                  onChange={handleAddressChange}
-                  color="secondary"
-                >
-                  <MenuItem value="cairo">Cairo</MenuItem>
-                  <MenuItem value="alex">Alexandria</MenuItem>
-                </Select>
-              </FormControl>
-            </ListItem>
-            <ListItem>
-              <FormControl fullWidth>
-                <InputLabel id="selectAreaLabel">Area</InputLabel>
-                <Select
-                  labelId="selectAreaLabel"
-                  id="selectArea"
-                  name="area"
-                  value={addressDetails.area}
-                  label="Area"
-                  onChange={handleAddressChange}
-                  color="secondary"
-                >
-                  <MenuItem value="smouha">Smouha</MenuItem>
-                  <MenuItem value="mahat-elraml">Mahat El Raml</MenuItem>
-                </Select>
-              </FormControl>
-            </ListItem>
-            <ListItem>
-              <TextField
-                id="detailedAddress"
-                name="detailedAddress"
-                label="Deatiled Address"
-                variant="outlined"
-                value={addressDetails.detailedAddress}
-                onChange={handleAddressChange}
+              <FormControl
                 fullWidth
+                error={Boolean(errors.city)}
+                disabled={!Boolean(watchCountry)}
+              >
+                <InputLabel id="selectCityLabel">{t("city")}</InputLabel>
+                <Controller
+                  name="city"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      labelId="selectCityLabel"
+                      id="selectCity"
+                      label={t("city")}
+                      color="secondary"
+                      MenuProps={MenuProps}
+                      {...field}
+                    >
+                      {availableCities?.length !== 0 ? (
+                        availableCities?.map((el) => (
+                          <MenuItem
+                            key={el.id}
+                            value={el.uniqueName}
+                            sx={{ whiteSpace: "initial" }}
+                          >
+                            {el[`name_${locale}`]}
+                          </MenuItem>
+                        ))
+                      ) : (
+                        <MenuItem value="">
+                          <CircularProgress size={20} />
+                        </MenuItem>
+                      )}
+                    </Select>
+                  )}
+                />
+                {errors.city && (
+                  <FormHelperText>{t("reqField")}</FormHelperText>
+                )}
+              </FormControl>
+            </ListItem>
+            <ListItem>
+              <FormControl
+                fullWidth
+                error={Boolean(errors.area)}
+                disabled={!Boolean(watchCity)}
+              >
+                <InputLabel id="selectAreaLabel">{t("area")}</InputLabel>
+                <Controller
+                  name="area"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <Select
+                      labelId="selectAreaLabel"
+                      id="selectArea"
+                      label={t("area")}
+                      color="secondary"
+                      MenuProps={MenuProps}
+                      {...field}
+                    >
+                      {availableAreas?.length !== 0 ? (
+                        availableAreas?.map((el) => (
+                          <MenuItem
+                            key={el.id}
+                            value={el.uniqueName}
+                            sx={{ whiteSpace: "initial" }}
+                          >
+                            {el[`name_${locale}`]}
+                          </MenuItem>
+                        ))
+                      ) : (
+                        <MenuItem value="">
+                          <CircularProgress size={20} />
+                        </MenuItem>
+                      )}
+                    </Select>
+                  )}
+                />
+                {errors.area && (
+                  <FormHelperText>{t("reqField")}</FormHelperText>
+                )}
+              </FormControl>
+            </ListItem>
+            <ListItem>
+              <Controller
+                name="detailedAddress"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    id="detailedAddress"
+                    label={t("detailedAddress")}
+                    variant="outlined"
+                    fullWidth
+                    color="secondary"
+                    {...field}
+                  />
+                )}
               />
             </ListItem>
             <ListItem>
@@ -154,12 +298,12 @@ const AddressDialog = (props) => {
                     color="secondary"
                     onClick={handleCancelAddress}
                   >
-                    Cancel
+                    {t("cancel")}
                   </Button>
                 </Grid>
                 <Grid item>
                   <Button variant="contained" color="primary" type="submit">
-                    add address
+                    {t("save")}
                   </Button>
                 </Grid>
               </Grid>

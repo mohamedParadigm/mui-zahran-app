@@ -1,22 +1,32 @@
-import * as React from 'react';
-import Tooltip from '@mui/material/Tooltip'
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import IconButton from '@mui/material/IconButton'
+// Internals
 import {useState} from 'react'
 
+//MUI
+import Tooltip from '@mui/material/Tooltip'
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import IconButton from '@mui/material/IconButton'
 
-const FevIcon = () => {
+//Icons
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+
+// Externals
+import { useDispatch } from 'react-redux';
+import { addToFav } from '../redux/features/cart/cartSlice'
+
+
+const FevIcon = ({cart , product}) => {
 
     const [open, setOpen] = useState(false);
-    const handleClick = () => {
-        setOpen(!open);
-    };
+    const dispatch = useDispatch()
+
+    const handleClick = () =>{
+        dispatch(addToFav(product));
+    }
 
     return ( 
         <>
         <Tooltip arrow title="Add to favorite" placement="top">
-            <IconButton aria-label="add to favorites" align="right" onClick={handleClick}>
+            <IconButton aria-label="add to favorites" align="right" onClick={handleClick()}>
             {!open ?
                 <FavoriteBorderOutlinedIcon /> : <FavoriteIcon />
             }

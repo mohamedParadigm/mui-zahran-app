@@ -220,7 +220,7 @@ const TrackOrder = () => {
                         </Grid>
                       </Grid>
                     </ListItem>
-                    <Divider sx={{ my: 1 }} />
+                    <Divider sx={{ my: 1 }} component="li" />
                     <ListItem sx={{ p: 0 }}>
                       <Grid container spacing={1} px={1} alignItems="center">
                         <Grid item xs>
@@ -446,7 +446,7 @@ const TrackOrder = () => {
                         </Grid>
                       </Grid>
                     </ListItem>
-                    {/* <Divider /> */}
+                    {/* <Divider component="li" /> */}
                   </List>
                 </Box>
               </Paper>

@@ -320,7 +320,7 @@ const ShippingAddress = () => {
                     </Typography>
                     <Typography variant="body2">80.79 EGP</Typography>
                   </ListItem>
-                  <Divider sx={{ my: 1 }} />
+                  <Divider sx={{ my: 1 }} component="li" />
                   <ListItem sx={{ justifyContent: "space-between", py: 0.5 }}>
                     <Typography
                       variant="body1"
