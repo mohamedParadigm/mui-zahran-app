@@ -594,6 +594,245 @@ const data = {
       displayOrder: 5,
     },
   ],
+  brands: [
+    {
+      id: uniqueId(),
+      image: "/images/brands/brand.webp",
+      uniqueName: "zahran-tefal",
+      name_en: "zahran tefal",
+      name_ar: "زهران تيفال",
+    },
+    {
+      id: uniqueId(),
+      image: "/images/brands/brand.webp",
+      uniqueName: "zahran-tefal",
+      name_en: "zahran tefal",
+      name_ar: "زهران تيفال",
+    },
+    {
+      id: uniqueId(),
+      image: "/images/brands/brand.webp",
+      uniqueName: "zahran-tefal",
+      name_en: "zahran tefal",
+      name_ar: "زهران تيفال",
+    },
+    {
+      id: uniqueId(),
+      image: "/images/brands/brand.webp",
+      uniqueName: "zahran-tefal",
+      name_en: "zahran tefal",
+      name_ar: "زهران تيفال",
+    },
+    {
+      id: uniqueId(),
+      image: "/images/brands/brand.webp",
+      uniqueName: "zahran-tefal",
+      name_en: "zahran tefal",
+      name_ar: "زهران تيفال",
+    },
+    {
+      id: uniqueId(),
+      image: "/images/brands/brand.webp",
+      uniqueName: "zahran-tefal",
+      name_en: "zahran tefal",
+      name_ar: "زهران تيفال",
+    },
+  
+  ],
+
+  bannersHome: [
+    {
+      id: uniqueId(),
+      image: "/images/banners-home/banner-1360x250.jpg",
+      uniqueName: "zahran-offer",
+      name_en: "zahran offer",
+      name_ar: "عروض زهران ",
+    },
+    {
+      id: uniqueId(),
+      image: "/images/banners-home/banner-1360x250.jpg",
+      uniqueName: "zahran-offer2",
+      name_en: "zahran offer2",
+      name_ar: "عروض زهران 2 ",
+    },
+ 
+  ],
+ category: [
+  
+    {
+      id: uniqueId(),
+      image: "/images/banners-home/banner-1360x250.jpg",
+      uniqueName: "zahran-offer",
+      name_en: "zahran offer",
+      name_ar: "عروض زهران ",
+      brandsCatogery: [
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-1.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-2.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-3.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+      
+      ],
+    },
+    {
+      id: uniqueId(),
+      image: "/images/banners-home/banner-1360x250.jpg",
+      uniqueName: "zahran-offer",
+      name_en: "zahran offer",
+      name_ar: "عروض زهران ",
+      brandsCatogery: [
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-1.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-2.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-3.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+      
+      ],
+    },
+ 
+  ],
+ category2: [
+  
+    {
+      id: uniqueId(),
+      image: "/images/banners-home/banner-1360x250.jpg",
+      uniqueName: "zahran-offer",
+      name_en: "zahran offer",
+      name_ar: "عروض زهران ",
+      brandsCatogery2: [
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-1.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-2.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/products/prod-3.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+        {
+          id: uniqueId(),
+          image: "/images/brands/brand.webp",
+          uniqueName: "zahran-tefal",
+          name_en: "zahran tefal",
+          name_ar: "زهران تيفال",
+        },
+      
+      ],
+    },
+   
+  ],
+ magazineSec: [
+  
+    {
+      id: uniqueId(),
+      image: "/images/banners-home/banner-1360x250.jpg",
+      uniqueName: "zahran-offer",
+      name_en: "zahran offer",
+      name_ar: "عروض زهران ",
+    
+    },
+   
+  ],
 };
 
 export default data;
