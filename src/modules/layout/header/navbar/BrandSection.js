@@ -218,6 +218,7 @@ const BrandSection = () => {
           handleToggleAddressDialog={handleToggleAddressDialog}
           title={location.country ? t("updateAddress") : t("newAddress")}
           initialValues={location}
+          type="location"
         />
       </LocationTriggerStyle>
     </BrandSectionStyle>

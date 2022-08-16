@@ -32,7 +32,7 @@ const AccordionStyle = styled(Accordion)(({ theme }) => ({
   flexGrow: 1,
   "& .MuiAccordionSummary-root:not(.active).Mui-expanded": {
     color: theme.palette.common.white,
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
   },
   "& .MuiAccordionSummary-root.active.Mui-expanded, .MuiAccordionSummary-root.active":
     {
@@ -67,18 +67,29 @@ const PageFilter = (props) => {
     setExpandedItem(isExpanded ? panel : false);
   };
 
+  const validateSubCategoryExist = (uniqueName) => {
+    const isExist = router?.query?.subCategory?.split(",") || [];
+
+    return isExist.indexOf(uniqueName) !== -1;
+  };
+
   const handleCategorySelect = (uniqueName) => {
-    const isExist = router?.query?.subCategory?.includes(uniqueName);
-    if (isExist) {
-      router.push(
-        router.asPath
-          .split("/")
-          .filter((el) => el !== uniqueName)
-          .join("/")
-      );
+    const isExist = router?.query?.subCategory?.split(",") || [];
+    let subCategoryPath;
+    if (validateSubCategoryExist(uniqueName)) {
+      subCategoryPath = isExist.filter((el) => el !== uniqueName).join(",");
     } else {
-      router.push(`${router.asPath}/${uniqueName}`);
+      subCategoryPath = [...isExist, uniqueName].join(",");
     }
+
+    const currentPath = router.pathname;
+    const currentQuery = { ...router.query };
+    currentQuery.subCategory = subCategoryPath;
+
+    router.push({
+      pathname: currentPath,
+      query: currentQuery,
+    });
   };
 
   const [priceValues, setPriceValues] = useState([min, max]);
@@ -99,7 +110,7 @@ const PageFilter = (props) => {
     });
 
     if (handleCloseFilterMenu) {
-      handleCloseFilterMenu(event);
+      handleCloseFilterMenu();
     }
   };
 
@@ -200,9 +211,7 @@ const PageFilter = (props) => {
                               key={el.id}
                               disablePadding
                               className={
-                                router?.query?.subCategory?.includes(
-                                  el.uniqueName
-                                )
+                                validateSubCategoryExist(el.uniqueName)
                                   ? "active"
                                   : ""
                               }
@@ -214,7 +223,7 @@ const PageFilter = (props) => {
                               >
                                 <ListItemIcon sx={{ minWidth: 30 }}>
                                   <Checkbox
-                                    checked={router?.query?.subCategory?.includes(
+                                    checked={validateSubCategoryExist(
                                       el.uniqueName
                                     )}
                                     icon={<CheckBoxOutlineBlankOutlinedIcon />}
@@ -260,10 +269,10 @@ const PageFilter = (props) => {
           </AccordionStyle>
         </Paper>
         <Box p={2}>
-          <Typography component="h3" variant="h5" mb={2} fontWeight={600}>
+          <Typography component="h3" variant="h5" mb={1} fontWeight={600}>
             {t("price")}
           </Typography>
-          <Box mb={2} p={1}>
+          <Box p={1}>
             <Stack
               direction="row"
               justifyContent="space-between"
