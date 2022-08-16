@@ -8,6 +8,9 @@ const nextConfig = {
   images: {
     domains: ["via.placeholder.com"],
   },
+  env: {
+    PUBLIC_URL: "",
+  },
   ...nextTranslate(),
 }
 
