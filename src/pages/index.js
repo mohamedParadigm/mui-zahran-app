@@ -45,11 +45,10 @@ const Home = (props) => {
   const dispatch = useDispatch()
 
   useEffect(()=> {
-    const cart = hasCookie("cart") ? JSON.parse(getCookie("cart")) : 
-    {
-      cart: [],
-    };
-    dispatch(createCart(cart))
+    if (hasCookie("cart")) {
+      dispatch(createCart(JSON.parse(getCookie("cart"))))
+    }
+    
   }, [])
 
   return (
@@ -59,7 +58,6 @@ const Home = (props) => {
       scrollOffset={{ bottom: { xs: 70, md: 16 } }}
       footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
     >
-
       <CustomMarquee>
         {marqueeAds?.map((item) => (
           <Typography key={item.id} color="primary">
@@ -103,7 +101,6 @@ const Home = (props) => {
               order={item.displayOrder}
             >
               <CategoryItem item={item} />
-
             </Grid>
           ))}
         </Grid>
@@ -199,9 +196,7 @@ const Home = (props) => {
 
           </Grid>
         
-
         </div>
-
 
         <Grid container spacing={2} sx={{ mt: 5 }}>
           {products.map((product) => (

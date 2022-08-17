@@ -1,6 +1,7 @@
 // External
 import { createSlice } from "@reduxjs/toolkit";
-import { setCookie } from "cookies-next";
+import { setCookie, deleteCookie } from "cookies-next";
+import data from "../../../utils/data";
 
 const initialState = {
   cart: [],
@@ -10,12 +11,12 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-
     // Create cart
     createCart: (state, action) => {
-      return (state = action.payload);
+      const { products } = data;
+      let items = products.filter((product) => product.id in action.payload);
+      console.log(items);
     },
-
     // Add to cart
     addToCart: (state, action) => {
       const cart = state.cart.find(
@@ -26,7 +27,12 @@ const cartSlice = createSlice({
         return state;
       }
       state.cart.push({ ...action.payload, quantity: 1 });
-      setCookie("cart", JSON.stringify(state));
+      const newItemID = state.cart.map((item) => ({
+        id: item.id,
+        quantity: item.quantity,
+      }));
+
+      setCookie("cart", JSON.stringify(newItemID));
     },
     // Increament
     increament: (state, action) => {
@@ -54,7 +60,7 @@ const cartSlice = createSlice({
       state.cart = cart;
       setCookie("cart", JSON.stringify(state));
     },
-    // Delete
+    // Delete Item from cart
     deleteFromCart: (state, action) => {
       const cart = state.cart.filter(
         (el) => el.uniqueName !== action.payload.uniqueName
@@ -62,7 +68,11 @@ const cartSlice = createSlice({
       state.cart = cart;
       setCookie("cart", JSON.stringify(state));
     },
-
+    // Clear cart
+    clearCart: (state) => {
+      state.cart = [];
+      deleteCookie("cart");
+    },
     // Add to fav
     addToFav: (state, action) => {
       const exist = state.cart.filter(
@@ -82,6 +92,7 @@ export const {
   deleteFromCart,
   addToFav,
   createCart,
+  clearCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
