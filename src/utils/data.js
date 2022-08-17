@@ -234,21 +234,21 @@ const data = {
     },
   ],
   users: [
-    {
-      id: uniqueId(),
-      firstName: "Mohamed",
-      lastName: "Mahrous",
-      mobile: "00123456789",
-      email: "mohamed@gmail.com",
-      password: bcrypt.hashSync("123456"),
-      type: "user",
-      cart: [],
-      addresses: [],
-      orders: [],
-      favourites: [],
-      dateCreated: "2022-04-24T08:13:35.835Z",
-      dateUpdated: "2022-04-24T08:13:35.835Z"
-    },
+    // {
+    //   id: uniqueId(),
+    //   firstName: "Mohamed",
+    //   lastName: "Mahrous",
+    //   mobile: "00123456789",
+    //   email: "mohamed@gmail.com",
+    //   password: bcrypt.hashSync("123456"),
+    //   type: "user",
+    //   cart: [],
+    //   addresses: [],
+    //   orders: [],
+    //   favourites: [],
+    //   dateCreated: "2022-04-24T08:13:35.835Z",
+    //   dateUpdated: "2022-04-24T08:13:35.835Z"
+    // },
   ],
   categories: [
     {

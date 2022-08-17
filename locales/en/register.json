@@ -1,0 +1,16 @@
+{
+  "createAccount": "Create an account",
+  "haveAccount": "Already have an account",
+  "signin": "sign in",
+  "fName": "First Name",
+  "lName": "Last Name",
+  "mobile": "Mobile Number",
+  "email": "Email",
+  "pass": "Password",
+  "required": "* This field is required",
+  "mobileValid": "Mobile number is not valid",
+  "emailValid": "Email is not valid",
+  "passLength": "Password length should be more than 5",
+  "signUp": "Sign Up",
+  "connectionFail": "Connection failed, please try again later"
+}

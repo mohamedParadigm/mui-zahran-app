@@ -1,5 +1,4 @@
 // Internals
-import { useState } from "react";
 import NextLink from "next/link";
 // MUI
 import Fade from "@mui/material/Fade";
@@ -64,9 +63,7 @@ const tabs = [
   },
 ];
 
-const AccountMenu = ({ showAccountMenu }) => {
-  const [user, setUser] = useState(true);
-
+const AccountMenu = ({ showAccountMenu, user }) => {
   return (
     <Fade in={showAccountMenu} mountOnEnter unmountOnExit>
       <Paper sx={{ position: "absolute", zIndex: 10 }}>

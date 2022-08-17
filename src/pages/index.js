@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 // Externals
 import useTranslation from "next-translate/useTranslation";
 import { useSelector, useDispatch } from "react-redux";
-import { getCookie, hasCookie } from 'cookies-next';
+import { getCookie, hasCookie } from "cookies-next";
 
 // Components
 import Layout from "../modules/layout/Layout";
@@ -26,31 +26,39 @@ import ProductItem from "../components/items/product/ProductItem";
 import { useEffect } from "react";
 import { createCart } from "../redux/features/cart/cartSlice";
 
-
 const Home = (props) => {
   const { locale } = useRouter();
 
   const { t } = useTranslation("home");
 
-  const { marqueeAds, topCategories, brands, bannersHome, category, category2, magazineSec , products} = props;
+  const {
+    marqueeAds,
+    topCategories,
+    brands,
+    bannersHome,
+    category,
+    category2,
+    magazineSec,
+    products,
+  } = props;
   const { cart } = useSelector((state) => state.cart);
 
- const checkExistingCart = (cart, element) => {
-  if (cart.length !== 0) {
-    const amount = cart.find((item) => item.uniqueName === element.uniqueName);
-    if (amount) return amount.quantity;
-  }
-  return null;
-};
-  const dispatch = useDispatch()
+  const checkExistingCart = (cart, element) => {
+    if (cart.length !== 0) {
+      const amount = cart.find(
+        (item) => item.uniqueName === element.uniqueName
+      );
+      if (amount) return amount.quantity;
+    }
+    return null;
+  };
+  const dispatch = useDispatch();
 
-  useEffect(()=> {
-    const cart = hasCookie("cart") ? JSON.parse(getCookie("cart")) : 
-    {
-      cart: [],
-    };
-    dispatch(createCart(cart))
-  }, [])
+  useEffect(() => {
+    if (hasCookie("cartItems")) {
+      dispatch(createCart(JSON.parse(getCookie("cartItems"))));
+    }
+  }, [dispatch]);
 
   return (
     <Layout
@@ -59,7 +67,6 @@ const Home = (props) => {
       scrollOffset={{ bottom: { xs: 70, md: 16 } }}
       footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
     >
-
       <CustomMarquee>
         {marqueeAds?.map((item) => (
           <Typography key={item.id} color="primary">
@@ -68,8 +75,8 @@ const Home = (props) => {
         ))}
       </CustomMarquee>
       <BannersHome bannersHome={bannersHome} />
-      <Container sx={{ py: 4, width: '100%' }}>
-        <div style={{ height: '50px' }}></div>
+      <Container sx={{ py: 4, width: "100%" }}>
+        <div style={{ height: "50px" }}></div>
         <Grid
           container
           spacing={1}
@@ -103,11 +110,10 @@ const Home = (props) => {
               order={item.displayOrder}
             >
               <CategoryItem item={item} />
-
             </Grid>
           ))}
         </Grid>
-        <div style={{ height: '50px' }}></div>
+        <div style={{ height: "50px" }}></div>
         <Grid
           container
           spacing={1}
@@ -122,13 +128,15 @@ const Home = (props) => {
           </Grid>
           <Grid item xs="auto">
             <NextLink href="/all-categories">
-              <Button variant="outlined" color="primary">{t("brandsHomelink")}</Button>
+              <Button variant="outlined" color="primary">
+                {t("brandsHomelink")}
+              </Button>
             </NextLink>
           </Grid>
         </Grid>
         <BrandHomeSec brands={brands} />
-        <div style={{ height: '50px' }}></div>
-        <div style={{ width: '100%' }}>
+        <div style={{ height: "50px" }}></div>
+        <div style={{ width: "100%" }}>
           <Grid
             container
             spacing={1}
@@ -143,29 +151,31 @@ const Home = (props) => {
             </Grid>
             <Grid item xs="auto">
               <NextLink href="/all-categories">
-                <Button variant="outlined" color="primary">{t("supCategoriesLink")}</Button>
+                <Button variant="outlined" color="primary">
+                  {t("supCategoriesLink")}
+                </Button>
               </NextLink>
             </Grid>
           </Grid>
-          <Grid sx={{ display: '-webkit-box', gap: 2, bgcolor: 'background.paper', borderRadius: 1 }} >
+          <Grid
+            sx={{
+              display: "-webkit-box",
+              gap: 2,
+              bgcolor: "background.paper",
+              borderRadius: 1,
+            }}
+          >
             {category?.map((item) => (
-              <Grid
-                key={item.id}
-                item
-                sx={{ flexGrow: 1 }}
-              >
+              <Grid key={item.id} item sx={{ flexGrow: 1 }}>
                 <CategorySec item={item} />
                 <SliderCatogeryHomeSec brandsCatogery={item.brandsCatogery} />
-
               </Grid>
             ))}
-
           </Grid>
-
         </div>
-       
-        <div style={{ height: '50px' }}></div>
-        <div style={{ width: '100%' }}>
+
+        <div style={{ height: "50px" }}></div>
+        <div style={{ width: "100%" }}>
           <Grid
             container
             spacing={1}
@@ -180,28 +190,28 @@ const Home = (props) => {
             </Grid>
             <Grid item xs="auto">
               <NextLink href="/all-categories">
-                <Button variant="outlined" color="primary">{t("moreCategories")}</Button>
+                <Button variant="outlined" color="primary">
+                  {t("moreCategories")}
+                </Button>
               </NextLink>
             </Grid>
           </Grid>
-          <Grid sx={{ display: '-webkit-box', gap: 2, bgcolor: 'background.paper', borderRadius: 1 }} >
+          <Grid
+            sx={{
+              display: "-webkit-box",
+              gap: 2,
+              bgcolor: "background.paper",
+              borderRadius: 1,
+            }}
+          >
             {category2?.map((item) => (
-              <Grid
-                key={item.id}
-                item
-                sx={{ flexGrow: 1 }}
-              >
+              <Grid key={item.id} item sx={{ flexGrow: 1 }}>
                 <CategorySec item={item} />
                 <SliderCatogeryHomeSec brandsCatogery={item.brandsCatogery2} />
-
               </Grid>
             ))}
-
           </Grid>
-        
-
         </div>
-
 
         <Grid container spacing={2} sx={{ mt: 5 }}>
           {products.map((product) => (
@@ -213,9 +223,9 @@ const Home = (props) => {
             </Grid>
           ))}
         </Grid>
-      
-           <div style={{ height: '50px' }}></div>
-        <MagazineSec item={magazineSec}/>
+
+        <div style={{ height: "50px" }}></div>
+        <MagazineSec item={magazineSec} />
       </Container>
     </Layout>
   );
@@ -224,10 +234,27 @@ const Home = (props) => {
 export default Home;
 
 export const getServerSideProps = (req, res) => {
-
-  const { marqueeAds, topCategories, brands, bannersHome, category, category2, magazineSec , products} = data;
+  const {
+    marqueeAds,
+    topCategories,
+    brands,
+    bannersHome,
+    category,
+    category2,
+    magazineSec,
+    products,
+  } = data;
 
   return {
-    props: { marqueeAds, topCategories, brands, bannersHome, category, category2, magazineSec , products}
-  }
+    props: {
+      marqueeAds,
+      topCategories,
+      brands,
+      bannersHome,
+      category,
+      category2,
+      magazineSec,
+      products,
+    },
+  };
 };

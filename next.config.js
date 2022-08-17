@@ -8,6 +8,15 @@ const nextConfig = {
   images: {
     domains: ["via.placeholder.com"],
   },
+  async redirects() {
+    return [
+      {
+        source: '/dashboard',
+        destination: '/dashboard/profile',
+        permanent: true,
+      },
+    ]
+  },
   env: {
     PUBLIC_URL: "",
   },

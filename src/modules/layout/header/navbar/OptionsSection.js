@@ -1,5 +1,5 @@
 // Internals
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // MUI
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -10,10 +10,13 @@ import { useSelector, useDispatch } from "react-redux";
 // Icons
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+// Externals
+import { hasCookie, getCookie } from "cookies-next";
 // Components
 import MuiTooltip from "../../../../components/shared/MuiTooltip";
 import AccountMenu from "./AccountMenu";
 import LanguageChanger from "../../../../components/LanguageChanger";
+import { createUser } from "../../../../redux/features/user/userSlice";
 
 const OptionsStyle = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -36,10 +39,15 @@ const OptionsSection = () => {
 
   const handleToggleAccountMenu = () => setShowAccountMenu((prev) => !prev);
 
-  const [user, setUser] = useState(true);
-
+  const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state);
 
+  useEffect(() => {
+    if (hasCookie("user")) {
+      dispatch(createUser(JSON.parse(getCookie("user"))))
+    }
+  }, [dispatch]);
 
   return (
     <OptionsStyle>
@@ -58,7 +66,7 @@ const OptionsSection = () => {
         >
           {user ? "welcome mohamed" : "login / register"}
         </Button>
-        <AccountMenu showAccountMenu={showAccountMenu} />
+        <AccountMenu showAccountMenu={showAccountMenu} user={user} />
       </Box>
       <MuiTooltip title="Your Cart" arrow>
         <IconButton color="inherit">
