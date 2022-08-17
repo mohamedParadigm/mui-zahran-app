@@ -32,5 +32,9 @@
   "to": "To",
   "egp": "EGP",
   "apply": "Apply",
-  "addToCart": "Add to cart"
+  "addToCart": "Add to cart",
+  "cart": "Cart",
+  "grocery":"Grocery",
+  "household":"Household",
+  "shippedBy": "Shipped by"
 }

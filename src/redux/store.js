@@ -8,7 +8,6 @@ import userReducer from "./features/user/userSlice";
 // Middlewares
 import locationMiddleware from "./features/location/locationMiddleware";
 import userMiddleware from "./features/user/userMiddleware";
-import cartMiddleware from "./features/cart/cartMiddleware";
 
 const store = configureStore({
   reducer: {
@@ -18,11 +17,7 @@ const store = configureStore({
     global: globalReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
-      locationMiddleware,
-      userMiddleware,
-      // cartMiddleware
-    ),
+    getDefaultMiddleware().concat(locationMiddleware, userMiddleware),
 });
 
 export default store;

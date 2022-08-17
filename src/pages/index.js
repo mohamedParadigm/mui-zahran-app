@@ -54,11 +54,12 @@ const Home = (props) => {
   };
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (hasCookie("cartItems")) {
-      dispatch(createCart(JSON.parse(getCookie("cartItems"))));
+  useEffect(()=> {
+    if (hasCookie("cart")) {
+      dispatch(createCart(JSON.parse(getCookie("cart"))))
     }
-  }, [dispatch]);
+    
+  }, [dispatch])
 
   return (
     <Layout

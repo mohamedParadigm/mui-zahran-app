@@ -1,6 +1,7 @@
 // External
 import { createSlice } from "@reduxjs/toolkit";
-import { setCookie, getCookie } from "cookies-next";
+import { setCookie, deleteCookie } from "cookies-next";
+import data from "../../../utils/data";
 
 const initialState = {
   cart: [],
@@ -12,9 +13,10 @@ const cartSlice = createSlice({
   reducers: {
     // Create cart
     createCart: (state, action) => {
-      state.cart = action.payload;
+      const { products } = data;
+      let items = products.filter((product) => product.id in action.payload);
+      console.log(items);
     },
-
     // Add to cart
     addToCart: (state, action) => {
       const cart = state.cart.find(
@@ -24,12 +26,12 @@ const cartSlice = createSlice({
         alert("Exist");
         return state;
       } else {
-        const newItems = [...state.cart, { ...action.payload, quantity: 1 }];
-        const test = newItems.map(item => ({id: item.id, quantity: item.quantity}))
-        console.log("New Items ", test)
-        setCookie("cartItems", JSON.stringify(test));
-        console.log("In Cookie", JSON.parse(getCookie("cartItems")))
-        return state = {...state, cart: newItems}
+        state.cart.push({ ...action.payload, quantity: 1 });
+        const newItemID = state.cart.map((item) => ({
+          id: item.id,
+          quantity: item.quantity,
+        }));
+        setCookie("cart", JSON.stringify(newItemID));
       }
     },
     // Increament
@@ -58,7 +60,7 @@ const cartSlice = createSlice({
       state.cart = cart;
       // setCookie("cart", JSON.stringify(state));
     },
-    // Delete
+    // Delete Item from cart
     deleteFromCart: (state, action) => {
       const cart = state.cart.filter(
         (el) => el.uniqueName !== action.payload.uniqueName
@@ -66,7 +68,11 @@ const cartSlice = createSlice({
       state.cart = cart;
       // setCookie("cart", JSON.stringify(state));
     },
-
+    // Clear cart
+    clearCart: (state) => {
+      state.cart = [];
+      deleteCookie("cart");
+    },
     // Add to fav
     addToFav: (state, action) => {
       const exist = state.cart.filter(
@@ -86,6 +92,7 @@ export const {
   deleteFromCart,
   addToFav,
   createCart,
+  clearCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

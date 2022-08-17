@@ -674,7 +674,7 @@ const data = {
       priceAfterDiscount: "355",
       discountType: "percent", // "amount"
       discount: "25",
-      availability: true,
+      availability: false,
       isFeatured: "25% OFF",
     },
     {
@@ -768,7 +768,7 @@ const data = {
       priceAfterDiscount: "",
       discountType: "percent", // "amount"
       discount: "",
-      availability: true,
+      availability: false,
       isFeatured: "",
     },
     {
@@ -862,7 +862,7 @@ const data = {
       priceAfterDiscount: "",
       discountType: "percent", // "amount"
       discount: "",
-      availability: true,
+      availability: false,
       isFeatured: "",
     },
   ],
