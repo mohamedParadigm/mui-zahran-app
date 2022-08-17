@@ -72,7 +72,7 @@ const Cart = () => {
       cart: [],
     };
     dispatch(createCart(cart))
-  }, [])
+  }, [dispatch])
 
   const handleCheckoutItems = (e) => {
     e.preventDefault();
