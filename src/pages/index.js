@@ -250,7 +250,8 @@ export const getServerSideProps = withSessionSsr(async ({ req }) => {
     products,
   } = data;
 
-  const user = req.session.user;
+  const user = req.session.user || null;
+
 
   return {
     props: {
@@ -267,28 +268,3 @@ export const getServerSideProps = withSessionSsr(async ({ req }) => {
   };
 });
 
-// export const getServerSideProps = (req, res) => {
-//   const {
-//     marqueeAds,
-//     topCategories,
-//     brands,
-//     bannersHome,
-//     category,
-//     category2,
-//     magazineSec,
-//     products,
-//   } = data;
-
-//   return {
-//     props: {
-//       marqueeAds,
-//       topCategories,
-//       brands,
-//       bannersHome,
-//       category,
-//       category2,
-//       magazineSec,
-//       products,
-//     },
-//   };
-// };
