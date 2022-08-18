@@ -36,5 +36,10 @@
   "cart": "العربة",
   "grocery": "البقالة",
   "household":"مستلزمات المنزل",
-  "shippedBy": "توصيل بواسطة"
+  "shippedBy": "توصيل بواسطة",
+  "signin": "تسجيل الدخول",
+  "newUser": "مستخدم جديد ؟",
+  "createAccount": "انشاء حساب جديد",
+  "loginAndRegister": "تسجيل الدخول / انشاء حساب",
+  "welcome": "مرحبا {{name}}"
 }

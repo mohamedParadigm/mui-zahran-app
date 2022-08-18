@@ -21,11 +21,10 @@ import useTranslation from "next-translate/useTranslation";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
+import { toggleSubmitLoading } from "../../redux/features/global/globalSlice";
 // Components
-import Layout from "../modules/layout/Layout";
-import { toggleSubmitLoading } from "../redux/features/global/globalSlice";
-import { createUser } from "../redux/features/user/userSlice";
-import { withSessionSsr } from "../lib/withSession";
+import Layout from "../../modules/layout/Layout";
+import { withSessionSsr } from "../../lib/withSession";
 
 const Wrapper = styled(Paper)(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
@@ -67,7 +66,6 @@ const Register = () => {
 
       if (res.ok) {
         dispatch(toggleSubmitLoading(false));
-        dispatch(createUser(jsonRes));
         router.replace(redirect ? `/${redirect}` : "/dashboard/profile");
       } else {
         dispatch(toggleSubmitLoading(false));
@@ -117,7 +115,7 @@ const Register = () => {
           </Typography>
           <form onSubmit={handleSubmit(handleRegisterSubmit)}>
             <List>
-              <ListItem>
+              <ListItem sx={{ px: 0 }}>
                 <Controller
                   name="firstName"
                   control={control}
@@ -141,7 +139,7 @@ const Register = () => {
                   )}
                 />
               </ListItem>
-              <ListItem>
+              <ListItem sx={{ px: 0 }}>
                 <Controller
                   name="lastName"
                   control={control}
@@ -164,7 +162,7 @@ const Register = () => {
                   )}
                 />
               </ListItem>
-              <ListItem>
+              <ListItem sx={{ px: 0 }}>
                 <Controller
                   name="mobile"
                   control={control}
@@ -192,7 +190,7 @@ const Register = () => {
                   )}
                 />
               </ListItem>
-              <ListItem>
+              <ListItem sx={{ px: 0 }}>
                 <Controller
                   name="email"
                   control={control}
@@ -221,7 +219,7 @@ const Register = () => {
                   )}
                 />
               </ListItem>
-              <ListItem>
+              <ListItem sx={{ px: 0 }}>
                 <Controller
                   name="password"
                   control={control}
@@ -261,7 +259,7 @@ const Register = () => {
                   )}
                 />
               </ListItem>
-              <ListItem>
+              <ListItem sx={{ px: 0 }}>
                 <Button
                   type="submit"
                   variant="contained"

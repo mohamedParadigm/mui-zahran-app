@@ -502,15 +502,15 @@ export const getServerSideProps = (req, res) => {
       ? data.categories.find((cat) => cat.uniqueName === params.category)
       : "all-categories";
 
-  const childCategory = category !== "all-categories" && category.children;
-  const childCategoryUniqueNames =
-    childCategory && childCategory.map((cat) => cat.uniqueName);
-
   if (!category) {
     return {
       notFound: true,
     };
   }
+
+  const childCategory = category !== "all-categories" && category.children;
+  const childCategoryUniqueNames =
+    childCategory && childCategory.map((cat) => cat.uniqueName);
 
   const categoryProducts =
     category === "all-categories"

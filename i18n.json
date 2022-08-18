@@ -5,6 +5,9 @@
   "pages": {
     "*": ["common"],
     "/": ["home"],
-    "/register": ["register"]
+    "/account/register": ["register"],
+    "/account/login": ["login"],
+    "/dashboard/profile": ["profile"],
+    "/dashboard/password": ["password"]
   }
 }

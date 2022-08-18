@@ -7,7 +7,7 @@ import globalReducer from "./features/global/globalSlice";
 import userReducer from "./features/user/userSlice";
 // Middlewares
 import locationMiddleware from "./features/location/locationMiddleware";
-import userMiddleware from "./features/user/userMiddleware";
+// import userMiddleware from "./features/user/userMiddleware";
 
 const store = configureStore({
   reducer: {
@@ -17,7 +17,7 @@ const store = configureStore({
     global: globalReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(locationMiddleware, userMiddleware),
+    getDefaultMiddleware().concat(locationMiddleware),
 });
 
 export default store;

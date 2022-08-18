@@ -1,0 +1,15 @@
+{
+  "profile": "Profile",
+  "desc": "Update your personal information.",
+  "fName": "First Name",
+  "lName": "Last Name",
+  "mobile": "Mobile Number",
+  "email": "Email",
+  "required": "* This field is required",
+  "mobileValid": "Mobile number is not valid",
+  "emailValid": "Email is not valid",
+  "connectionFail": "Connection failed, please try again later",
+  "cancel": "Cancel",
+  "saveChanges": "Save Changes",
+  "updateSuccess": "Profile updated successfully"
+}

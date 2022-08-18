@@ -14,20 +14,57 @@ import AddLocationOutlinedIcon from "@mui/icons-material/AddLocationOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+// Externals
+import { useDispatch } from "react-redux";
+import { toggleSubmitLoading } from "../../redux/features/global/globalSlice";
+import { createUser } from "../../redux/features/user/userSlice";
 // Components
 import Layout from "../layout/Layout";
+import { uniqueId } from "../../utils/utils";
 
 const tabs = [
-  { icon: <PersonOutlinedIcon />, label: "Profile", slug: "profile" },
   {
+    id: uniqueId(),
+    icon: <PersonOutlinedIcon />,
+    label_en: "Profile",
+    label_ar: " معلومات الحساب",
+    slug: "profile",
+  },
+  {
+    id: uniqueId(),
     icon: <LockOutlinedIcon />,
-    label: "Change password",
+    label_en: "Change password",
+    label_ar: "تغيير كلمة المرور",
     slug: "password",
   },
-  { icon: <AddLocationOutlinedIcon />, label: "addresses", slug: "addresses" },
-  { icon: <HistoryOutlinedIcon />, label: "orders", slug: "orders" },
-  { icon: <FavoriteBorderOutlinedIcon />, label: "wishlist", slug: "wishlist" },
-  { icon: <LogoutOutlinedIcon />, label: "logout", slug: "/" },
+  {
+    id: uniqueId(),
+    icon: <AddLocationOutlinedIcon />,
+    label_en: "addresses",
+    label_ar: "العناوين",
+    slug: "addresses",
+  },
+  {
+    id: uniqueId(),
+    icon: <HistoryOutlinedIcon />,
+    label_en: "orders",
+    label_ar: "الطلبيات",
+    slug: "orders",
+  },
+  {
+    id: uniqueId(),
+    icon: <FavoriteBorderOutlinedIcon />,
+    label_en: "wishlist products",
+    label_ar: "قائمة المنتجات المفضلة",
+    slug: "wishlist",
+  },
+  {
+    id: uniqueId(),
+    icon: <LogoutOutlinedIcon />,
+    label_en: "logout",
+    label_ar: "تسجيل الخروج",
+    slug: "logout",
+  },
 ];
 
 const TabStyle = styled(Tabs)(({ theme }) => ({
@@ -44,13 +81,33 @@ const TabStyle = styled(Tabs)(({ theme }) => ({
 }));
 
 const DashboardLayout = (props) => {
-  const { title, elevationOption, activeTab, children, maxWidth = 600, ...other } = props;
+  const {
+    user,
+    title,
+    elevationOption,
+    activeTab,
+    children,
+    maxWidth = 600,
+    ...other
+  } = props;
 
   const router = useRouter();
+  const { locale } = router;
+  const dispatch = useDispatch();
+
+  const handleLogout = async () => {
+    dispatch(toggleSubmitLoading(true));
+    const res = await fetch(`${process.env.PUBLIC_URL}/api/users/logout`);
+    if (res.ok) {
+      dispatch(toggleSubmitLoading(false));
+      dispatch(createUser(null));
+      router.push("/");
+    }
+  };
 
   const handleTabChange = (event, newValue) => {
-    if (tabs[newValue].slug === "/") {
-      router.push(`${tabs[newValue].slug}`);
+    if (tabs[newValue].slug === "logout") {
+      handleLogout();
       return;
     }
     router.push(`/dashboard/${tabs[newValue].slug}`);
@@ -67,7 +124,9 @@ const DashboardLayout = (props) => {
             fontWeight={700}
             gutterBottom
           >
-            Hi, Mohamed
+            {locale === "ar"
+              ? `مرحبا ${user.firstName}`
+              : `Hi, ${user.firstName}`}
           </Typography>
         </Box>
         <Box mb={3}>
@@ -81,9 +140,9 @@ const DashboardLayout = (props) => {
           >
             {tabs?.map((tab) => (
               <Tab
-                key={tab.label}
+                key={tab.id}
                 icon={tab.icon}
-                label={tab.label}
+                label={tab[`label_${locale}`]}
                 sx={{ textTransform: "capitalize" }}
               />
             ))}

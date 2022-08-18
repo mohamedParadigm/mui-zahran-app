@@ -15,6 +15,11 @@ const nextConfig = {
         destination: '/dashboard/profile',
         permanent: true,
       },
+      {
+        source: '/account',
+        destination: '/account/login',
+        permanent: true,
+      },
     ]
   },
   env: {

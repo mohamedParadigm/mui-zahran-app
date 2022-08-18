@@ -1,6 +1,5 @@
-// Externals
-import bcrypt from "bcryptjs";
-const uniqueId = () => Math.random().toString(16).slice(2);
+// Components
+import { uniqueId } from "./utils";
 
 const data = {
   branches: [

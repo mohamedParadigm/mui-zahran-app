@@ -1,4 +1,5 @@
 // Internals
+import { useRouter } from "next/router";
 import NextLink from "next/link";
 // MUI
 import Fade from "@mui/material/Fade";
@@ -17,53 +18,70 @@ import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
+// Externals
+import useTranslation from "next-translate/useTranslation";
+// Components
+import { uniqueId } from "../../../../utils/utils";
 
 const tabs = [
   {
-    id: 1,
+    id: uniqueId(),
     icon: <PersonOutlinedIcon />,
-    label: "Profile",
+    label_en: "Profile",
+    label_ar: "معلومات الحساب",
     url: "/dashboard/profile",
   },
   {
-    id: 2,
+    id: uniqueId(),
     icon: <LockOutlinedIcon />,
-    label: "Change password",
+    label_en: "Change password",
+    label_ar: "تغيير كلمة المرور",
     url: "/dashboard/password",
   },
   {
-    id: 3,
+    id: uniqueId(),
     icon: <AddLocationOutlinedIcon />,
-    label: "addresses",
+    label_en: "addresses",
+    label_ar: "العناوين",
     url: "/dashboard/addresses",
   },
   {
-    id: 4,
+    id: uniqueId(),
     icon: <HistoryOutlinedIcon />,
-    label: "orders",
+    label_en: "orders",
+    label_ar: "الطلبيات",
     url: "/dashboard/orders",
   },
   {
-    id: 5,
+    id: uniqueId(),
     icon: <FavoriteBorderOutlinedIcon />,
-    label: "wishlist",
+    label_en: "wishlist",
+    label_ar: "قائمة المنتجات المفضلة",
     url: "/dashboard/wishlist",
   },
   {
-    id: 6,
+    id: uniqueId(),
     icon: <StarBorderOutlinedIcon />,
     label: "favourites",
+    label_en: "favourites",
+    label_ar: "قائمة الطلبيات المفضلة",
     url: "/dashboard/orders#favourites",
   },
   {
-    id: 7,
+    id: uniqueId(),
     icon: <LocalShippingOutlinedIcon />,
     label: "track order",
+    label_en: "track order",
+    label_ar: "متابعة الطلب",
     url: "/track-order",
   },
 ];
 
 const AccountMenu = ({ showAccountMenu, user }) => {
+  const router = useRouter();
+  const { locale, pathname } = router;
+  const { t } = useTranslation("common");
+
   return (
     <Fade in={showAccountMenu} mountOnEnter unmountOnExit>
       <Paper sx={{ position: "absolute", zIndex: 10 }}>
@@ -74,14 +92,17 @@ const AccountMenu = ({ showAccountMenu, user }) => {
                 <MenuItem
                   sx={{
                     transition: "0.3s ease-in-out",
-                    "&:hover": { color: (theme) => theme.palette.primary.main },
+                    "&:hover, &.active": {
+                      color: (theme) => theme.palette.primary.main,
+                    },
                   }}
+                  className={el.url === pathname ? "active" : ""}
                 >
                   <ListItemIcon sx={{ color: "inherit" }}>
                     {el.icon}
                   </ListItemIcon>
                   <ListItemText sx={{ textTransform: "capitalize" }}>
-                    {el.label}
+                    {el[`label_${locale}`]}
                   </ListItemText>
                 </MenuItem>
               </NextLink>
@@ -90,14 +111,14 @@ const AccountMenu = ({ showAccountMenu, user }) => {
         ) : (
           <MenuList>
             <MenuItem>
-              <NextLink href="/login" passHref>
+              <NextLink href="/account/login" passHref>
                 <Button
                   variant="contained"
                   color="primary"
                   disableElevation
                   fullWidth
                 >
-                  sign in
+                  {t("signin")}
                 </Button>
               </NextLink>
             </MenuItem>
@@ -107,17 +128,17 @@ const AccountMenu = ({ showAccountMenu, user }) => {
               component="li"
               px="16px"
             >
-              new user ?
+              {t("newUser")}
             </Typography>
             <MenuItem>
-              <NextLink href="/register" passHref>
+              <NextLink href="/account/register" passHref>
                 <Button
                   variant="contained"
                   color="secondary"
                   disableElevation
                   fullWidth
                 >
-                  create an account
+                  {t("createAccount")}
                 </Button>
               </NextLink>
             </MenuItem>

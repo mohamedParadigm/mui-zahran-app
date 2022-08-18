@@ -10,11 +10,12 @@ import Button from "@mui/material/Button";
 import useTranslation from "next-translate/useTranslation";
 import { useSelector, useDispatch } from "react-redux";
 import { getCookie, hasCookie } from "cookies-next";
-
 // Components
 import Layout from "../modules/layout/Layout";
 import CustomMarquee from "../modules/home/CustomMarquee";
 import CategoryItem from "../modules/home/CategoryItem";
+import { withSessionSsr } from "../lib/withSession";
+import { createUser } from "../redux/features/user/userSlice";
 // Data
 import data from "../utils/data";
 import BrandHomeSec from "../components/BrandHomeSec";
@@ -32,6 +33,7 @@ const Home = (props) => {
   const { t } = useTranslation("home");
 
   const {
+    user,
     marqueeAds,
     topCategories,
     brands,
@@ -54,12 +56,14 @@ const Home = (props) => {
   };
   const dispatch = useDispatch();
 
-  useEffect(()=> {
+  useEffect(() => {
     if (hasCookie("cart")) {
-      dispatch(createCart(JSON.parse(getCookie("cart"))))
+      dispatch(createCart(JSON.parse(getCookie("cart"))));
     }
-    
-  }, [dispatch])
+
+    // Add user to redux
+    user && dispatch(createUser(user));
+  }, [dispatch, user]);
 
   return (
     <Layout
@@ -234,7 +238,7 @@ const Home = (props) => {
 
 export default Home;
 
-export const getServerSideProps = (req, res) => {
+export const getServerSideProps = withSessionSsr(async ({ req }) => {
   const {
     marqueeAds,
     topCategories,
@@ -246,8 +250,11 @@ export const getServerSideProps = (req, res) => {
     products,
   } = data;
 
+  const user = req.session.user;
+
   return {
     props: {
+      user,
       marqueeAds,
       topCategories,
       brands,
@@ -258,4 +265,30 @@ export const getServerSideProps = (req, res) => {
       products,
     },
   };
-};
+});
+
+// export const getServerSideProps = (req, res) => {
+//   const {
+//     marqueeAds,
+//     topCategories,
+//     brands,
+//     bannersHome,
+//     category,
+//     category2,
+//     magazineSec,
+//     products,
+//   } = data;
+
+//   return {
+//     props: {
+//       marqueeAds,
+//       topCategories,
+//       brands,
+//       bannersHome,
+//       category,
+//       category2,
+//       magazineSec,
+//       products,
+//     },
+//   };
+// };

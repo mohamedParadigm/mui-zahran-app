@@ -1,22 +1,21 @@
 // Internals
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // MUI
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 // Icons
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 // Externals
-import { hasCookie, getCookie } from "cookies-next";
+import useTranslation from "next-translate/useTranslation";
 // Components
 import MuiTooltip from "../../../../components/shared/MuiTooltip";
 import AccountMenu from "./AccountMenu";
 import LanguageChanger from "../../../../components/LanguageChanger";
-import { createUser } from "../../../../redux/features/user/userSlice";
 
 const OptionsStyle = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -39,15 +38,10 @@ const OptionsSection = () => {
 
   const handleToggleAccountMenu = () => setShowAccountMenu((prev) => !prev);
 
-  const dispatch = useDispatch();
+  const { t } = useTranslation("common");
+
   const { cart } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state);
-
-  useEffect(() => {
-    if (hasCookie("user")) {
-      dispatch(createUser(JSON.parse(getCookie("user"))))
-    }
-  }, [dispatch]);
 
   return (
     <OptionsStyle>
@@ -64,7 +58,9 @@ const OptionsSection = () => {
           aria-haspopup="true"
           aria-expanded={showAccountMenu ? "true" : undefined}
         >
-          {user ? "welcome mohamed" : "login / register"}
+          {user
+            ? t("welcome", { name: user.firstName })
+            : t("loginAndRegister")}
         </Button>
         <AccountMenu showAccountMenu={showAccountMenu} user={user} />
       </Box>
