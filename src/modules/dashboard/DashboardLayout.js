@@ -117,17 +117,19 @@ const DashboardLayout = (props) => {
     <Layout title={title} elevationOption={elevationOption} {...other}>
       <Container sx={{ py: 3 }}>
         <Box maxWidth={maxWidth} mx="auto">
-          <Typography
-            component="h1"
-            variant="h4"
-            textTransform="capitalize"
-            fontWeight={700}
-            gutterBottom
-          >
-            {locale === "ar"
-              ? `مرحبا ${user.firstName}`
-              : `Hi, ${user.firstName}`}
-          </Typography>
+          {user && (
+            <Typography
+              component="h1"
+              variant="h4"
+              textTransform="capitalize"
+              fontWeight={700}
+              gutterBottom
+            >
+              {locale === "ar"
+                ? `مرحبا ${user.firstName}`
+                : `Hi, ${user.firstName}`}
+            </Typography>
+          )}
         </Box>
         <Box mb={3}>
           <TabStyle
