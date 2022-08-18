@@ -76,7 +76,9 @@ const Profile = ({ user }) => {
   }, [user, setValue]);
 
   useEffect(() => {
-    setDefaultValues();
+    if (user) {
+      setDefaultValues();
+    }
 
     user && dispatch(createUser(user));
   }, [dispatch, user, setDefaultValues]);
