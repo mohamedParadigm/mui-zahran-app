@@ -8,24 +8,24 @@ const nextConfig = {
   images: {
     domains: ["via.placeholder.com"],
   },
-  async redirects() {
-    return [
-      {
-        source: '/dashboard',
-        destination: '/dashboard/profile',
-        permanent: true,
-      },
-      {
-        source: '/account',
-        destination: '/account/login',
-        permanent: true,
-      },
-    ]
-  },
   env: {
     PUBLIC_URL: "",
   },
   ...nextTranslate(),
-}
+  async redirects() {
+    return [
+      {
+        source: "/with-locale/dashboard",
+        destination: "/dashboard/profile",
+        permanent: true,
+      },
+      {
+        source: "/with-locale/account",
+        destination: "/account/login",
+        permanent: true,
+      },
+    ];
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

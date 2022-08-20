@@ -1,6 +1,9 @@
 // External
 import { createSlice } from "@reduxjs/toolkit";
 import { setCookie, deleteCookie } from "cookies-next";
+// Components
+import { cookieExpireDate } from "../../../utils/utils";
+// Data
 import data from "../../../utils/data";
 
 const initialState = {
@@ -14,8 +17,16 @@ const cartSlice = createSlice({
     // Create cart
     createCart: (state, action) => {
       const { products } = data;
-      let items = products.filter((product) => product.id in action.payload);
-      console.log(items);
+      const items = action?.payload?.map((item) => {
+        const productItem = {
+          ...products.find((el) => el.uniqueName === item.uniqueName),
+          quantity: item.quantity,
+        };
+
+        return productItem;
+      });
+
+      state.cart = items;
     },
     // Add to cart
     addToCart: (state, action) => {
@@ -27,11 +38,14 @@ const cartSlice = createSlice({
         return state;
       } else {
         state.cart.push({ ...action.payload, quantity: 1 });
+
         const newItemID = state.cart.map((item) => ({
-          id: item.id,
+          uniqueName: item.uniqueName,
           quantity: item.quantity,
         }));
-        setCookie("cart", JSON.stringify(newItemID));
+        setCookie("cart", JSON.stringify(newItemID), {
+          expires: cookieExpireDate(13),
+        });
       }
     },
     // Increament
@@ -44,7 +58,14 @@ const cartSlice = createSlice({
         return index;
       });
       state.cart = cart;
-      // setCookie("cart", JSON.stringify(state));
+
+      const newItemID = state.cart.map((item) => ({
+        uniqueName: item.uniqueName,
+        quantity: item.quantity,
+      }));
+      setCookie("cart", JSON.stringify(newItemID), {
+        expires: cookieExpireDate(13),
+      });
     },
     // Decreament
     decreament: (state, action) => {
@@ -58,7 +79,14 @@ const cartSlice = createSlice({
         return index;
       });
       state.cart = cart;
-      // setCookie("cart", JSON.stringify(state));
+
+      const newItemID = state.cart.map((item) => ({
+        uniqueName: item.uniqueName,
+        quantity: item.quantity,
+      }));
+      setCookie("cart", JSON.stringify(newItemID), {
+        expires: cookieExpireDate(13),
+      });
     },
     // Delete Item from cart
     deleteFromCart: (state, action) => {
@@ -66,7 +94,14 @@ const cartSlice = createSlice({
         (el) => el.uniqueName !== action.payload.uniqueName
       );
       state.cart = cart;
-      // setCookie("cart", JSON.stringify(state));
+
+      const newItemID = state.cart.map((item) => ({
+        uniqueName: item.uniqueName,
+        quantity: item.quantity,
+      }));
+      setCookie("cart", JSON.stringify(newItemID), {
+        expires: cookieExpireDate(13),
+      });
     },
     // Clear cart
     clearCart: (state) => {

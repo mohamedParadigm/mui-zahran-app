@@ -1,18 +1,18 @@
 {
   "users": [
     {
-      "firstName": "Mohamed",
-      "lastName": "Mahrous",
-      "mobile": "01234567890",
+      "firstName": "mohamed",
+      "lastName": "mahrous",
+      "mobile": "01157735762",
       "email": "test@test.com",
-      "hash": "$2a$10$qEAJoKafR5SXftnptvLvq.T/vdgUcrSMGhWu5zxDaExy1zei.VeRy",
-      "id": "b1c24e6c4e07a",
+      "hash": "$2a$10$J6hqczR5/HHa8wAs4KPrZuc5xDyDoid/aoySZeu8gMchgCeZEAkpW",
+      "id": "c5d2d624db9fb",
       "cart": [],
       "addresses": [],
       "orders": [],
       "favourites": [],
-      "dateCreated": "2022-08-18T15:37:30.054Z",
-      "dateUpdated": "2022-08-18T15:37:30.054Z"
+      "dateCreated": "2022-08-20T11:46:08.043Z",
+      "dateUpdated": "2022-08-20T11:46:08.043Z"
     }
   ]
 }
