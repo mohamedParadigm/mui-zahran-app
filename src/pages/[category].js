@@ -160,6 +160,13 @@ const Category = (props) => {
       }
       footerOtherStyle={{ marginBottom: { xs: "105px", md: 0 } }}
       scrollOffset={{ bottom: { xs: 120, md: 16 } }}
+      BottomNavigationValue={
+        query?.category === "all-categories" && !query?.other
+          ? 1
+          : query?.category === "all-categories" && query?.other === "deals"
+          ? 2
+          : null
+      }
     >
       <Container sx={{ py: 4 }}>
         <CustomBreadcrumbs
@@ -469,7 +476,7 @@ const Category = (props) => {
                 <>
                   {updatedProducts?.map((el) => (
                     <Grid key={el.id} item md={4}>
-                      <ProductItem product={el}  />
+                      <ProductItem product={el} />
                     </Grid>
                   ))}
                 </>

@@ -59,11 +59,13 @@ const iOS =
   /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 const BrandSection = () => {
-  const { locale } = useRouter();
+  const router = useRouter();
+  const { locale } = router;
   const { t } = useTranslation("common");
 
   const [menuDrawerAnchor, setMenuDrawerAnchor] = useState(false);
 
+  const { user } = useSelector((state) => state);
   const { location } = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -95,6 +97,11 @@ const BrandSection = () => {
     }
 
     setMenuDrawerAnchor((prev) => !prev);
+  };
+
+  const handleRedirectToAccount = (url) => {
+    router.push(url, undefined, { locale });
+    toggleMenuDrawer();
   };
 
   const [showAddressDialog, setShowAddressDialog] = useState(false);
@@ -132,7 +139,7 @@ const BrandSection = () => {
                 <Image
                   src="/images/logo/logo-horizontal.webp"
                   alt="zahran logo"
-                  width={100}
+                  width={80}
                   height={34}
                 />
               </Link>
@@ -144,32 +151,58 @@ const BrandSection = () => {
                 component="p"
                 gutterBottom
               >
-                Welcome, To Zahran
+                {user
+                  ? t("welcome", { name: user.firstName })
+                  : t("welcomeToZ")}
               </Typography>
-              <Box display="flex" gap={1} alignItems="center" flexWrap="wrap">
-                <NextLink href="/register" passHref>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    disableElevation
-                    component="a"
-                    size="small"
-                  >
-                    sign up
-                  </Button>
-                </NextLink>
-                <NextLink href="/login" passHref>
+              {!user && (
+                <Box display="flex" gap={1} alignItems="center" flexWrap="wrap">
                   <Button
                     variant="outlined"
                     color="inherit"
                     disableElevation
                     component="a"
                     size="small"
+                    onClick={() => handleRedirectToAccount("/account/register")}
                   >
-                    sign in
+                    {t("signup")}
                   </Button>
-                </NextLink>
-              </Box>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    disableElevation
+                    component="a"
+                    size="small"
+                    onClick={() => handleRedirectToAccount("/account/login")}
+                  >
+                    {t("signin")}
+                  </Button>
+                </Box>
+              )}
+              {user && (
+                <Box display="flex" gap={1} alignItems="center" flexWrap="wrap">
+                  <Button
+                    variant="outlined"
+                    color="inherit"
+                    disableElevation
+                    component="a"
+                    size="small"
+                    onClick={() => handleRedirectToAccount("/account/orders")}
+                  >
+                    {t("orders")}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    disableElevation
+                    component="a"
+                    size="small"
+                    onClick={() => handleRedirectToAccount("/dashboard/profile")}
+                  >
+                    {t("profile")}
+                  </Button>
+                </Box>
+              )}
             </Box>
           </Stack>
           <IconButton
@@ -180,7 +213,7 @@ const BrandSection = () => {
             <CloseIcon />
           </IconButton>
         </DrawerHeader>
-        <MobileMenu />
+        <MobileMenu closeMenuDrawer={toggleMenuDrawer} />
       </SwipeableDrawer>
       <NextLink href="/" passHref>
         <Link display="flex">

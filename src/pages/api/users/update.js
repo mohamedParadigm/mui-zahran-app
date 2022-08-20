@@ -9,7 +9,7 @@ const update = async (req, res) => {
   const { locale } = req;
   // split out password from user details
   const { userID } = req.query;
-  const { password, ...user } = await JSON.parse(req.body);
+  const { password, currentPassword, ...user } = await JSON.parse(req.body);
 
   if (!password) {
     // validate
@@ -26,15 +26,20 @@ const update = async (req, res) => {
     return res.status(200).json({ ...user });
   }
 
-  console.log("User ", user)
+  let currentUser = usersRepo.getById(userID);
+  
+  if (!bcrypt.compareSync(currentPassword, currentUser.hash)) {
+    throw locale === "ar" ? "كلمة المرور الحالية غير صحيحة" : "Current Password is Wrong";
+  }
   // hash password
-  user.hash = bcrypt.hashSync(password, 10);
+  currentUser.hash = bcrypt.hashSync(password, 10);
 
+  usersRepo.update(userID, currentUser);
   // set user as in database:
-  req.session.user = user;
+  req.session.user = currentUser;
   await req.session.save();
 
-  return res.status(200).json({ ...user });
+  return res.status(200).json({ ...currentUser });
 };
 
 export default withSessionRoute(

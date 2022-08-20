@@ -19,11 +19,6 @@ function create(user) {
   user.id = uniqueId();
   // user.id = users.length ? Math.max(...users.map((x) => x.id)) + 1 : 1;
 
-  user.cart = [];
-  user.addresses = [];
-  user.orders = [];
-  user.favourites = [];
-
   // set date created and updated
   user.dateCreated = new Date().toISOString();
   user.dateUpdated = new Date().toISOString();
@@ -56,3 +51,6 @@ function _delete(id) {
 function saveData() {
   fs.writeFileSync("data/db.json", JSON.stringify({ users, ...db }, null, 2));
 }
+
+
+// $2a$10$J6hqczR5/HHa8wAs4KPrZuc5xDyDoid/aoySZeu8gMchgCeZEAkpW

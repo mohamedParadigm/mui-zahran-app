@@ -45,7 +45,10 @@ const ChangePassword = ({ user }) => {
       const res = await fetch(
         `${process.env.PUBLIC_URL}/api/users/update?userID=${user.id}`,
         {
-          body: JSON.stringify({ password: data.newPassword }),
+          body: JSON.stringify({
+            password: data.newPassword,
+            currentPassword: data.currentPassword,
+          }),
           method: "PUT",
         }
       );
@@ -110,7 +113,7 @@ const ChangePassword = ({ user }) => {
               rules={{
                 required: true,
                 minLength: 6,
-                validate: (value) => bcrypt.compareSync(value, user.hash),
+                // validate: (value) => bcrypt.compareSync(value, user.hash),
               }}
               render={({ field }) => (
                 <TextField
@@ -137,13 +140,20 @@ const ChangePassword = ({ user }) => {
                   error={Boolean(errors.currentPassword)}
                   helperText={
                     errors.currentPassword
-                      ? errors.currentPassword.type === "validate"
-                        ? t("wrongPass")
-                        : errors.currentPassword.type === "minLength"
+                      ? errors.currentPassword.type === "minLength"
                         ? t("passLength")
                         : t("required")
                       : ""
                   }
+                  // helperText={
+                  //   errors.currentPassword
+                  //     ? errors.currentPassword.type === "validate"
+                  //       ? t("wrongPass")
+                  //       : errors.currentPassword.type === "minLength"
+                  //       ? t("passLength")
+                  //       : t("required")
+                  //     : ""
+                  // }
                   {...field}
                 />
               )}
@@ -235,27 +245,10 @@ const ChangePassword = ({ user }) => {
               )}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <Button variant="contained" type="submit" color="primary">
               {t("save")}
             </Button>
-            {/* <Grid container spacing={2} mt={1}>
-              <Grid item xs={6}>
-                <Button variant="contained" color="secondary" fullWidth>
-                  cancel
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  color="primary"
-                  fullWidth
-                >
-                  save changes
-                </Button>
-              </Grid>
-            </Grid> */}
           </Grid>
         </Grid>
       </form>
@@ -265,12 +258,12 @@ const ChangePassword = ({ user }) => {
 
 export default ChangePassword;
 
-export const getServerSideProps = withSessionSsr(async ({ req }) => {
+export const getServerSideProps = withSessionSsr(async ({ req, locale }) => {
   const user = req.session.user;
   if (!user) {
     return {
       redirect: {
-        destination: "/account/login?redirect=dashboard/password",
+        destination: `${locale}/account/login?redirect=dashboard/password`,
         permanent: false,
       },
     };

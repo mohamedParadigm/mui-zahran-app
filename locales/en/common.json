@@ -38,8 +38,12 @@
   "household":"Household",
   "shippedBy": "Shipped by",
   "signin": "Sign In",
+  "signup": "Sign Up",
   "newUser": "New user ?",
   "createAccount": "Create an account",
   "loginAndRegister": "Login / Register",
-  "welcome": "Welcome {{name}}"
+  "welcome": "Welcome {{name}}",
+  "welcomeToZ": "Welcome to zahran",
+  "profile": "Profile",
+  "orders": "Orders"
 }

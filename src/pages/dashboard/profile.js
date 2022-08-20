@@ -240,12 +240,12 @@ const Profile = ({ user }) => {
 
 export default Profile;
 
-export const getServerSideProps = withSessionSsr(async ({ req }) => {
+export const getServerSideProps = withSessionSsr(async ({ req, locale }) => {
   const user = req.session.user;
   if (!user) {
     return {
       redirect: {
-        destination: "/account/login?redirect=dashboard/profile",
+        destination: `${locale}/account/login?redirect=dashboard/profile`,
         permanent: false,
       },
     };
