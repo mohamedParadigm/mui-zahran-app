@@ -1,12 +1,11 @@
 // Internals
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 // MUI
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
-import { useSelector, useDispatch } from "react-redux";
 // Icons
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
@@ -14,6 +13,9 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import MuiTooltip from "../../../../components/shared/MuiTooltip";
 import AccountMenu from "./AccountMenu";
 import LanguageChanger from "../../../../components/LanguageChanger";
+// Externals
+import { useState } from "react";
+import CartCanvas from "../../../../components/CartCanvas";
 
 const OptionsStyle = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -40,6 +42,19 @@ const OptionsSection = () => {
 
   const { cart } = useSelector((state) => state.cart);
 
+  // Show canvas
+  const [open, setOpen] = useState(false);
+  const handleToggleDrawer = (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setOpen((prev) => !prev);
+  };
 
   return (
     <OptionsStyle>
@@ -63,7 +78,14 @@ const OptionsSection = () => {
       <MuiTooltip title="Your Cart" arrow>
         <IconButton color="inherit">
           <StyledBadge badgeContent={cart.length} showZero>
-            <AddShoppingCartOutlinedIcon />
+            <AddShoppingCartOutlinedIcon
+              onClick={handleToggleDrawer}
+            />
+            <CartCanvas
+              anchor="right"
+              state={open}
+              toggleDrawer={handleToggleDrawer}
+            ></CartCanvas>
           </StyledBadge>
         </IconButton>
       </MuiTooltip>
