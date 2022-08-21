@@ -6,9 +6,12 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
+import { useSelector } from "react-redux";
 // Icons
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+// Externals
+import useTranslation from "next-translate/useTranslation";
 // Components
 import MuiTooltip from "../../../../components/shared/MuiTooltip";
 import AccountMenu from "./AccountMenu";
@@ -38,10 +41,10 @@ const OptionsSection = () => {
 
   const handleToggleAccountMenu = () => setShowAccountMenu((prev) => !prev);
 
-  const [user, setUser] = useState(true);
+  const { t } = useTranslation("common");
 
   const { cart } = useSelector((state) => state.cart);
-
+  const { user } = useSelector((state) => state);
   // Show canvas
   const [open, setOpen] = useState(false);
   const handleToggleDrawer = (event) => {
@@ -71,9 +74,11 @@ const OptionsSection = () => {
           aria-haspopup="true"
           aria-expanded={showAccountMenu ? "true" : undefined}
         >
-          {user ? "welcome mohamed" : "login / register"}
+          {user
+            ? t("welcome", { name: user.firstName })
+            : t("loginAndRegister")}
         </Button>
-        <AccountMenu showAccountMenu={showAccountMenu} />
+        <AccountMenu showAccountMenu={showAccountMenu} user={user} />
       </Box>
       <MuiTooltip title="Your Cart" arrow>
         <IconButton color="inherit">

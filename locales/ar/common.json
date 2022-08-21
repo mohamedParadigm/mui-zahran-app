@@ -37,5 +37,13 @@
   "grocery": "البقالة",
   "household":"مستلزمات المنزل",
   "shippedBy": "توصيل بواسطة",
-  "clearCart": "حذف الكل"
+  "signin": "تسجيل الدخول",
+  "signup": "انشاء حساب",
+  "newUser": "مستخدم جديد ؟",
+  "createAccount": "انشاء حساب جديد",
+  "loginAndRegister": "تسجيل الدخول / انشاء حساب",
+  "welcome": "مرحبا {{name}}",
+  "welcomeToZ": "مرحبا بك في زهران",
+  "profile": "معلومات الحساب",
+  "orders": "الطلبيات"
 }

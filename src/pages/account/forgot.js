@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 // Icons
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 // Components
-import Layout from "../modules/layout/Layout";
+import Layout from "../../modules/layout/Layout";
 
 const Wrapper = styled(Paper)(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {

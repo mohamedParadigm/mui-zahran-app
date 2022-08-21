@@ -4,6 +4,10 @@
   "localeDetection": false,
   "pages": {
     "*": ["common"],
-    "/": ["home"]
+    "/": ["home"],
+    "/account/register": ["register"],
+    "/account/login": ["login"],
+    "/dashboard/profile": ["profile"],
+    "/dashboard/password": ["password"]
   }
 }

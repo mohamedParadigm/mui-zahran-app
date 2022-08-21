@@ -37,5 +37,14 @@
   "grocery":"Grocery",
   "household":"Household",
   "shippedBy": "Shipped by",
-  "clearCart": "Clear cart"
+  "clearCart": "Clear cart",
+  "signin": "Sign In",
+  "signup": "Sign Up",
+  "newUser": "New user ?",
+  "createAccount": "Create an account",
+  "loginAndRegister": "Login / Register",
+  "welcome": "Welcome {{name}}",
+  "welcomeToZ": "Welcome to zahran",
+  "profile": "Profile",
+  "orders": "Orders"
 }

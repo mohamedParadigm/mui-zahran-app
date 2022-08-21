@@ -10,6 +10,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
 import Link from "@mui/material/Link";
 // Icons
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -52,10 +53,17 @@ const AccordionStyle = styled(Accordion)(({ theme }) => ({
   },
 }));
 
-const MobileMenu = () => {
-  const { locale, query } = useRouter();
+const MobileMenu = ({ closeMenuDrawer }) => {
+  const router = useRouter();
+  const { locale, query } = router;
   const { t } = useTranslation("common");
   const { categories } = data;
+
+  const handleCategoryChange = (url) => {
+    router.push(url, undefined, { locale });
+
+    closeMenuDrawer();
+  };
 
   return (
     <Box py={2}>
@@ -87,34 +95,44 @@ const MobileMenu = () => {
           <AccordionDetails>
             <List sx={{ p: 0 }}>
               <ListItem
-                className={query?.category === item.uniqueName ? "active" : ""}
+                className={
+                  query?.category === item.uniqueName &&
+                  query?.subCategory === "all"
+                    ? "active"
+                    : ""
+                }
+                disablePadding
               >
-                <NextLink href={`/${item.uniqueName}`} passHref>
-                  <Link
-                    underline="none"
-                    color="inherit"
-                    textTransform="capitalize"
-                    flexGrow={1}
-                  >
-                    {t("all")}
-                  </Link>
-                </NextLink>
+                <ListItemButton
+                  sx={{ textTransform: "capitalize" }}
+                  onClick={() =>
+                    handleCategoryChange(`/${item.uniqueName}?subCategory=all`)
+                  }
+                >
+                  {t("all")}
+                </ListItemButton>
               </ListItem>
               {item?.children?.map((el) => (
-                <ListItem key={el.id}>
-                  <NextLink
-                    href={`/${item.uniqueName}/${el.uniqueName}`}
-                    passHref
+                <ListItem
+                  key={el.id}
+                  disablePadding
+                  className={
+                    query?.category === item.uniqueName &&
+                    query?.subCategory === el.uniqueName
+                      ? "active"
+                      : ""
+                  }
+                >
+                  <ListItemButton
+                    sx={{ textTransform: "capitalize" }}
+                    onClick={() =>
+                      handleCategoryChange(
+                        `/${item.uniqueName}?subCategory=${el.uniqueName}`
+                      )
+                    }
                   >
-                    <Link
-                      underline="none"
-                      color="inherit"
-                      textTransform="capitalize"
-                      flexGrow={1}
-                    >
-                      {el[`name_${locale}`]}
-                    </Link>
-                  </NextLink>
+                    {el[`name_${locale}`]}
+                  </ListItemButton>
                 </ListItem>
               ))}
             </List>

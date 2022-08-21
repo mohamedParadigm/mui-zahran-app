@@ -35,6 +35,7 @@ const BottomHeader = ({categories}) => {
                     wrapped
                     onMouseEnter={handleOpen}
                     onMouseLeave={handleOpen}
+                    key={index}
                     />
                 ))}
             </Tabs>

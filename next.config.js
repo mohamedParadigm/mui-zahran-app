@@ -12,6 +12,20 @@ const nextConfig = {
     PUBLIC_URL: "",
   },
   ...nextTranslate(),
-}
+  async redirects() {
+    return [
+      {
+        source: "/with-locale/dashboard",
+        destination: "/dashboard/profile",
+        permanent: true,
+      },
+      {
+        source: "/with-locale/account",
+        destination: "/account/login",
+        permanent: true,
+      },
+    ];
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

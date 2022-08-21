@@ -1,0 +1,14 @@
+{
+  "login": "Login",
+  "noAccount": "Don't have an account",
+  "signUp": "Sign Up",
+  "fbLogin": "Login with facebook",
+  "googleLogin": "Login with google",
+  "signin": "sign in",
+  "email": "Email",
+  "pass": "Password",
+  "required": "* This field is required",
+  "emailValid": "Email is not valid",
+  "connectionFail": "Connection failed, please try again later",
+  "forgot": "Forgot password ?"
+}
