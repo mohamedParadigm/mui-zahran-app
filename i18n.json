@@ -7,7 +7,12 @@
     "/": ["home"],
     "/account/register": ["register"],
     "/account/login": ["login"],
+    "/account/forgot": ["forgot"],
     "/dashboard/profile": ["profile"],
-    "/dashboard/password": ["password"]
+    "/dashboard/password": ["password"],
+    "/dashboard/addresses": ["addresses"],
+    "/checkout/shipping": ["shipping"],
+    "/checkout/payment": ["payment"],
+    "/checkout/placeorder": ["placeorder"]
   }
 }

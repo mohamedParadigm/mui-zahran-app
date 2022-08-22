@@ -21,9 +21,9 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Link from "@mui/material/Link";
 // Components
-import Layout from "../modules/layout/Layout";
-import CheckoutLinearStepper from "../components/CheckoutLinearStepper";
-import CheckoutCircularStepper from "../components/CheckoutCircularStepper";
+import Layout from "../../modules/layout/Layout";
+import CheckoutLinearStepper from "../../components/CheckoutLinearStepper";
+import CheckoutCircularStepper from "../../components/CheckoutCircularStepper";
 
 const FixedMobileButton = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -46,9 +46,14 @@ const FixedMobileButton = styled(Box)(({ theme }) => ({
 
 const CheckoutItems = () => {
   const router = useRouter();
+  const { locale } = router;
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
+
+  const handleNextStep = () => {
+    router.push("/checkout/payment", undefined, { locale });
+  };
 
   return (
     <Layout
@@ -56,7 +61,7 @@ const CheckoutItems = () => {
       title="Checkout Items"
       footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
       showBottomNav={false}
-      scrollOffset={{bottom: {xs: 70, md: 16}}}
+      scrollOffset={{ bottom: { xs: 70, md: 16 } }}
     >
       <Container sx={{ py: 4 }}>
         <Box mb={3}>
@@ -260,7 +265,9 @@ const CheckoutItems = () => {
                 variant="outlined"
                 color="secondary"
                 sx={{ flexGrow: { xs: 1, md: 0 } }}
-                onClick={() => router.push("/shipping")}
+                onClick={() =>
+                  router.push("/checkout/shipping", undefined, { locale })
+                }
               >
                 back
               </Button>
@@ -268,7 +275,7 @@ const CheckoutItems = () => {
                 variant="contained"
                 color="secondary"
                 sx={{ flexGrow: { xs: 1, md: 0 } }}
-                onClick={() => router.push("/payment")}
+                onClick={handleNextStep}
               >
                 next
               </Button>

@@ -1,5 +1,5 @@
 // Internals
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 // MUI
 import { useTheme, styled } from "@mui/material/styles";
@@ -16,11 +16,15 @@ import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+// Externals
+import { getCookie, hasCookie, setCookie } from "cookies-next";
+import useTranslation from "next-translate/useTranslation";
 // Components
-import Layout from "../modules/layout/Layout";
-import CheckoutLinearStepper from "../components/CheckoutLinearStepper";
-import CheckoutCircularStepper from "../components/CheckoutCircularStepper";
-import CustomRadio from "../components/shared/CustomRadio";
+import Layout from "../../modules/layout/Layout";
+import CheckoutLinearStepper from "../../components/CheckoutLinearStepper";
+import CheckoutCircularStepper from "../../components/CheckoutCircularStepper";
+import CustomRadio from "../../components/shared/CustomRadio";
+import { cookieExpireDate } from "../../utils/utils";
 
 const FixedMobileButton = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -43,16 +47,35 @@ const FixedMobileButton = styled(Box)(({ theme }) => ({
 
 const Payment = () => {
   const router = useRouter();
+  const { locale } = router;
 
-  const [paymentMethod, setPaymentMethod] = useState("creditCard");
+  const [paymentMethod, setPaymentMethod] = useState("Credit Card");
+
+  const handlePaymentChange = (e) => {
+    setPaymentMethod(e.target.value);
+
+    setCookie("paymentMethod", e.target.value, {
+      expires: cookieExpireDate(13),
+    });
+  };
+
+  const { t } = useTranslation("payment");
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
+  useEffect(() => {
+    hasCookie("paymentMethod")
+      ? setPaymentMethod(getCookie("paymentMethod"))
+      : setCookie("paymentMethod", "creditCard", {
+          expires: cookieExpireDate(13),
+        });
+  }, []);
+
   const handlePaymentSubmit = (e) => {
     e.preventDefault();
 
-    router.push("/placeorder");
+    router.push("/checkout/placeorder", undefined, { locale });
   };
 
   return (
@@ -61,7 +84,7 @@ const Payment = () => {
       title="Payment"
       footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
       showBottomNav={false}
-      scrollOffset={{bottom: {xs: 70, md: 16}}}
+      scrollOffset={{ bottom: { xs: 70, md: 16 } }}
     >
       <Container sx={{ py: 4 }}>
         <Box mb={3}>
@@ -80,34 +103,34 @@ const Payment = () => {
                 variant="h4"
                 mb={1}
               >
-                payment method
+                {t("title")}
               </Typography>
               <Typography variant="body2" mb={1}>
-                All transactions are secure and encrypted.
+                {t("desc")}
               </Typography>
               <FormControl>
                 <RadioGroup
                   aria-labelledby="selectOrderTypeLabel"
                   name="selectOrderType"
                   value={paymentMethod}
-                  onChange={(e) => setPaymentMethod(e.target.value)}
+                  onChange={handlePaymentChange}
                 >
                   <FormControlLabel
-                    value="creditCard"
+                    value="Credit Card"
                     control={<CustomRadio />}
-                    label="Credit Card"
+                    label={t("credit")}
                     sx={{ textTransform: "capitalize" }}
                   />
                   <FormControlLabel
-                    value="cashOnDelivery"
+                    value="Cash On Delivery"
                     control={<CustomRadio />}
-                    label="cash on delivery"
+                    label={t("cash")}
                     sx={{ textTransform: "capitalize" }}
                   />
                   <FormControlLabel
-                    value="creditOnDelivery"
+                    value="Credit On Delivery"
                     control={<CustomRadio />}
-                    label="credit on delivery"
+                    label={t("creditDel")}
                     sx={{ textTransform: "capitalize" }}
                   />
                 </RadioGroup>
@@ -120,19 +143,21 @@ const Payment = () => {
                 sx={{ display: { md: "none" } }}
               >
                 <Typography variant="body2" fontWeight={600}>
-                  Total
+                  {t("total")}
                 </Typography>
                 <Typography variant="body2" fontWeight={600}>
-                  772.68 EGP
+                  772.68 {t("egp")}
                 </Typography>
               </Box>
               <Button
                 variant="outlined"
                 color="secondary"
                 sx={{ flexGrow: { xs: 1, md: 0 } }}
-                onClick={() => router.push("/checkout-items")}
+                onClick={() =>
+                  router.push("/checkout/checkout-items", undefined, { locale })
+                }
               >
-                back
+                {t("back")}
               </Button>
               <Button
                 variant="contained"
@@ -140,7 +165,7 @@ const Payment = () => {
                 sx={{ flexGrow: { xs: 1, md: 0 }, display: { md: "none" } }}
                 onClick={handlePaymentSubmit}
               >
-                place order
+                {t("placeOrder")}
               </Button>
             </FixedMobileButton>
           </Grid>
@@ -205,3 +230,20 @@ const Payment = () => {
 };
 
 export default Payment;
+
+export const getServerSideProps = async ({ req, res, locale }) => {
+  const cartItems = hasCookie("cart", { req, res });
+
+  if (!cartItems) {
+    return {
+      redirect: {
+        destination: `/${locale}/cart`,
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  };
+};

@@ -9,6 +9,9 @@ const data = {
       name_ar: "سموحة",
       uniqueName: "smouha",
       area: "smouha-31-victor-emmanuel-street",
+      unavial: [
+        { id: uniqueId(), productUniqueName: "tefal-cook-natural-cooking-set" },
+      ],
     },
     {
       id: uniqueId(),
@@ -16,6 +19,9 @@ const data = {
       name_ar: "زيزينيا",
       uniqueName: "zizinia",
       area: "zizinia-34-ahmed-yehia-street",
+      unavial: [
+        { id: uniqueId(), productUniqueName: "tefal-cook-natural-fryapn-set" },
+      ],
     },
     {
       id: uniqueId(),
@@ -23,6 +29,9 @@ const data = {
       name_ar: "المعمورة",
       uniqueName: "al-mamoura",
       area: "al-mamoura-1-al-nasr-street-al-maamoura-al-shati",
+      unavial: [
+        { id: uniqueId(), productUniqueName: "molonix-vitapress-juicer" },
+      ],
     },
     {
       id: uniqueId(),
@@ -30,6 +39,9 @@ const data = {
       name_ar: "العجمى",
       uniqueName: "al-ajami",
       area: "al-ajami-shahr-al-asal-street-al-bitash",
+      unavial: [
+        { id: uniqueId(), productUniqueName: "Tefal-Silence-Force-Wall-Fan" },
+      ],
     },
     {
       id: uniqueId(),
@@ -37,6 +49,9 @@ const data = {
       name_ar: "كرير",
       uniqueName: "kerir",
       area: "kerir-sidi-kerir-military-village",
+      unavial: [
+        { id: uniqueId(), productUniqueName: "Tefal-Pizza-Tray" },
+      ],
     },
     {
       id: uniqueId(),
@@ -44,6 +59,9 @@ const data = {
       name_ar: "بدر",
       uniqueName: "badr",
       area: "badr-badr-village",
+      unavial: [
+        { id: uniqueId(), productUniqueName: "Moulinex-Double-Force-Food-Processor" },
+      ],
     },
     {
       id: uniqueId(),
@@ -51,6 +69,9 @@ const data = {
       name_ar: "ماريــــنا",
       uniqueName: "marina",
       area: "marina-champs-elysees-market-marina",
+      unavial: [
+        { id: uniqueId(), productUniqueName: "Tefal-Travel-Mug" },
+      ],
     },
     {
       id: uniqueId(),
@@ -58,6 +79,9 @@ const data = {
       name_ar: "شارع سعد زغلول",
       uniqueName: "saad-zaghloul-street",
       area: "saad-zaghloul-street-manshiet-abaza",
+      unavial: [
+        { id: uniqueId(), productUniqueName: "tefal-cook-natural-fryapn-set" },
+      ],
     },
     {
       id: uniqueId(),
@@ -65,6 +89,9 @@ const data = {
       name_ar: "تقاطع شارع محمد سعيد",
       uniqueName: "the-intersection-of-mohamed-saeed-branch",
       area: "the-intersection-of-mohamed-saeed",
+      unavial: [
+        { id: uniqueId(), productUniqueName: "tefal-cook-natural-cooking-set" },
+      ],
     },
     {
       id: uniqueId(),
@@ -72,6 +99,9 @@ const data = {
       name_ar: "41 طريق الجيش",
       uniqueName: "41-army-road",
       area: "41-army-road-next-to-egyptair-office",
+      unavial: [
+        { id: uniqueId(), productUniqueName: "Tefal-Silence-Force-Wall-Fan" },
+      ],
     },
     {
       id: uniqueId(),
@@ -79,6 +109,9 @@ const data = {
       name_ar: "برج رويال بلازا",
       uniqueName: "royal-plaza-tower",
       area: "royal-plaza-tower-el-galaa-st",
+      unavial: [
+        { id: uniqueId(), productUniqueName: "Moulinex-Double-Force-Food-Processor" },
+      ],
     },
     {
       id: uniqueId(),
@@ -86,6 +119,9 @@ const data = {
       name_ar: "دمياط الجديدة",
       uniqueName: "new-damietta",
       area: "new-damietta-gamal-abdel-nasser-street-central-district-city-grand-mall",
+      unavial: [
+        { id: uniqueId(), productUniqueName: "tefal-cook-natural-fryapn-set" },
+      ],
     },
   ],
   countries: [
@@ -559,14 +595,14 @@ const data = {
       categoryUniqueName: "cookware",
       images: [
         {
-          imageAcutal: "../../images/products/p-1.webp",
+          imageAcutal: "/images/products/p-1.webp",
           imageThumb: "",
           imageMedium: "",
           prime: true,
           type: "",
         },
         {
-          imageAcutal: "../../images/products/p-2.webp",
+          imageAcutal: "/images/products/p-2.webp",
           imageThumb: "",
           imageMedium: "",
           prime: true,
@@ -606,14 +642,14 @@ const data = {
       categoryUniqueName: "cookware",
       images: [
         {
-          imageAcutal: "../../images/products/p1.png",
+          imageAcutal: "/images/products/p1.png",
           imageThumb: "",
           imageMedium: "",
           prime: true,
           type: "",
         },
         {
-          imageAcutal: "../../images/products/p2.jpg",
+          imageAcutal: "/images/products/p2.jpg",
           imageThumb: "",
           imageMedium: "",
           prime: true,
@@ -653,14 +689,14 @@ const data = {
       categoryUniqueName: "home-appliances",
       images: [
         {
-          imageAcutal: "../../images/products/p2.jpg",
+          imageAcutal: "/images/products/p2.jpg",
           imageThumb: "",
           imageMedium: "",
           prime: true,
           type: "",
         },
         {
-          imageAcutal: "../../images/products/p3.jpg",
+          imageAcutal: "/images/products/p3.jpg",
           imageThumb: "",
           imageMedium: "",
           prime: true,
@@ -700,22 +736,24 @@ const data = {
       categoryUniqueName: "home-appliances",
       images: [
         {
-          imageAcutal: "../../images/products/fan.jpg",
+          imageAcutal: "/images/products/fan.jpg",
           imageThumb: "",
           imageMedium: "",
           prime: true,
           type: "",
         },
         {
-          imageAcutal: "../../images/products/fan.jpg",
+          imageAcutal: "/images/products/fan.jpg",
           imageThumb: "",
           imageMedium: "",
           prime: true,
           type: "",
         },
       ],
-      description_en: "+30% Powerful Airflow with 6 blades combined to aerodynamic",
-      description_ar: "+ 30٪ تدفق هواء قوي مع 6 شفرات مجتمعة مع الديناميكية الهوائية",
+      description_en:
+        "+30% Powerful Airflow with 6 blades combined to aerodynamic",
+      description_ar:
+        "+ 30٪ تدفق هواء قوي مع 6 شفرات مجتمعة مع الديناميكية الهوائية",
       Price: "799",
       priceAfterDiscount: "",
       discountType: "percent", // "amount"
@@ -736,7 +774,7 @@ const data = {
       color: "",
       model: "",
       serialNumber: "4300000957",
-      sizes: [23,27,30,33],
+      sizes: [23, 27, 30, 33],
       weight: "4.6",
       seo: {},
       brand_en: "tefal3",
@@ -747,21 +785,22 @@ const data = {
       categoryUniqueName: "cookware",
       images: [
         {
-          imageAcutal: "../../images/products/pan.jpg",
+          imageAcutal: "/images/products/pan.jpg",
           imageThumb: "",
           imageMedium: "",
           prime: true,
           type: "",
         },
         {
-          imageAcutal: "../../images/products/pan.jpg",
+          imageAcutal: "/images/products/pan.jpg",
           imageThumb: "",
           imageMedium: "",
           prime: true,
           type: "",
         },
       ],
-      description_en: "Long-lasting performance thanks to durable non-stick coated in France.",
+      description_en:
+        "Long-lasting performance thanks to durable non-stick coated in France.",
       description_ar: " أداء طويل الأمد بفضل طلاء متين غير لاصق في فرنسا.",
       Price: "269",
       priceAfterDiscount: "",
@@ -794,21 +833,22 @@ const data = {
       categoryUniqueName: "cookware",
       images: [
         {
-          imageAcutal: "../../images/products/col.png",
+          imageAcutal: "/images/products/col.png",
           imageThumb: "",
           imageMedium: "",
           prime: true,
           type: "",
         },
         {
-          imageAcutal: "../../images/products/col.png",
+          imageAcutal: "/images/products/col.png",
           imageThumb: "",
           imageMedium: "",
           prime: true,
           type: "",
         },
       ],
-      description_en: "Optimal speed and spinning force with the 2 different motor outputs.",
+      description_en:
+        "Optimal speed and spinning force with the 2 different motor outputs.",
       description_ar: "السرعة المثلى وقوة الدوران مع مخرجين مختلفين للمحرك.",
       Price: "3099",
       priceAfterDiscount: "",
@@ -819,7 +859,7 @@ const data = {
     },
     {
       id: uniqueId(),
-      uniqueName: "Tefal-Travel-Mug ",
+      uniqueName: "Tefal-Travel-Mug",
       name_en: "Tefal Travel Mug ",
       name_ar: "    كوب السفر من تيفال",
       attributes: {
@@ -841,22 +881,24 @@ const data = {
       categoryUniqueName: "home-appliances",
       images: [
         {
-          imageAcutal: "../../images/products/mug.jpg",
+          imageAcutal: "/images/products/mug.jpg",
           imageThumb: "",
           imageMedium: "",
           prime: true,
           type: "",
         },
         {
-          imageAcutal: "../../images/products/mug.jpg",
+          imageAcutal: "/images/products/mug.jpg",
           imageThumb: "",
           imageMedium: "",
           prime: true,
           type: "",
         },
       ],
-      description_en: "Take your mug on the go without worrying about leaks as it is 100% leakproof.",
-      description_ar: "خذ الكوب الخاص بك أثناء التنقل دون القلق بشأن التسرب لأنه مقاوم للتسرب بنسبة 100٪.",
+      description_en:
+        "Take your mug on the go without worrying about leaks as it is 100% leakproof.",
+      description_ar:
+        "خذ الكوب الخاص بك أثناء التنقل دون القلق بشأن التسرب لأنه مقاوم للتسرب بنسبة 100٪.",
       Price: "559",
       priceAfterDiscount: "",
       discountType: "percent", // "amount"
@@ -971,7 +1013,6 @@ const data = {
       name_ar: "زهران 4",
     },
   ],
-
   bannersHome: [
     {
       id: uniqueId(),
@@ -987,10 +1028,8 @@ const data = {
       name_en: "zahran offer2",
       name_ar: "عروض زهران 2 ",
     },
- 
   ],
- category: [
-  
+  category: [
     {
       id: uniqueId(),
       image: "/images/banners-home/banner-1360x250.jpg",
@@ -1040,7 +1079,6 @@ const data = {
           name_en: "zahran tefal",
           name_ar: "زهران تيفال",
         },
-      
       ],
     },
     {
@@ -1092,13 +1130,10 @@ const data = {
           name_en: "zahran tefal",
           name_ar: "زهران تيفال",
         },
-      
       ],
     },
- 
   ],
- category2: [
-  
+  category2: [
     {
       id: uniqueId(),
       image: "/images/banners-home/banner-1360x250.jpg",
@@ -1148,21 +1183,16 @@ const data = {
           name_en: "zahran tefal",
           name_ar: "زهران تيفال",
         },
-      
       ],
     },
-   
   ],
- magazineSec: 
-  
-    {
-      id: uniqueId(),
-      image: "/images/banners-home/banner-1360x250.jpg",
-      uniqueName: "zahran-offer",
-      name_en: "zahran offer",
-      name_ar: "عروض زهران ",
-    
-    },
+  magazineSec: {
+    id: uniqueId(),
+    image: "/images/banners-home/banner-1360x250.jpg",
+    uniqueName: "zahran-offer",
+    name_en: "zahran offer",
+    name_ar: "عروض زهران ",
+  },
 };
 
 export default data;

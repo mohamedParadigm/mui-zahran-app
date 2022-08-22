@@ -47,5 +47,7 @@
   "welcomeToZ": "Welcome to zahran",
   "profile": "Profile",
   "orders": "Orders", 
-  "youHave": "You have"
+  "youHave": "You have",
+  "userPhone": "Phone",
+  "confirm": "Confirm"
 }

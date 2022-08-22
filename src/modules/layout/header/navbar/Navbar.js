@@ -1,6 +1,9 @@
+// Internals
+import { useState, useEffect } from "react";
 // MUI
 import { styled } from "@mui/material/styles";
 import Toolbar from "@mui/material/Toolbar";
+import Skeleton from "@mui/material/Skeleton";
 // Components
 import BrandSection from "./BrandSection";
 import OptionsSection from "./OptionsSection";
@@ -19,11 +22,29 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
 }));
 
 const Navbar = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
   return (
     <ToolbarStyle>
-      <BrandSection />
-      <SearchSection />
-      <OptionsSection />
+      {loading ? (
+        <Skeleton variant="rectangular" sx={{width: {xs: "100%", md: "30%"}}} height={40} />
+      ) : (
+        <BrandSection />
+      )}
+      {loading ? (
+        <Skeleton variant="rectangular" sx={{width: {xs: "100%", md: "30%"}}} height={40} />
+      ) : (
+        <SearchSection />
+      )}
+      {loading ? (
+        <Skeleton variant="rectangular" sx={{width: {xs: "100%", md: "30%"}}} height={40} />
+      ) : (
+        <OptionsSection />
+      )}
     </ToolbarStyle>
   );
 };

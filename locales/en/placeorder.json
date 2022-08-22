@@ -1,0 +1,14 @@
+{
+  "title": "Place Order",
+  "thankyou": "Thank you",
+  "desc": "we will get in touch with you soon...",
+  "info": "Your Information",
+  "name": "Name:",
+  "email": "Email:",
+  "phone": "Phone:",
+  "address": "Address:",
+  "orderType": "Order Type:",
+  "paymentMethod": "Payment Method",
+  "items": "Items",
+  "quantity": "Quantity: {{count}}"
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Payment Methods",
+  "desc": "All transactions are secure and encrypted.",
+  "credit": "Credit Card",
+  "cash": "cash on delivery",
+  "creditDel": "credit on delivery",
+  "total": "Total",
+  "egp": "EGP",
+  "back": "Back",
+  "placeOrder": "Place Order"
+}
