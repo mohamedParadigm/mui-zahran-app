@@ -24,6 +24,11 @@ const nextConfig = {
         destination: "/account/login",
         permanent: true,
       },
+      {
+        source: "/with-locale/checkout",
+        destination: "/checkout/shipping",
+        permanent: true,
+      },
     ];
   },
 };

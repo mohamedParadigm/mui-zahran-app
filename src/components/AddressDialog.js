@@ -26,6 +26,7 @@ import useTranslation from "next-translate/useTranslation";
 import { useDispatch } from "react-redux";
 import { updateLocation } from "../redux/features/location/locationSlice";
 import { toast } from "react-toastify";
+import { updateAddresses } from "../redux/features/userAddresses/userAddressesSlice";
 // Data
 import data from "../utils/data";
 
@@ -62,14 +63,13 @@ const AddressDialog = (props) => {
   const [values, setValues] = useState(initialValues);
 
   useEffect(() => {
-    setValues({...initialValues})
+    setValues({ ...initialValues });
   }, [initialValues]);
-  
+
   const [errors, setErrors] = useState({
     country: "",
     city: "",
     area: "",
-    detailedAddress: "",
   });
 
   const [availableCountries, setAvailableCountries] = useState([]);
@@ -98,7 +98,7 @@ const AddressDialog = (props) => {
 
   const handleCancelAddress = (e) => {
     e.preventDefault();
-    setValues({...initialValues});
+    setValues({ ...initialValues });
     handleToggleAddressDialog();
   };
 
@@ -113,6 +113,9 @@ const AddressDialog = (props) => {
 
     "area" in selectValues &&
       (temp.area = selectValues.area ? "" : t("reqField"));
+
+    "userPhone" in selectValues &&
+      (temp.userPhone = selectValues.userPhone ? "" : t("reqField"));
 
     setErrors({ ...temp });
 
@@ -165,6 +168,14 @@ const AddressDialog = (props) => {
           initialValues.country ? t("updateAddressSucc") : t("addAddress")
         );
       }
+      if (type === "userAddress") {
+        dispatch(updateAddresses(values));
+        handleToggleAddressDialog();
+        toast.success(
+          initialValues.country ? t("updateAddressSucc") : t("addAddress")
+        );
+      }
+      setValues(initialValues);
     }
   };
 
@@ -197,7 +208,7 @@ const AddressDialog = (props) => {
       <DialogContent sx={{ padding: "1rem" }}>
         <form onSubmit={handleAddressSubmit} autoComplete="off">
           <List>
-            <ListItem>
+            <ListItem sx={{ px: 0 }}>
               <FormControl fullWidth error={Boolean(errors.country)}>
                 <InputLabel id="selectCountryLabel">{t("country")}</InputLabel>
                 <Select
@@ -231,7 +242,7 @@ const AddressDialog = (props) => {
                 )}
               </FormControl>
             </ListItem>
-            <ListItem>
+            <ListItem sx={{ px: 0 }}>
               <FormControl
                 fullWidth
                 error={Boolean(errors.city)}
@@ -265,11 +276,11 @@ const AddressDialog = (props) => {
                   )}
                 </Select>
                 {errors.city && (
-                  <FormHelperText>{t("reqField")}</FormHelperText>
+                  <FormHelperText>{errors.city}</FormHelperText>
                 )}
               </FormControl>
             </ListItem>
-            <ListItem>
+            <ListItem sx={{ px: 0 }}>
               <FormControl
                 fullWidth
                 error={Boolean(errors.area)}
@@ -303,11 +314,11 @@ const AddressDialog = (props) => {
                   )}
                 </Select>
                 {errors.area && (
-                  <FormHelperText>{t("reqField")}</FormHelperText>
+                  <FormHelperText>{errors.area}</FormHelperText>
                 )}
               </FormControl>
             </ListItem>
-            <ListItem>
+            <ListItem sx={{ px: 0 }}>
               <TextField
                 id="detailedAddress"
                 name="detailedAddress"
@@ -324,7 +335,29 @@ const AddressDialog = (props) => {
                 }
               />
             </ListItem>
-            <ListItem>
+            {type === "userAddress" && (
+              <ListItem sx={{ px: 0 }}>
+                <TextField
+                  id="userPhone"
+                  name="userPhone"
+                  label={t("userPhone")}
+                  variant="outlined"
+                  fullWidth
+                  color="secondary"
+                  value={values.userPhone}
+                  onChange={(e) => {
+                    setValues((prev) => ({
+                      ...prev,
+                      userPhone: e.target.value,
+                    }));
+                    validate({ userPhone: e.target.value });
+                  }}
+                  error={Boolean(errors.userPhone)}
+                  helperText={errors.userPhone ? t("reqField") : ""}
+                />
+              </ListItem>
+            )}
+            <ListItem sx={{ px: 0 }}>
               <Grid container spacing={1} justifyContent="flex-end">
                 <Grid item>
                   <Button

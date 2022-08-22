@@ -5,15 +5,16 @@ import locationReducer from "./features/location/locationSlice";
 import cartReducer from "./features/cart/cartSlice";
 import globalReducer from "./features/global/globalSlice";
 import userReducer from "./features/user/userSlice";
+import userAddressesReducer from "./features/userAddresses/userAddressesSlice";
 // Middlewares
 import locationMiddleware from "./features/location/locationMiddleware";
-// import userMiddleware from "./features/user/userMiddleware";
 
 const store = configureStore({
   reducer: {
     location: locationReducer,
     cart: cartReducer,
     user: userReducer,
+    userAddresses: userAddressesReducer,
     global: globalReducer,
   },
   middleware: (getDefaultMiddleware) =>

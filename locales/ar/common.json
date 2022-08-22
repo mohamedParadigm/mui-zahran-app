@@ -45,5 +45,7 @@
   "welcome": "مرحبا {{name}}",
   "welcomeToZ": "مرحبا بك في زهران",
   "profile": "معلومات الحساب",
-  "orders": "الطلبيات"
+  "orders": "الطلبيات",
+  "userPhone": "رقم الهاتف",
+  "confirm": "تأكيد"
 }

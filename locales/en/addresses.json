@@ -1,0 +1,15 @@
+{
+  "title": "Your Addresses",
+  "desc": "Manage your saved addresses for fast and easy checkout across our marketplaces",
+  "addNew": "add new address",
+  "defAddress": "Default Address",
+  "makeDef": "Make Default",
+  "address": "Address",
+  "phone": "Phone",
+  "deleteAddress": "Delete Address",
+  "editAddress": "Edit Address",
+  "noAddresses": "No addresses to show",
+  "deletedSucc": "Address deleted successfully",
+  "confirmDelete": "Are you sure delete this address?",
+  "defaultUpdated": "Default address updated successfully"
+}

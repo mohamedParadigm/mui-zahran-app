@@ -1,3 +1,5 @@
+// Intenrals
+import { useRouter } from "next/router";
 // MUI
 import { styled } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
@@ -6,7 +8,18 @@ import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
-const steps = ["shipping address", "cart items", "payment", "order placed"];
+const steps = [
+  {
+    label_en: "shipping address",
+    label_ar: "عنوان الشحن",
+  },
+  {
+    label_en: "cart items",
+    label_ar: "عناصر العربة",
+  },
+  { label_en: "payment", label_ar: "الدفع" },
+  { label_en: "order placed", label_ar: "اتمام الطلب" },
+];
 
 const CurrentProgressLabel = styled("div")({
   position: "absolute",
@@ -20,6 +33,8 @@ const CurrentProgressLabel = styled("div")({
 });
 
 const CheckoutCircularStepper = ({ activeStep = 0 }) => {
+  const { locale } = useRouter();
+
   return (
     <Grid container spacing={1} justifyContent="space-between">
       <Grid item xs="auto">
@@ -28,7 +43,7 @@ const CheckoutCircularStepper = ({ activeStep = 0 }) => {
             variant="determinate"
             size={50}
             value={((activeStep + 1) / steps.length) * 100}
-            sx={{borderRadius: "50%", backgroundColor: grey[200]}}
+            sx={{ borderRadius: "50%", backgroundColor: grey[200] }}
           />
           <CurrentProgressLabel>
             <Typography variant="caption">
@@ -44,11 +59,11 @@ const CheckoutCircularStepper = ({ activeStep = 0 }) => {
           textTransform="capitalize"
           mb={1}
         >
-          {steps[activeStep]}
+          {steps[activeStep][`label_${locale}`]}
         </Typography>
         {activeStep + 1 < steps.length && (
           <Typography variant="body2" textTransform="capitalize">
-            Next: {steps[activeStep + 1]}
+            {locale === "ar" ? "القادم:" : "Next:"} {steps[activeStep + 1][`label_${locale}`]}
           </Typography>
         )}
       </Grid>

@@ -45,5 +45,7 @@
   "welcome": "Welcome {{name}}",
   "welcomeToZ": "Welcome to zahran",
   "profile": "Profile",
-  "orders": "Orders"
+  "orders": "Orders",
+  "userPhone": "Phone",
+  "confirm": "Confirm"
 }

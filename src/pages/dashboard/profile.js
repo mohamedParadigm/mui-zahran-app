@@ -245,7 +245,7 @@ export const getServerSideProps = withSessionSsr(async ({ req, locale }) => {
   if (!user) {
     return {
       redirect: {
-        destination: `${locale}/account/login?redirect=dashboard/profile`,
+        destination: `/${locale}/account/login?redirect=dashboard/profile`,
         permanent: false,
       },
     };

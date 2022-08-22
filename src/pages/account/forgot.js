@@ -11,8 +11,12 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 // Icons
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+// Externals
+import useTranslation from "next-translate/useTranslation";
+import { useForm, Controller } from "react-hook-form";
 // Components
 import Layout from "../../modules/layout/Layout";
+import { withSessionSsr } from "../../lib/withSession";
 
 const Wrapper = styled(Paper)(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
@@ -30,14 +34,21 @@ const Wrapper = styled(Paper)(({ theme }) => ({
 const ForgotPassword = () => {
   const router = useRouter();
 
-  const handleForgotSubmit = (e) => {
-    e.preventDefault();
-    console.log("yes");
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const { t } = useTranslation("forgot");
+
+  const handleForgotSubmit = (data) => {
+    console.log(data);
   };
 
   return (
     <Layout
-      title="Forgot Password"
+      title={t("title")}
       elevationOption={false}
       footerOtherStyle={{ marginBottom: { xs: "56px", md: 0 } }}
       scrollOffset={{ bottom: { xs: 70, md: 16 } }}
@@ -49,7 +60,7 @@ const ForgotPassword = () => {
             startIcon={<ChevronLeftIcon />}
             onClick={() => router.push("/login")}
           >
-            back
+            {t("back")}
           </Button>
           <Typography
             component="h1"
@@ -58,33 +69,50 @@ const ForgotPassword = () => {
             gutterBottom
             textAlign="center"
           >
-            Forgot Password
+            {t("title")}
           </Typography>
           <Typography textAlign="center" variant="subtitle2" mb={3}>
-            Enter your email address and we&apos;ll send you a link to reset
-            your password
+            {t("desc")}
           </Typography>
-          <form onSubmit={handleForgotSubmit}>
+          <form onSubmit={handleSubmit(handleForgotSubmit)}>
             <List>
-              <ListItem>
-                <TextField
-                  id="email"
-                  label="Email:"
-                  variant="standard"
-                  fullWidth
-                  inputProps={{ type: "email" }}
+            <ListItem sx={{ px: 0 }}>
+                <Controller
+                  name="email"
+                  control={control}
+                  defaultValue=""
+                  rules={{
+                    required: true,
+                    pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]/,
+                  }}
+                  render={({ field }) => (
+                    <TextField
+                      variant="standard"
+                      fullWidth
+                      id="email"
+                      label={t("email")}
+                      InputProps={{ type: "email" }}
+                      error={Boolean(errors.email)}
+                      helperText={
+                        errors.email
+                          ? errors.email.type === "pattern"
+                            ? t("emailValid")
+                            : t("required")
+                          : ""
+                      }
+                      {...field}
+                    />
+                  )}
                 />
               </ListItem>
-            </List>
-            <List>
-              <ListItem>
+              <ListItem sx={{ px: 0 }}>
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
                   sx={{ width: { xs: "100%", md: "50%" }, mx: "auto" }}
                 >
-                  submit email
+                  {t("submit")}
                 </Button>
               </ListItem>
             </List>
@@ -96,3 +124,19 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
+
+export const getServerSideProps = withSessionSsr(async ({ req }) => {
+  const user = req.session.user;
+  if (user) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+});
