@@ -37,6 +37,7 @@
   "grocery":"Grocery",
   "household":"Household",
   "shippedBy": "Shipped by",
+  "clearCart": "Clear cart",
   "signin": "Sign In",
   "signup": "Sign Up",
   "newUser": "New user ?",
