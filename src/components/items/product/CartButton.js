@@ -48,7 +48,7 @@ const CartButton = ({ product , quantity , sx = {} }) => {
     <ButtonGroup
       size="small"
       aria-label="small button group"
-      sx={{ alignItems: "center" , ...sx}}
+      sx={{ alignItems: "center" , ...sx , boxShadow: "0 3px 6px #707070"}}
       disableElevation
     >
       <Button
@@ -59,7 +59,7 @@ const CartButton = ({ product , quantity , sx = {} }) => {
         {quantity > 1 ? "-" : <DeleteIcon />}
       </Button>
 
-      <Typography flexGrow={1} sx={{minWidth: 40 }}>{quantity}</Typography>
+      <Typography flexGrow={1} alignItems="center" sx={{minWidth: 40 , textAlign: 'center'}}>{quantity}</Typography>
       <Button
         variant="contained"
         sx={{ width: "fit-content" }}

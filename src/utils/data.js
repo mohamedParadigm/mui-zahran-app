@@ -810,8 +810,8 @@ const data = {
       ],
       description_en: "Optimal speed and spinning force with the 2 different motor outputs.",
       description_ar: "السرعة المثلى وقوة الدوران مع مخرجين مختلفين للمحرك.",
-      Price: "3,099",
-      priceAfterDiscount: "2,799",
+      Price: "3099",
+      priceAfterDiscount: "",
       discountType: "percent", // "amount"
       discount: "",
       availability: true,

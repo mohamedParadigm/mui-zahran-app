@@ -241,7 +241,7 @@ const Profile = ({ user }) => {
 export default Profile;
 
 export const getServerSideProps = withSessionSsr(async ({ req, locale }) => {
-  const user = req.session.user;
+  const user = req.session.user || null;
   if (!user) {
     return {
       redirect: {

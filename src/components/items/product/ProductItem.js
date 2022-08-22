@@ -106,7 +106,7 @@ const ProductItem = ({ product, quantity }) => {
         : ""}
         <FevIcon />
       </Header>
-      <NextLink href="/Products" passHref>
+      <NextLink href='/' passHref>
         <CardActionArea>
           {renderImage()}
           <CardContent>
@@ -157,19 +157,32 @@ const ProductItem = ({ product, quantity }) => {
         </CardActionArea>
       </NextLink>
 
-      <CardActions>
-        {quantity  ? (
-          <CartButton quantity={quantity} product={product} sx={{width: '100%'}} /> 
-        ) : (
-          <Button
-            fullWidth
-            variant="contained"
-            onClick={() => handleAddToCart(product)}
-          >
-            {t("addToCart")}
+      {product.availability === true ? 
+        <CardActions>
+          {quantity  ? (
+            <CartButton quantity={quantity} product={product} sx={{width: '100%'}} /> 
+          ) : (
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={() => handleAddToCart(product)}
+            >
+              {t("addToCart")}
+            </Button>
+          )}
+        </CardActions>
+      : 
+        <CardActions
+          sx={{ justifyContent: { xs: "center", sm: "center" } }}
+        >
+          <Button variant="contained" color="secondary">
+            notify me
           </Button>
-        )}
-      </CardActions>
+          <Button variant="outlined" color="secondary">
+            find similar
+          </Button>
+        </CardActions>
+      }
     </Card>
   );
 };

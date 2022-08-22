@@ -46,5 +46,6 @@
   "welcome": "Welcome {{name}}",
   "welcomeToZ": "Welcome to zahran",
   "profile": "Profile",
-  "orders": "Orders"
+  "orders": "Orders", 
+  "youHave": "You have"
 }

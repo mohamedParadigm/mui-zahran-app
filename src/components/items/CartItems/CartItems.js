@@ -14,23 +14,21 @@ import Box from "@mui/material/Box";
 // Components
 import CartButton from "../product/CartButton";
 // Externals
-import { useSelector, useDispatch } from "react-redux";
-import { toast } from "react-toastify";
-import {addToCart} from "../../../redux/features/cart/cartSlice";
+import { useSelector } from "react-redux";
+import useTranslation from "next-translate/useTranslation";
 
 const CartItems = ({product}) => {
 
     const { locale } = useRouter();
-
+    const {t} = useTranslation("common")
     const { cart } = useSelector((state) => state.cart);
-    console.log(cart)
 
     return ( 
         <>
     
             <Grid container spacing={1}>
                 <Grid item xs="auto" alignSelf="center" mx="auto">
-                    <NextLink href="/product" passHref>
+                    <NextLink href={`/product/${product.uniqueName}`} passHref>
                         <CardActionArea>
                             <CardMedia
                                 component="img"
@@ -72,8 +70,8 @@ const CartItems = ({product}) => {
                                     spacing={1}
                                     justifyContent={{ xs: "center", sm: "start" }}
                                 >
-                                    <strong>{product.priceAfterDiscount}</strong>
-                                    <del style={{ opacity: 0.7 }}>{product.price}</del>
+                                    <strong>{product.priceAfterDiscount} {t("egp")}</strong>
+                                    <del style={{ opacity: 0.7 }}>{product.price} {t("egp")}</del>
                                 </Stack> 
                                 : 
                                 <Stack
@@ -81,7 +79,7 @@ const CartItems = ({product}) => {
                                     spacing={1}
                                     justifyContent={{ xs: "center", sm: "start" }}
                                 >
-                                    <strong>{product.price}</strong>
+                                    <strong>{product.Price} {t("egp")}</strong>
                                 </Stack> 
                             }
                             <Typography
@@ -89,28 +87,32 @@ const CartItems = ({product}) => {
                                 textTransform="uppercase"
                                 variant="body2"
                             >
-                                {product.availability === true ? "NOT AVAILABLE" : ""}
+                                {product.availability === true ? "" : "NOT AVAILABLE"}
                             </Typography>
                         </CardContent>
 
-                        {product.Availability === true ? 
+                        {product.availability === true ? 
                             <CardActions
                                 sx={{
                                     px: 0,
-                                    justifyContent: { xs: "center", sm: "start" },
+                                    justifyContent: { xs: "start"},
                                 }}
                             >
                                 <CartButton quantity={product.quantity} product={product}  />
                             </CardActions>
                         :
-                            <CardActions sx={{ px: 0,justifyContent: { xs: "center", sm: "start" }, }}>
+                            <CardActions sx={{ px: 0,justifyContent: { xs: "start", sm: "space-between" }, }}>
                                 <CartButton quantity={product.quantity} product={product} sx={{opacity: 0.5 ,pointerEvents: 'none'}} />
-                                <Button variant="contained" color="secondary">
-                                    notify me
-                                </Button>
-                                <Button variant="outlined" color="secondary">
-                                    find similar
-                                </Button>
+                                <Stack direction="row"
+                                        spacing={1}
+                                        justifyContent={{ xs: "center", sm: "start" }}>
+                                    <Button variant="contained" color="secondary">
+                                        notify me
+                                    </Button>
+                                    <Button variant="outlined" color="secondary">
+                                        find similar
+                                    </Button>
+                                </Stack>
                             </CardActions>
                         }
                     </Box>
