@@ -7,5 +7,11 @@
   "total": "Total",
   "egp": "EGP",
   "back": "Back",
-  "placeOrder": "Place Order"
+  "placeOrder": "Place Order",
+  "orderSummary": "Order summary",
+  "subtotal": "Subtotal",
+  "item": "Item",
+  "vat": "Vat",
+  "deliveryCharg": "Delivery Charge",
+  "incVat": "Inclusive of VAT"
 }

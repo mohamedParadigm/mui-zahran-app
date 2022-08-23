@@ -24,7 +24,16 @@ import Layout from "../../modules/layout/Layout";
 import CheckoutLinearStepper from "../../components/CheckoutLinearStepper";
 import CheckoutCircularStepper from "../../components/CheckoutCircularStepper";
 import CustomRadio from "../../components/shared/CustomRadio";
-import { cookieExpireDate } from "../../utils/utils";
+import {
+  calcItemsSubTotal,
+  calcItemsTotalPrice,
+  cookieExpireDate,
+} from "../../utils/utils";
+// Data
+import data from "../../utils/data";
+
+const vat = 100;
+const delivery = 100;
 
 const FixedMobileButton = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -45,7 +54,8 @@ const FixedMobileButton = styled(Box)(({ theme }) => ({
   },
 }));
 
-const Payment = () => {
+const Payment = ({ cartProducts, orderType }) => {
+  console.log(cartProducts);
   const router = useRouter();
   const { locale } = router;
 
@@ -150,7 +160,10 @@ const Payment = () => {
                   {t("total")}
                 </Typography>
                 <Typography variant="body2" fontWeight={600}>
-                  772.68 {t("egp")}
+                  {orderType === "delivery"
+                    ? calcItemsTotalPrice(cartProducts, vat, delivery)
+                    : calcItemsTotalPrice(cartProducts, vat)}{" "}
+                  {t("egp")}
                 </Typography>
               </Box>
               <Button
@@ -182,21 +195,38 @@ const Payment = () => {
             >
               <Paper elevation={6} sx={{ borderRadius: 2, mb: 2 }}>
                 <Typography variant="h4" px={2} pt={2}>
-                  order summary
+                  {t("orderSummary")}
                 </Typography>
                 <List>
                   <ListItem sx={{ justifyContent: "space-between", py: 0.5 }}>
                     <Typography variant="body2" textTransform="capitalize">
-                      Subtotal <span style={{ opacity: 0.7 }}>(2 Item)</span>
+                      {t("subtotal")}{" "}
+                      <span style={{ opacity: 0.7 }}>
+                        ({cartProducts.length} {t("item")})
+                      </span>
                     </Typography>
-                    <Typography variant="body2">677.79 EGP</Typography>
+                    <Typography variant="body2">
+                      {calcItemsSubTotal(cartProducts)} {t("egp")}
+                    </Typography>
                   </ListItem>
                   <ListItem sx={{ justifyContent: "space-between", py: 0.5 }}>
                     <Typography variant="body2" textTransform="capitalize">
-                      vat
+                      {t("vat")}
                     </Typography>
-                    <Typography variant="body2">80.79 EGP</Typography>
+                    <Typography variant="body2">
+                      {vat} {t("egp")}
+                    </Typography>
                   </ListItem>
+                  {orderType === "delivery" && (
+                    <ListItem sx={{ justifyContent: "space-between", py: 0.5 }}>
+                      <Typography variant="body2" textTransform="capitalize">
+                        {t("deliveryCharg")}
+                      </Typography>
+                      <Typography variant="body2">
+                        {delivery} {t("egp")}
+                      </Typography>
+                    </ListItem>
+                  )}
                   <Divider sx={{ my: 1 }} component="li" />
                   <ListItem sx={{ justifyContent: "space-between", py: 0.5 }}>
                     <Typography
@@ -204,13 +234,16 @@ const Payment = () => {
                       textTransform="capitalize"
                       fontWeight={700}
                     >
-                      total{" "}
+                      {t("total")}{" "}
                       <span style={{ opacity: 0.7, fontSize: "0.7rem" }}>
-                        (Inclusive of VAT)
+                        ({t("incVat")})
                       </span>
                     </Typography>
                     <Typography variant="body1" fontWeight={700}>
-                      772.68 EGP
+                      {orderType === "delivery"
+                        ? calcItemsTotalPrice(cartProducts, vat, delivery)
+                        : calcItemsTotalPrice(cartProducts, vat)}{" "}
+                      {t("egp")}
                     </Typography>
                   </ListItem>
                 </List>
@@ -222,7 +255,7 @@ const Payment = () => {
                   fullWidth
                   onClick={handlePaymentSubmit}
                 >
-                  place order
+                  {t("placeOrder")}
                 </Button>
               )}
             </Box>
@@ -236,8 +269,9 @@ const Payment = () => {
 export default Payment;
 
 export const getServerSideProps = async ({ req, res, locale }) => {
-  const cartItems = hasCookie("cart", { req, res })
-      && JSON.parse(getCookie("cart", { req, res }));
+  const cartItems =
+    hasCookie("cart", { req, res }) &&
+    JSON.parse(getCookie("cart", { req, res }));
 
   if (!cartItems) {
     return {
@@ -249,16 +283,23 @@ export const getServerSideProps = async ({ req, res, locale }) => {
   }
 
   const cartProducts =
-      cartItems &&
-      cartItems?.map((el) => {
-        const items = data?.products?.find(
-          (product) => product.uniqueName === el.uniqueName
-        );
-        const withQuantity = { ...items, quantity: el.quantity };
-        return withQuantity;
-      });
+    cartItems &&
+    cartItems?.map((el) => {
+      const items = data?.products?.find(
+        (product) => product.uniqueName === el.uniqueName
+      );
+      const withQuantity = { ...items, quantity: el.quantity };
+      return withQuantity;
+    });
+
+  const orderType =
+    hasCookie("orderType", { req, res }) &&
+    getCookie("orderType", { req, res });
 
   return {
-    props: {},
+    props: {
+      cartProducts,
+      orderType,
+    },
   };
 };
