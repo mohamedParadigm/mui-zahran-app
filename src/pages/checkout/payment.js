@@ -236,7 +236,8 @@ const Payment = () => {
 export default Payment;
 
 export const getServerSideProps = async ({ req, res, locale }) => {
-  const cartItems = hasCookie("cart", { req, res });
+  const cartItems = hasCookie("cart", { req, res })
+      && JSON.parse(getCookie("cart", { req, res }));
 
   if (!cartItems) {
     return {
@@ -246,6 +247,16 @@ export const getServerSideProps = async ({ req, res, locale }) => {
       },
     };
   }
+
+  const cartProducts =
+      cartItems &&
+      cartItems?.map((el) => {
+        const items = data?.products?.find(
+          (product) => product.uniqueName === el.uniqueName
+        );
+        const withQuantity = { ...items, quantity: el.quantity };
+        return withQuantity;
+      });
 
   return {
     props: {},
