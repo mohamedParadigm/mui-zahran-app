@@ -35,7 +35,7 @@ import CustomRadio from "../../components/shared/CustomRadio";
 import { withSessionSsr } from "../../lib/withSession";
 // Data
 import data from "../../utils/data";
-import { cookieExpireDate } from "../../utils/utils";
+import { calcItemsSubTotal, calcItemsTotalPrice, cookieExpireDate } from "../../utils/utils";
 import SimpleAddressItem from "../../components/items/SimpleAddressItem";
 
 const addressInitialDetails = {
@@ -83,19 +83,20 @@ const ShippingAddress = (props) => {
     props;
   const { countries, cities, areas, branches } = data;
 
-  const calcItemsSubTotal = (items) => {
-    const prices = items.map((item) => {
-      return {
-        id: item.id,
-        price: item.priceAfterDiscount ? item.priceAfterDiscount : item.Price,
-      };
-    });
-    const price = prices.reduce((acc, curr) => {
-      return acc + parseFloat(curr.price);
-    }, 0);
+  // const calcItemsSubTotal = (items) => {
+  //   console.log(items);
+  //   const prices = items.map((item) => {
+  //     return {
+  //       price: item.discount ? item.priceAfterDiscount : item.Price,
+  //       quantity: item.quantity
+  //     };
+  //   });
+  //   const price = prices.reduce((acc, curr) => {
+  //     return acc + (parseFloat(curr.price) * curr.quantity);
+  //   }, 0);
 
-    return price;
-  };
+  //   return price;
+  // };
 
   const router = useRouter();
   const { locale } = router;
@@ -792,8 +793,8 @@ const ShippingAddress = (props) => {
                     </Typography>
                     <Typography variant="body1" fontWeight={700}>
                       {orderTypeValue === "delivery"
-                        ? calcItemsSubTotal(cartItems) + vat + delivery
-                        : calcItemsSubTotal(cartItems) + vat}{" "}
+                        ? calcItemsTotalPrice(cartItems, vat, delivery)
+                        : calcItemsTotalPrice(cartItems, vat)}{" "}
                       {t("egp")}
                     </Typography>
                   </ListItem>
@@ -840,7 +841,8 @@ export const getServerSideProps = withSessionSsr(
         const items = data?.products?.find(
           (product) => product.uniqueName === el.uniqueName
         );
-        return items;
+        const withQuantity = {...items, quantity: el.quantity}
+        return withQuantity;
       });
 
     const userLocation = hasCookie("location", { req, res })

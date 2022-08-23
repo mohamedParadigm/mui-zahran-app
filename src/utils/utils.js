@@ -7,3 +7,29 @@ export const cookieExpireDate = (days) => {
 
   return date;
 };
+
+export const calcItemPrice = (item) => {
+  const price = item.discount ? item.priceAfterDiscount : item.Price;
+
+  return price * item.quantity;
+};
+
+export const calcItemsSubTotal = (items) => {
+  const prices = items.map((item) => {
+    return {
+      price: item.discount ? item.priceAfterDiscount : item.Price,
+      quantity: item.quantity,
+    };
+  });
+  const price = prices.reduce((acc, curr) => {
+    return acc + parseFloat(curr.price) * curr.quantity;
+  }, 0);
+
+  return price;
+};
+
+export const calcItemsTotalPrice = (items, vat = 100, delivery = 0) => {
+  const subTotal = calcItemsSubTotal(items);
+
+  return subTotal + vat + delivery;
+};

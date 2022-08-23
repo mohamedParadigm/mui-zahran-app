@@ -51,6 +51,3 @@ function _delete(id) {
 function saveData() {
   fs.writeFileSync("data/db.json", JSON.stringify({ users, ...db }, null, 2));
 }
-
-
-// $2a$10$J6hqczR5/HHa8wAs4KPrZuc5xDyDoid/aoySZeu8gMchgCeZEAkpW
