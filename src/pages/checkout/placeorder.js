@@ -96,108 +96,87 @@ const PlaceOrder = (props) => {
               </Typography>
             </Box>
             <Grid container spacing={2}>
-              {user ||
-                (guest && (
-                  <Grid item xs={12}>
-                    <Paper elevation={3} sx={{ borderRadius: 2 }}>
-                      <Typography component="h2" variant="h5" px={2} pt={2}>
-                        {t("info")}
+              <Grid item xs={12}>
+                <Paper elevation={3} sx={{ borderRadius: 2 }}>
+                  <Typography component="h2" variant="h5" px={2} pt={2}>
+                    {t("info")}
+                  </Typography>
+                  <List>
+                    <ListItem
+                      sx={{
+                        justifyContent: "space-between",
+                        py: 0.5,
+                        gap: 1,
+                      }}
+                    >
+                      <Typography variant="body2" textTransform="capitalize">
+                        {t("name")}
                       </Typography>
-                      <List>
-                        <ListItem
-                          sx={{
-                            justifyContent: "space-between",
-                            py: 0.5,
-                            gap: 1,
-                          }}
-                        >
-                          <Typography
-                            variant="body2"
-                            textTransform="capitalize"
-                          >
-                            {t("name")}
-                          </Typography>
-                          <Typography variant="body2">
-                            {user
-                              ? `${user.firstName} ${user.lastName}`
-                              : `${guest.firstName} ${guest.lastName}`}
-                          </Typography>
-                        </ListItem>
-                        <ListItem
-                          sx={{
-                            justifyContent: "space-between",
-                            py: 0.5,
-                            gap: 1,
-                          }}
-                        >
-                          <Typography
-                            variant="body2"
-                            textTransform="capitalize"
-                          >
-                            {t("email")}
-                          </Typography>
-                          <Typography variant="body2">
-                            {user ? user.email : guest.email}
-                          </Typography>
-                        </ListItem>
-                        <ListItem
-                          sx={{
-                            justifyContent: "space-between",
-                            py: 0.5,
-                            gap: 1,
-                          }}
-                        >
-                          <Typography
-                            variant="body2"
-                            textTransform="capitalize"
-                          >
-                            {t("phone")}
-                          </Typography>
-                          <Typography variant="body2">
-                            {user ? user.mobile : guest.mobile}
-                          </Typography>
-                        </ListItem>
-                        <ListItem
-                          sx={{
-                            justifyContent: "space-between",
-                            py: 0.5,
-                            gap: 1,
-                          }}
-                        >
-                          <Typography
-                            variant="body2"
-                            textTransform="capitalize"
-                          >
-                            {t("address")}
-                          </Typography>
-                          <Typography variant="body2">
-                            {`${userLocation.country} - ${userLocation.city} - ${userLocation.area}`}
-                          </Typography>
-                        </ListItem>
-                        <ListItem
-                          sx={{
-                            justifyContent: "space-between",
-                            py: 0.5,
-                            gap: 1,
-                          }}
-                        >
-                          <Typography
-                            variant="body2"
-                            textTransform="capitalize"
-                          >
-                            {t("orderType")}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            textTransform="capitalize"
-                          >
-                            {orderType}
-                          </Typography>
-                        </ListItem>
-                      </List>
-                    </Paper>
-                  </Grid>
-                ))}
+                      <Typography variant="body2">
+                        {user
+                          ? `${user.firstName} ${user.lastName}`
+                          : `${guest.firstName} ${guest.lastName}`}
+                      </Typography>
+                    </ListItem>
+                    <ListItem
+                      sx={{
+                        justifyContent: "space-between",
+                        py: 0.5,
+                        gap: 1,
+                      }}
+                    >
+                      <Typography variant="body2" textTransform="capitalize">
+                        {t("email")}
+                      </Typography>
+                      <Typography variant="body2">
+                        {user ? user.email : guest.email}
+                      </Typography>
+                    </ListItem>
+                    <ListItem
+                      sx={{
+                        justifyContent: "space-between",
+                        py: 0.5,
+                        gap: 1,
+                      }}
+                    >
+                      <Typography variant="body2" textTransform="capitalize">
+                        {t("phone")}
+                      </Typography>
+                      <Typography variant="body2">
+                        {user ? user.mobile : guest.mobile}
+                      </Typography>
+                    </ListItem>
+                    <ListItem
+                      sx={{
+                        justifyContent: "space-between",
+                        py: 0.5,
+                        gap: 1,
+                      }}
+                    >
+                      <Typography variant="body2" textTransform="capitalize">
+                        {t("address")}
+                      </Typography>
+                      <Typography variant="body2">
+                        {`${userLocation.country} - ${userLocation.city} - ${userLocation.area}`}
+                      </Typography>
+                    </ListItem>
+                    <ListItem
+                      sx={{
+                        justifyContent: "space-between",
+                        py: 0.5,
+                        gap: 1,
+                      }}
+                    >
+                      <Typography variant="body2" textTransform="capitalize">
+                        {t("orderType")}
+                      </Typography>
+                      <Typography variant="body2" textTransform="capitalize">
+                        {orderType}
+                      </Typography>
+                    </ListItem>
+                  </List>
+                </Paper>
+              </Grid>
               <Grid item xs={12}>
                 <Paper elevation={3} sx={{ borderRadius: 2 }}>
                   <Typography component="h2" variant="h5" px={2} pt={2}>
@@ -351,6 +330,8 @@ export const getServerSideProps = withSessionSsr(
       JSON.parse(getCookie("guest", { req, res }));
 
     if (!user && !guest) {
+      console.log("No User or Guest");
+
       return {
         redirect: {
           destination: `/${locale}/checkout/shipping`,
@@ -385,7 +366,15 @@ export const getServerSideProps = withSessionSsr(
       hasCookie("location", { req, res }) &&
       JSON.parse(getCookie("location", { req, res }));
 
-    if (!userLocation) {
+    const branch =
+      hasCookie("branch", { req, res }) &&
+      JSON.parse(getCookie("branch", { req, res }));
+
+    console.log("userLocation ", userLocation);
+    console.log("branch ", branch);
+    if (!userLocation && !branch) {
+      console.log("No User Location or Branch");
+
       return {
         redirect: {
           destination: `/${locale}/checkout/shipping`,
@@ -412,6 +401,8 @@ export const getServerSideProps = withSessionSsr(
       getCookie("orderType", { req, res });
 
     if (!orderType) {
+      console.log("No Order Type");
+
       return {
         redirect: {
           destination: `/${locale}/checkout/shipping`,
