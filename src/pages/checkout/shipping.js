@@ -223,7 +223,7 @@ const ShippingAddress = (props) => {
       ? getCookie("orderType")
       : "delivery";
 
-    setOrderTypeValue(currentOrderType);
+    handleOrderTpyeChange(currentOrderType);
 
     if (user) {
       setValue("firstName", user.firstName);
@@ -285,6 +285,8 @@ const ShippingAddress = (props) => {
         setCookie("branch", JSON.stringify(branch), {
           expires: cookieExpireDate(13),
         });
+
+        router.push("/checkout/checkout-items", undefined, { locale });
       }
     } else {
       if (!selectedBranch) {
@@ -294,10 +296,10 @@ const ShippingAddress = (props) => {
         setCookie("branch", JSON.stringify(branch), {
           expires: cookieExpireDate(13),
         });
+
+        router.push("/checkout/checkout-items", undefined, { locale });
       }
     }
-
-    router.push("/checkout/checkout-items", undefined, { locale });
   };
 
   return (
