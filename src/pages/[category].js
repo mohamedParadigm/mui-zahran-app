@@ -1,5 +1,5 @@
 // Internals
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 // MUI
 import { useTheme, styled } from "@mui/material/styles";
@@ -30,11 +30,14 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 // Externals
 import useTranslation from "next-translate/useTranslation";
+import { useDispatch } from "react-redux";
+import { createUser } from "../redux/features/user/userSlice";
 // Components
 import Layout from "../modules/layout/Layout";
 import CustomBreadcrumbs from "../components/Breadcrumbs";
 import PageFilter from "../components/PageFilter";
 import ProductItem from "../components/items/product/ProductItem";
+import { withSessionSsr } from "../lib/withSession";
 // Data
 import data from "../utils/data";
 import CustomRadio from "../components/shared/CustomRadio";
@@ -48,6 +51,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const Category = (props) => {
   const {
+    user,
     breadCrumbCategory,
     updatedProducts,
     allProductsLength,
@@ -60,6 +64,8 @@ const Category = (props) => {
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
+
+  const dispatch = useDispatch();
 
   const [showMobileFilterDrawer, setShowMobileFilterDrawer] = useState({
     left: false,
@@ -146,6 +152,11 @@ const Category = (props) => {
       query: currentQuery,
     });
   };
+
+  useEffect(() => {
+    // Add user to redux
+    user && dispatch(createUser(user));
+  }, [user, dispatch]);
 
   return (
     <Layout
@@ -500,9 +511,11 @@ const Category = (props) => {
 
 export default Category;
 
-export const getServerSideProps = (req, res) => {
-  const { params, query } = req;
+export const getServerSideProps = withSessionSsr(async (ctx) => {
+  const { query, params, req} = ctx;
   const { products } = data;
+
+  const user = req.session.user || null;
 
   const category =
     params.category !== "all-categories"
@@ -592,6 +605,7 @@ export const getServerSideProps = (req, res) => {
 
   return {
     props: {
+      user,
       breadCrumbCategory,
       updatedProducts,
       allProductsLength: allProducts.length,
@@ -599,4 +613,4 @@ export const getServerSideProps = (req, res) => {
       maxPrice,
     },
   };
-};
+});

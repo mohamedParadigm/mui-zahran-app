@@ -36,7 +36,7 @@ const CategoryItem = ({ item }) => {
   return (
     <MuiTooltip title={item[`name_${locale}`]} followCursor placement="top">
       <CardStyle>
-        <NextLink href={`/${item.uniqueName}`} passHref>
+        <NextLink href={`/${item.uniqueName}?subCategory=all`} passHref>
           <CardActionArea>
             <CardMedia
               component="img"
