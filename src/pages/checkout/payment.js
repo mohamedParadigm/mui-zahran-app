@@ -49,7 +49,7 @@ const Payment = () => {
   const router = useRouter();
   const { locale } = router;
 
-  const [paymentMethod, setPaymentMethod] = useState("Credit Card");
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   const handlePaymentChange = (e) => {
     setPaymentMethod(e.target.value);
@@ -65,11 +65,15 @@ const Payment = () => {
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
   useEffect(() => {
-    hasCookie("paymentMethod")
-      ? setPaymentMethod(getCookie("paymentMethod"))
-      : setCookie("paymentMethod", "creditCard", {
-          expires: cookieExpireDate(13),
-        });
+    const pay = hasCookie("paymentMethod")
+      ? getCookie("paymentMethod")
+      : "Credit Card";
+
+    setPaymentMethod(pay);
+
+    setCookie("paymentMethod", pay, {
+      expires: cookieExpireDate(13),
+    });
   }, []);
 
   const handlePaymentSubmit = (e) => {
@@ -240,7 +244,7 @@ export const getServerSideProps = async ({ req, res, locale }) => {
         destination: `/${locale}/cart`,
         permanent: false,
       },
-    }
+    };
   }
 
   return {
