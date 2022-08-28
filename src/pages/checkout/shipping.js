@@ -35,7 +35,11 @@ import CustomRadio from "../../components/shared/CustomRadio";
 import { withSessionSsr } from "../../lib/withSession";
 // Data
 import data from "../../utils/data";
-import { calcItemsSubTotal, calcItemsTotalPrice, cookieExpireDate } from "../../utils/utils";
+import {
+  calcItemsSubTotal,
+  calcItemsTotalPrice,
+  cookieExpireDate,
+} from "../../utils/utils";
 import SimpleAddressItem from "../../components/items/SimpleAddressItem";
 
 const addressInitialDetails = {
@@ -841,7 +845,7 @@ export const getServerSideProps = withSessionSsr(
         const items = data?.products?.find(
           (product) => product.uniqueName === el.uniqueName
         );
-        const withQuantity = {...items, quantity: el.quantity}
+        const withQuantity = { ...items, quantity: el.quantity };
         return withQuantity;
       });
 

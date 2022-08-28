@@ -13,6 +13,7 @@
     "/dashboard/addresses": ["addresses"],
     "/checkout/shipping": ["shipping"],
     "/checkout/payment": ["payment"],
-    "/checkout/placeorder": ["placeorder"]
+    "/checkout/placeorder": ["placeorder"],
+    "/track-order": ["track-order"]
   }
 }

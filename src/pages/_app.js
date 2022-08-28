@@ -9,11 +9,11 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // Components
-import theme from "../utils/theme";
+import { themeEN, themeAR } from "../utils/theme";
 import store from "../redux/store";
 import SubmitLoading from "../components/SubmitLoading";
 import Loading from "../components/Loading";
@@ -45,10 +45,12 @@ const App = ({ Component, pageProps }) => {
     };
   }, [router]);
 
-  const themeWithDirection = {
-    ...theme,
-    direction: locale === "en" ? "ltr" : "rtl",
-  };
+  // const updatedTheme = {
+  //   ...theme,
+  //   direction: locale === "en" ? "ltr" : "rtl",
+  // };
+
+  const updatedTheme = locale === "ar" ? themeAR : themeEN;
 
   const cacheRtl = createCache({
     key: locale === "en" ? "muiltr" : "muirtl",
@@ -58,7 +60,7 @@ const App = ({ Component, pageProps }) => {
   return (
     <Provider store={store}>
       <CacheProvider value={cacheRtl}>
-        <ThemeProvider theme={themeWithDirection}>
+        <ThemeProvider theme={updatedTheme}>
           <CssBaseline />
           <Component {...pageProps} />
           <ToastContainer

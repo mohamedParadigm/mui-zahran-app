@@ -1,5 +1,6 @@
 // Internals
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import NextLink from "next/link";
 // MUI
@@ -22,6 +23,8 @@ import StepLabel from "@mui/material/StepLabel";
 import Switch from "@mui/material/Switch";
 // Icons
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// Externals
+import useTranslation from "next-translate/useTranslation";
 // Components
 import Layout from "../modules/layout/Layout";
 import RenameOrderDialog from "../components/RenameOrderDialog";
@@ -30,28 +33,38 @@ const activeStep = 2;
 
 const initialSteps = [
   {
-    label: "Recieved",
-    description: "We have recieved your order.",
+    label_en: "Recieved",
+    label_ar: "تم استلامه",
+    description_en: "We have recieved your order.",
+    description_ar: "تم استلام طلبك",
     image: "/images/track-order/Order-recieved.svg",
   },
   {
-    label: "Approved",
-    description: "Your order has been confirmed.",
+    label_en: "Approved",
+    label_ar: "وافق عليه",
+    description_en: "Your order has been confirmed.",
+    description_ar: "تمت الموافقة على الطلب",
     image: "/images/track-order/Approved.svg",
   },
   {
-    label: "Paused",
-    description: "Your order has been Paused.",
+    label_en: "Paused",
+    label_ar: "متوقف",
+    description_en: "Your order has been Paused.",
+    description_ar: "تم ايقاف الطلب",
     image: "/images/track-order/Order-cancel.svg",
   },
   {
-    label: "On The Way",
-    description: "Your order on its way",
+    label_en: "On The Way",
+    label_ar: "في الطريق",
+    description_en: "Your order on its way",
+    description_ar: "الطلب في الطريق اليك",
     image: "/images/track-order/Track-order.svg",
   },
   {
-    label: "Delivered",
-    description: "your order delivered successfully",
+    label_en: "Delivered",
+    label_ar: "تم ايصاله",
+    description_en: "your order delivered successfully",
+    description_ar: "تم توصيل الطلب بنجاح",
     image: "/images/track-order/Package-delivered.svg",
   },
 ];
@@ -75,6 +88,11 @@ const renameOrderInitialValue = {
 };
 
 const TrackOrder = () => {
+  const router = useRouter();
+  const { locale } = router;
+
+  const { t } = useTranslation("track-order");
+
   const [showOrderDetails, setShowOrderDetails] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -94,7 +112,7 @@ const TrackOrder = () => {
 
   return (
     <Layout
-      title="Track Order"
+      title={t("title")}
       layoutType="alt"
       showBottomNav={false}
       scrollOffset={{ bottom: 16 }}
@@ -103,25 +121,23 @@ const TrackOrder = () => {
         <Container>
           <Box textAlign="center" mb={4}>
             <Typography component="h1" variant="h4" fontWeight={400} mb={3}>
-              <span style={{ fontWeight: 700 }}>Thank You</span> <br /> Your
-              Order Has Been Submitted <br /> Successfully
+              <span style={{ fontWeight: 700 }}>{t("thank")}</span> <br />{" "}
+              {t("desc")} <br /> {t("succ")}
             </Typography>
             <Typography>
-              Your order confirm number:{" "}
+              {t("orderConNum")}{" "}
               <span style={{ color: "var(--main-color)" }}>123456</span>
             </Typography>
-            <Typography>
-              You will recieve an email confirmation shortly.
-            </Typography>
+            <Typography>{t("emailCon")}</Typography>
           </Box>
           <Paper sx={{ borderRadius: 2, p: 2, mb: 4 }} elevation={0}>
             <Grid container spacing={1}>
               <Grid item xs>
                 <Box>
                   <Typography component="h2" variant="h6" mb={1}>
-                    Estimated Delivery Time
+                    {t("estimateTime")}
                   </Typography>
-                  <Typography>3 Days</Typography>
+                  <Typography>{t("days", { count: 4 })}</Typography>
                 </Box>
               </Grid>
               <Grid item xs="auto">
@@ -138,7 +154,7 @@ const TrackOrder = () => {
                   }
                   onClick={() => setShowOrderDetails((prev) => !prev)}
                 >
-                  order number
+                  {t("orderNum")}
                 </Button>
                 <Typography textAlign="center">123456</Typography>
               </Grid>
@@ -149,20 +165,20 @@ const TrackOrder = () => {
               <Grid container spacing={1}>
                 <Grid item xs={6}>
                   <Typography component="h3" variant="h6" mb={0.5}>
-                    Delivering to:
+                    {t("deliverTo")}
                   </Typography>
-                  <Typography variant="body2">User Name</Typography>
+                  <Typography variant="body2">{t("userName")}</Typography>
                   <Typography variant="body2">
                     18, Mahat El Ramal, Alexandria, Egypt
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Typography component="h3" variant="h6" mb={0.5}>
-                    Payment Method:
+                    {t("paymentMethod")}
                   </Typography>
                   <Typography variant="body2">Cash on Delivery</Typography>
                   <Typography component="h3" variant="h6" mb={0.5}>
-                    Order Type:
+                    {t("orderType")}
                   </Typography>
                   <Typography variant="body2">Delivery</Typography>
                 </Grid>
@@ -172,7 +188,7 @@ const TrackOrder = () => {
                   }}
                 >
                   <Typography component="h3" variant="h6" mb={0.5} px={1}>
-                    Order Summary:
+                    {t("orderSum")}
                   </Typography>
                   <List>
                     <ListItem sx={{ p: 0 }}>
@@ -186,7 +202,9 @@ const TrackOrder = () => {
                           <div style={{ border: "1px dashed #000" }}></div>
                         </Grid>
                         <Grid item xs="auto">
-                          <Typography variant="caption">12 EGP</Typography>
+                          <Typography variant="caption">
+                            12 {t("egp")}
+                          </Typography>
                         </Grid>
                       </Grid>
                     </ListItem>
@@ -201,7 +219,9 @@ const TrackOrder = () => {
                           <div style={{ border: "1px dashed #000" }}></div>
                         </Grid>
                         <Grid item xs="auto">
-                          <Typography variant="caption">12 EGP</Typography>
+                          <Typography variant="caption">
+                            12 {t("egp")}
+                          </Typography>
                         </Grid>
                       </Grid>
                     </ListItem>
@@ -216,7 +236,9 @@ const TrackOrder = () => {
                           <div style={{ border: "1px dashed #000" }}></div>
                         </Grid>
                         <Grid item xs="auto">
-                          <Typography variant="caption">12 EGP</Typography>
+                          <Typography variant="caption">
+                            12 {t("egp")}
+                          </Typography>
                         </Grid>
                       </Grid>
                     </ListItem>
@@ -225,12 +247,12 @@ const TrackOrder = () => {
                       <Grid container spacing={1} px={1} alignItems="center">
                         <Grid item xs>
                           <Typography variant="body2">
-                            Grocery Delivery Fees
+                            {t("grocDel")}
                           </Typography>
                         </Grid>
                         <Grid item xs="auto">
                           <Typography variant="body2" fontWeight={600}>
-                            5.00 EGP
+                            5.00 {t("egp")}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -238,13 +260,11 @@ const TrackOrder = () => {
                     <ListItem sx={{ p: 0 }}>
                       <Grid container spacing={1} px={1} alignItems="center">
                         <Grid item xs>
-                          <Typography variant="body2">
-                            Household Delivery Fees
-                          </Typography>
+                          <Typography variant="body2">{t("hosDel")}</Typography>
                         </Grid>
                         <Grid item xs="auto">
                           <Typography variant="body2" fontWeight={600}>
-                            5.00 EGP
+                            5.00 {t("egp")}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -256,7 +276,7 @@ const TrackOrder = () => {
                         </Grid>
                         <Grid item xs="auto">
                           <Typography variant="body2" fontWeight={600}>
-                            5.00 EGP
+                            5.00 {t("egp")}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -265,15 +285,15 @@ const TrackOrder = () => {
                       <Grid container spacing={1} px={1} alignItems="center">
                         <Grid item xs>
                           <Typography variant="body1" fontWeight={700}>
-                            Total{" "}
+                            {t("total")}{" "}
                             <span style={{ opacity: 0.7, fontSize: "0.75rem" }}>
-                              (Inclusive of VAT)
+                              ({t("incVat")})
                             </span>
                           </Typography>
                         </Grid>
                         <Grid item xs="auto">
                           <Typography variant="body1" fontWeight={700}>
-                            20.00 EGP
+                            20.00 {t("egp")}
                           </Typography>
                         </Grid>
                       </Grid>
@@ -318,7 +338,7 @@ const TrackOrder = () => {
                   <StepLabelStyle>
                     <Image
                       src={el.image}
-                      alt={el.label}
+                      alt={el[`label_${locale}`]}
                       width={35}
                       height={35}
                     />
@@ -330,10 +350,10 @@ const TrackOrder = () => {
                         textTransform="capitalize"
                         display="block"
                       >
-                        {el.label}
+                        {el[`label_${locale}`]}
                       </Typography>
                       <Typography variant="caption">
-                        {el.description}
+                        {el[`description_${locale}`]}
                       </Typography>
                     </Box>
                   </StepLabelStyle>
@@ -354,7 +374,7 @@ const TrackOrder = () => {
                   color="secondary"
                   onClick={handleToggleRenamingDialog}
                 >
-                  add to favourites
+                  {t("addToFav")}
                 </Button>
                 <RenameOrderDialog
                   showRenameOrderDialog={showRenameOrderDialog}
@@ -366,7 +386,7 @@ const TrackOrder = () => {
               <Grid item xs="auto">
                 <NextLink href="/" passHref>
                   <Button variant="contained" color="primary">
-                    back to home
+                    {t("backHome")}
                   </Button>
                 </NextLink>
               </Grid>
@@ -382,11 +402,11 @@ const TrackOrder = () => {
                   p={2}
                   fontWeight={500}
                 >
-                  sorry, these items are not available
+                  {t("notAvail")}
                 </Typography>
                 <Box>
                   <Typography component="h3" variant="h5" px={2}>
-                    Household
+                    {t("household")}
                   </Typography>
                   <List>
                     <ListItem>
@@ -404,10 +424,10 @@ const TrackOrder = () => {
                             Call It Spring Mayetiola
                           </Typography>
                           <Typography variant="body2" component="span" mr={1.5}>
-                            514.59 EGP
+                            514.59 {t("egp")}
                           </Typography>
                           <Typography variant="body2" component="del">
-                            1009 EGP
+                            1009 {t("egp")}
                           </Typography>
                           <Typography
                             variant="body2"
@@ -415,12 +435,12 @@ const TrackOrder = () => {
                             color="primary"
                             mb={1}
                           >
-                            not available
+                            {t("not_avail")}
                           </Typography>
                           <Grid container spacing={1}>
                             <Grid item xs="auto">
                               <Button variant="outlined" color="secondary">
-                                cancel
+                                {t("cancel")}
                               </Button>
                             </Grid>
                             <Grid item xs="auto">
@@ -439,7 +459,7 @@ const TrackOrder = () => {
                                 }
                                 onClick={() => setFindSimilar((prev) => !prev)}
                               >
-                                find similar
+                                {t("findSim")}
                               </Button>
                             </Grid>
                           </Grid>
@@ -461,7 +481,7 @@ const TrackOrder = () => {
                     color="secondary"
                     sx={{ textDecoration: "underline" }}
                   >
-                    cancel order
+                    {t("placeOrder")}
                   </Button>
                 </Grid>
               </Grid>

@@ -134,117 +134,128 @@ const PageFilter = (props) => {
             </AccordionSummary>
             <AccordionDetails sx={{ p: 0 }}>
               <List>
-                <ListItem
-                  disablePadding
-                  className={
-                    router.query.category === "all-categories" ? "active" : ""
-                  }
-                >
-                  <NextLink href="/all-categories" passHref>
-                    <ListItemButton>
-                      <ListItemIcon sx={{ minWidth: 30 }}>
-                        <Checkbox
-                          checked={router.query.category === "all-categories"}
-                          icon={<CheckBoxOutlineBlankOutlinedIcon />}
-                          checkedIcon={<CheckBoxTwoToneIcon />}
-                          sx={{ p: 0 }}
-                          color="secondary"
+                {router.query.category === "all-categories" && (
+                  <ListItem
+                    disablePadding
+                    className={
+                      router.query.category === "all-categories" ? "active" : ""
+                    }
+                  >
+                    <NextLink href="/all-categories" passHref>
+                      <ListItemButton>
+                        <ListItemIcon sx={{ minWidth: 30 }}>
+                          <Checkbox
+                            checked={router.query.category === "all-categories"}
+                            icon={<CheckBoxOutlineBlankOutlinedIcon />}
+                            checkedIcon={<CheckBoxTwoToneIcon />}
+                            sx={{ p: 0 }}
+                            color="secondary"
+                          />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={t("allCategories")}
+                          sx={{ textTransform: "capitalize" }}
                         />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={t("allCategories")}
-                        sx={{ textTransform: "capitalize" }}
-                      />
-                    </ListItemButton>
-                  </NextLink>
-                </ListItem>
-                {categories?.map((item) => (
-                  <ListItem key={item.id} disablePadding>
-                    <AccordionStyle key={item.id} square>
-                      <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={`${item.uniqueName}-filter-content`}
-                        id={`${item.uniqueName}-filter-header`}
-                        className={
-                          router.query?.category === item.uniqueName ||
-                          router.query.category === "all-categories"
-                            ? "active"
-                            : ""
-                        }
-                      >
-                        <Typography>{item[`name_${router.locale}`]}</Typography>
-                      </AccordionSummary>
-                      <AccordionDetails sx={{ p: 0 }}>
-                        <List>
-                          <ListItem
-                            disablePadding
-                            className={
-                              router.query?.category === item.uniqueName ||
-                              router.query.category === "all-categories"
-                                ? "active"
-                                : ""
-                            }
-                          >
-                            <NextLink href={`/${item.uniqueName}`}>
-                              <ListItemButton>
-                                <ListItemIcon sx={{ minWidth: 30 }}>
-                                  <Checkbox
-                                    checked={
-                                      router.query?.category ===
-                                        item.uniqueName ||
-                                      router.query.category === "all-categories"
-                                    }
-                                    icon={<CheckBoxOutlineBlankOutlinedIcon />}
-                                    checkedIcon={<CheckBoxTwoToneIcon />}
-                                    sx={{ p: 0 }}
-                                    color="secondary"
-                                  />
-                                </ListItemIcon>
-                                <ListItemText
-                                  primary={item[`name_${router.locale}`]}
-                                  sx={{ textTransform: "capitalize" }}
-                                />
-                              </ListItemButton>
-                            </NextLink>
-                          </ListItem>
-                          {item?.children?.map((el) => (
-                            <ListItem
-                              key={el.id}
-                              disablePadding
-                              className={
-                                validateSubCategoryExist(el.uniqueName)
-                                  ? "active"
-                                  : ""
-                              }
-                            >
-                              <ListItemButton
-                                onClick={() =>
-                                  handleCategorySelect(item.uniqueName, el.uniqueName)
-                                }
-                              >
-                                <ListItemIcon sx={{ minWidth: 30 }}>
-                                  <Checkbox
-                                    checked={validateSubCategoryExist(
-                                      el.uniqueName
-                                    )}
-                                    icon={<CheckBoxOutlineBlankOutlinedIcon />}
-                                    checkedIcon={<CheckBoxTwoToneIcon />}
-                                    sx={{ p: 0 }}
-                                    color="secondary"
-                                  />
-                                </ListItemIcon>
-                                <ListItemText
-                                  primary={el[`name_${router.locale}`]}
-                                  sx={{ textTransform: "capitalize" }}
-                                />
-                              </ListItemButton>
-                            </ListItem>
-                          ))}
-                        </List>
-                      </AccordionDetails>
-                    </AccordionStyle>
+                      </ListItemButton>
+                    </NextLink>
                   </ListItem>
-                ))}
+                )}
+                {router.query.category === "all-categories" &&
+                  categories?.map((item) => (
+                    <ListItem key={item.id} disablePadding>
+                      <AccordionStyle key={item.id} square>
+                        <AccordionSummary
+                          expandIcon={<ExpandMoreIcon />}
+                          aria-controls={`${item.uniqueName}-filter-content`}
+                          id={`${item.uniqueName}-filter-header`}
+                          className={
+                            router.query?.category === item.uniqueName ||
+                            router.query?.category === "all-categories"
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          <Typography>
+                            {item[`name_${router.locale}`]}
+                          </Typography>
+                        </AccordionSummary>
+                        <AccordionDetails sx={{ p: 0 }}>
+                          <List>
+                            <ListItem
+                              disablePadding
+                              // className={
+                              //   router.query?.category === item.uniqueName ||
+                              //   router.query.category === "all-categories"
+                              //     ? "active"
+                              //     : ""
+                              // }
+                            >
+                              <NextLink href={`/${item.uniqueName}?subCategory=all`}>
+                                <ListItemButton>
+                                  <ListItemIcon sx={{ minWidth: 30 }}>
+                                    <Checkbox
+                                      checked={
+                                        router.query?.category ===
+                                        item.uniqueName
+                                      }
+                                      icon={
+                                        <CheckBoxOutlineBlankOutlinedIcon />
+                                      }
+                                      checkedIcon={<CheckBoxTwoToneIcon />}
+                                      sx={{ p: 0 }}
+                                      color="secondary"
+                                    />
+                                  </ListItemIcon>
+                                  <ListItemText
+                                    primary={t("all")}
+                                    sx={{ textTransform: "capitalize" }}
+                                  />
+                                </ListItemButton>
+                              </NextLink>
+                            </ListItem>
+                            {item?.children?.map((el) => (
+                              <ListItem
+                                key={el.id}
+                                disablePadding
+                                // className={
+                                //   validateSubCategoryExist(el.uniqueName)
+                                //     ? "active"
+                                //     : ""
+                                // }
+                              >
+                                <ListItemButton
+                                  onClick={() =>
+                                    handleCategorySelect(
+                                      item.uniqueName,
+                                      el.uniqueName
+                                    )
+                                  }
+                                >
+                                  <ListItemIcon sx={{ minWidth: 30 }}>
+                                    <Checkbox
+                                      checked={validateSubCategoryExist(
+                                        el.uniqueName
+                                      )}
+                                      icon={
+                                        <CheckBoxOutlineBlankOutlinedIcon />
+                                      }
+                                      checkedIcon={<CheckBoxTwoToneIcon />}
+                                      sx={{ p: 0 }}
+                                      color="secondary"
+                                    />
+                                  </ListItemIcon>
+                                  <ListItemText
+                                    primary={el[`name_${router.locale}`]}
+                                    sx={{ textTransform: "capitalize" }}
+                                  />
+                                </ListItemButton>
+                              </ListItem>
+                            ))}
+                          </List>
+                        </AccordionDetails>
+                      </AccordionStyle>
+                    </ListItem>
+                  ))}
               </List>
             </AccordionDetails>
           </AccordionStyle>
