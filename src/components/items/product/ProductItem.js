@@ -3,17 +3,8 @@ import { useState } from "react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 
-// MUI
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { CardActionArea, Paper } from "@mui/material";
-import { styled } from "@mui/material/styles";
-
+// MUI 
+import { CardActionArea, Paper , Button , Box , Card , CardMedia , CardContent , CardActions , Typography , styled} from "@mui/material";
 // Components
 import CartButton from "./CartButton";
 import FevIcon from "./FevIcon";
@@ -106,7 +97,7 @@ const ProductItem = ({ product, quantity }) => {
         : ""}
         <FevIcon />
       </Header>
-      <NextLink href='/' passHref>
+      <NextLink href={`/product/${product.uniqueName}`} passHref>
         <CardActionArea>
           {renderImage()}
           <CardContent>
@@ -130,7 +121,7 @@ const ProductItem = ({ product, quantity }) => {
             >
               {product[`description_${locale}`]}
             </Typography>
-            {(product.discount !== "") ?
+            {product.discount ?
               <>
               <Typography fontSize="1.1rem" fontWeight={700} color="primary.main">
                 {product.priceAfterDiscount} EGP

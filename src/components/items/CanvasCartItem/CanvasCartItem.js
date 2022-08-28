@@ -67,7 +67,7 @@ const CanvasCartItems = ({ product }) => {
           onClick={() => handleClearItem(product)}
           sx={{ cursor: "pointer", color: "primary.main" }}
         />
-        <NextLink href='/' passHref>
+        <NextLink href={`/product/${product.uniqueName}`} passHref>
           <CardActionArea>
             <CardMedia
               component="img"
@@ -83,7 +83,7 @@ const CanvasCartItems = ({ product }) => {
       <Grid item xs={8}>
         <Box py={{ sm: 1 }} px={2} textAlign={{ xs: "center", sm: "initial" }}>
           <CardContent sx={{ px: 0 }}>
-            <NextLink href='/' passHref>
+            <NextLink href={`/product/${product.uniqueName}`} passHref>
               <Typography
                 component="h4"
                 variant="h5"
@@ -92,7 +92,7 @@ const CanvasCartItems = ({ product }) => {
                 {product[`name_${locale}`]}
               </Typography>
             </NextLink>
-            {product.discount !== "" ? (
+            {product.discount ? (
               <Stack
                 direction="row"
                 spacing={1}
