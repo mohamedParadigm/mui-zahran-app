@@ -1,29 +1,31 @@
 // Internals
 import { useRouter } from "next/router";
-import NextLink from "next/link";
 // MUI
 import { useTheme, styled } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Link from "@mui/material/Link";
+import {
+  useMediaQuery,
+  Container,
+  Grid,
+  Box,
+  Paper,
+  Typography,
+  List,
+  ListItem,
+  Divider,
+  Button,
+  Stack,
+  Card,
+} from "@mui/material";
 // Components
 import Layout from "../../modules/layout/Layout";
 import CheckoutLinearStepper from "../../components/CheckoutLinearStepper";
 import CheckoutCircularStepper from "../../components/CheckoutCircularStepper";
+import CartItems from "../../components/items/CartItems/CartItems";
+// Externals
+import { getCookie, hasCookie } from "cookies-next";
+import useTranslation from "next-translate/useTranslation";
+// Data
+import { calcItemsTotalPrice } from "../../utils/utils";
 
 const FixedMobileButton = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -44,16 +46,25 @@ const FixedMobileButton = styled(Box)(({ theme }) => ({
   },
 }));
 
-const CheckoutItems = () => {
+const CheckoutItems = (props) => {
+  const { cartItems, branch  } = props;
+
   const router = useRouter();
   const { locale } = router;
-
+  const { t } = useTranslation("common");
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
   const handleNextStep = () => {
     router.push("/checkout/payment", undefined, { locale });
   };
+
+  const existBranch = branch.unavial.map((item) => item.productUniqueName);
+
+  const existItems = cartItems?.filter((item) => {
+    return item.uniqueName === existBranch[0];
+  });
+
 
   return (
     <Layout
@@ -82,6 +93,7 @@ const CheckoutItems = () => {
               >
                 confirm items
               </Typography>
+
               <Box mb={3}>
                 <Stack direction="row" justifyContent="space-between" mb={2}>
                   <Typography
@@ -89,87 +101,29 @@ const CheckoutItems = () => {
                     variant="h5"
                     textTransform="capitalize"
                   >
-                    grocery
+                    {t("grocery")}
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{ textDecoration: "underline" }}
                   >
-                    Shipped by zahran
+                    {t("shippedBy")} Zahran
                   </Typography>
                 </Stack>
-                <Card>
-                  <Grid container spacing={1}>
-                    <Grid item xs="auto" alignSelf="center" mx="auto">
-                      <NextLink href="/product" passHref>
-                        <CardActionArea>
-                          <CardMedia
-                            component="img"
-                            image="/images/products/ingredient-1.jpg"
-                            width={150}
-                            height={150}
-                            alt="..."
-                            sx={{ objectFit: "contain" }}
-                          />
-                        </CardActionArea>
-                      </NextLink>
-                    </Grid>
-                    <Grid item xs={12} sm>
-                      <Box
-                        py={{ sm: 2 }}
-                        px={2}
-                        textAlign={{ xs: "center", sm: "initial" }}
-                      >
-                        <CardContent sx={{ px: 0 }}>
-                          <Typography variant="body2" sx={{ opacity: 0.7 }}>
-                            AL DOHA
-                          </Typography>
-                          <Typography component="h3" variant="h6">
-                            call it spring mayetiola
-                          </Typography>
-                          <Typography
-                            variant="caption"
-                            height={20}
-                            display="block"
-                            overflow="hidden"
-                            whiteSpace="nowrap"
-                            textOverflow="ellipsis"
-                          >
-                            Lorem ipsum dolor sit amet consectetur.
-                          </Typography>
-                          <Stack
-                            direction="row"
-                            spacing={1}
-                            justifyContent={{ xs: "center", sm: "start" }}
-                          >
-                            <strong>514.59 EGP</strong>
-                            <del style={{ opacity: 0.7 }}>1009 EGP</del>
-                          </Stack>
-                          <Typography>Quantity: 2kg</Typography>
-                          <Typography
-                            color="primary"
-                            textTransform="uppercase"
-                            variant="body2"
-                          >
-                            not available
-                          </Typography>
-                          <NextLink href="/shipping" passHref>
-                            <Link color="secondary">
-                              <Typography
-                                variant="caption"
-                                textTransform="capitalize"
-                                mt={1}
-                              >
-                                Choose Another Location
-                              </Typography>
-                            </Link>
-                          </NextLink>
-                        </CardContent>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Card>
+                {cartItems.map(
+                  (product) =>
+                    product.weight < 1 && (
+                      <Card sx={{ marginTop: 5 }} key={product.id}>
+                        <CartItems
+                          product={product}
+                          pageType="checkout"
+                          exist={existItems}
+                        />
+                      </Card>
+                    )
+                )}
               </Box>
+
               <Box>
                 <Stack direction="row" justifyContent="space-between" mb={2}>
                   <Typography
@@ -177,75 +131,27 @@ const CheckoutItems = () => {
                     variant="h5"
                     textTransform="capitalize"
                   >
-                    household
+                    {t("household")}
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{ textDecoration: "underline" }}
                   >
-                    Shipped by lorem ipsum
+                    {t("shippedBy")} lorem ipsum
                   </Typography>
                 </Stack>
-                <Card>
-                  <Grid container spacing={1}>
-                    <Grid item xs="auto" alignSelf="center" mx="auto">
-                      <NextLink href="/product" passHref>
-                        <CardActionArea>
-                          <CardMedia
-                            component="img"
-                            image="/images/products/p-1.webp"
-                            width={150}
-                            height={150}
-                            alt="..."
-                            sx={{ objectFit: "contain" }}
-                          />
-                        </CardActionArea>
-                      </NextLink>
-                    </Grid>
-                    <Grid item xs={12} sm>
-                      <Box
-                        py={{ sm: 2 }}
-                        px={2}
-                        textAlign={{ xs: "center", sm: "initial" }}
-                      >
-                        <CardContent sx={{ px: 0 }}>
-                          <Typography variant="body2" sx={{ opacity: 0.7 }}>
-                            AL DOHA
-                          </Typography>
-                          <Typography component="h3" variant="h6">
-                            call it spring mayetiola
-                          </Typography>
-                          <Typography
-                            variant="caption"
-                            height={20}
-                            display="block"
-                            overflow="hidden"
-                            whiteSpace="nowrap"
-                            textOverflow="ellipsis"
-                          >
-                            Lorem ipsum dolor sit amet consectetur.
-                          </Typography>
-                          <Stack
-                            direction="row"
-                            spacing={1}
-                            justifyContent={{ xs: "center", sm: "start" }}
-                          >
-                            <strong>514.59 EGP</strong>
-                            <del style={{ opacity: 0.7 }}>1009 EGP</del>
-                          </Stack>
-                          <Typography>Quantity: 2</Typography>
-                          <Typography
-                            color="primary"
-                            textTransform="uppercase"
-                            variant="body2"
-                          >
-                            best offer
-                          </Typography>
-                        </CardContent>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Card>
+                {cartItems.map(
+                  (product) =>
+                    product.weight > 1 && (
+                      <Card sx={{ marginTop: 2 }} key={product.id}>
+                        <CartItems
+                          product={product}
+                          pageType="checkout"
+                          exist={existItems}
+                        />
+                      </Card>
+                    )
+                )}
               </Box>
             </Paper>
             <FixedMobileButton>
@@ -258,7 +164,7 @@ const CheckoutItems = () => {
                   Total
                 </Typography>
                 <Typography variant="body2" fontWeight={600}>
-                  772.68 EGP
+                  {calcItemsTotalPrice(cartItems)}
                 </Typography>
               </Box>
               <Button
@@ -297,7 +203,7 @@ const CheckoutItems = () => {
                     <Typography variant="body2" textTransform="capitalize">
                       Subtotal <span style={{ opacity: 0.7 }}>(2 Item)</span>
                     </Typography>
-                    <Typography variant="body2">677.79 EGP</Typography>
+                    <Typography variant="body2"></Typography>
                   </ListItem>
                   <ListItem sx={{ justifyContent: "space-between", py: 0.5 }}>
                     <Typography variant="body2" textTransform="capitalize">
@@ -344,3 +250,31 @@ const CheckoutItems = () => {
 };
 
 export default CheckoutItems;
+
+export const getServerSideProps = async ({ req, res, locale }) => {
+
+  const cartItems = hasCookie("cart", { req, res })
+      ? JSON.parse(getCookie("cart", { req, res }))
+      : [];
+
+  if (!hasCookie("cart", { req, res }) || cartItems?.length === 0) {
+    return {
+      redirect: {
+        destination: `/${locale}/cart`,
+        permanent: false,
+      },
+    };
+  }
+
+  const branch =
+    hasCookie("branch", { req, res }) &&
+    JSON.parse(getCookie("branch", { req, res }));
+
+
+  return {
+    props: {
+      cartItems,
+      branch,
+    },
+  };
+};

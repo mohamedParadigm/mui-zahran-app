@@ -54,8 +54,9 @@ const FixedMobileButton = styled(Box)(({ theme }) => ({
   },
 }));
 
-const Payment = ({ cartProducts, orderType }) => {
+const Payment = ({ cartProducts, orderType }props) => {
   console.log(cartProducts);
+  const {cartItems , branch} = props
   const router = useRouter();
   const { locale } = router;
 
@@ -91,6 +92,7 @@ const Payment = ({ cartProducts, orderType }) => {
 
     router.push("/checkout/placeorder", undefined, { locale });
   };
+  console.log(cartItems)
 
   return (
     <Layout

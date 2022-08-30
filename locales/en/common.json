@@ -49,5 +49,7 @@
   "orders": "Orders", 
   "youHave": "You have",
   "userPhone": "Phone",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "viewed": "Recently Viewed",
+  "related": "Related"
 }

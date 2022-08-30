@@ -33,5 +33,6 @@
   "deliveryCharg": "تكلفة التوصيل",
   "total": "الاجمالى",
   "incVat": "شامل الضريبة",
-  "selectAddress": "اختار هذا العنوان"
+  "selectAddress": "اختار هذا العنوان",
+  "quantity": "الكمية"
 }

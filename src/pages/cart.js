@@ -1,25 +1,28 @@
 // Internals
 import { useRouter } from "next/router";
 import NextLink from "next/link";
+import { useEffect } from "react";
 import Image from "next/image";
 // MUI
-import { styled } from "@mui/material/styles";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardMedia from "@mui/material/CardMedia";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import Link from "@mui/material/Link";
+import {
+  styled , 
+  Container,
+  Grid,
+  Stack,
+  Typography,
+  Button,
+  Card,
+  CardActionArea,
+  CardMedia,
+  Box,
+  Paper,
+  List,
+  TextField,
+  ListItem,
+  Divider,
+  Link,
+  InputAdornment,
+} from "@mui/material";
 // Components
 import Layout from "../modules/layout/Layout";
 import CartItems from "../components/items/CartItems/CartItems";
@@ -29,8 +32,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getCookie, hasCookie } from "cookies-next";
 import useTranslation from "next-translate/useTranslation";
 // Data
-import { useEffect } from "react";
 import { clearCart, createCart } from "../redux/features/cart/cartSlice";
+import calcItemsTotalPrice from "../utils/utils";
 
 const FixedMobileButton = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up("md")]: {
@@ -73,30 +76,21 @@ const Cart = ({ user }) => {
 
   const groceryItems = cart.filter((el) => el.weight < 1);
   const houseHoldItems = cart.filter((el) => el.weight > 1);
-  console.log(houseHoldItems);
+
   const vat = 100;
   const groceryPrice = () => {
     const price = groceryItems.reduce((acc, item) => {
-      if (item.discount !== "") {
-        return acc + parseInt(item.priceAfterDiscount) * item.quantity;
-      } else {
-        return acc + parseInt(item.Price) * item.quantity;
-      }
+      const productPrice =
+        acc + parseFloat(item.discount ? item.priceAfterDiscount : item.Price);
+      return productPrice * item.quantity;
     }, 0);
     return price;
   };
 
   const houseHold = () => {
     const price = houseHoldItems.reduce((acc, item) => {
-      // if (item.discount !== "") {
-      //   return acc + parseInt(item.priceAfterDiscount) * item.quantity;
-      // } else {
-      //   return acc + parseInt(item.Price) * item.quantity;
-      // }
-
       const productPrice =
         acc + parseFloat(item.discount ? item.priceAfterDiscount : item.Price);
-
       return productPrice * item.quantity;
     }, 0);
 
@@ -109,9 +103,9 @@ const Cart = ({ user }) => {
 
   const handleCheckoutItems = (e) => {
     e.preventDefault();
-    router.push("/shipping");
+    router.push("/checkout/shipping");
   };
-  console.log(cart)
+
   return (
     <Layout
       title="Cart"
@@ -295,7 +289,7 @@ const Cart = ({ user }) => {
                         total
                       </Typography>
                       <Typography variant="body1" fontWeight={700}>
-                        {totalPrice()}
+                        {calcItemsTotalPrice}
                       </Typography>
                     </ListItem>
                     <ListItem sx={{ display: { xs: "none", md: "flex" } }}>

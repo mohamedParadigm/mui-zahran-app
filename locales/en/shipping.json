@@ -33,5 +33,6 @@
   "deliveryCharg": "Delivery Charge",
   "total": "Total",
   "incVat": "Inclusive of VAT",
-  "selectAddress": "Select this address"
+  "selectAddress": "Select this address",
+  "quantity": "Quantity"
 }

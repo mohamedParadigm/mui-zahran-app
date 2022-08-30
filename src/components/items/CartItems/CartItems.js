@@ -2,30 +2,21 @@
 import { useRouter } from "next/router";
 import NextLink from "next/link";
 // MUI
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Box from "@mui/material/Box";
+import {Grid , Stack , Typography , Button , CardActionArea , CardMedia , CardContent , CardActions , Box} from "@mui/material";
 // Components
 import CartButton from "../product/CartButton";
 // Externals
-import { useSelector } from "react-redux";
 import useTranslation from "next-translate/useTranslation";
+import Link from "next/link";
 
-const CartItems = ({product}) => {
+const CartItems = ({product , pageType = 'cart' , exist}) => {
 
     const { locale } = useRouter();
     const {t} = useTranslation("common")
-    const { cart } = useSelector((state) => state.cart);
+    const ship = exist.find((item) => item.uniqueName === product.uniqueName)
 
     return ( 
         <>
-    
             <Grid container spacing={1}>
                 <Grid item xs="auto" alignSelf="center" mx="auto">
                     <NextLink href={`/product/${product.uniqueName}`} passHref>
@@ -64,7 +55,7 @@ const CartItems = ({product}) => {
                             >
                                 {product[`description_${locale}`]}
                             </Typography>
-                            {product.discount !== "" ? 
+                            {product.discount ? 
                                 <Stack
                                     direction="row"
                                     spacing={1}
@@ -82,6 +73,8 @@ const CartItems = ({product}) => {
                                     <strong>{product.Price} {t("egp")}</strong>
                                 </Stack> 
                             }
+                            <Typography>{t("quantity")} {product.quantity}</Typography>
+
                             <Typography
                                 color="primary"
                                 textTransform="uppercase"
@@ -91,7 +84,7 @@ const CartItems = ({product}) => {
                             </Typography>
                         </CardContent>
 
-                        {product.availability === true ? 
+                        {product.availability  && pageType === 'cart' && 
                             <CardActions
                                 sx={{
                                     px: 0,
@@ -100,7 +93,9 @@ const CartItems = ({product}) => {
                             >
                                 <CartButton quantity={product.quantity} product={product}  />
                             </CardActions>
-                        :
+                        }
+
+                        {!product.availability  && pageType === 'cart' && 
                             <CardActions sx={{ px: 0,justifyContent: { xs: "start", sm: "space-between" }, }}>
                                 <CartButton quantity={product.quantity} product={product} sx={{opacity: 0.5 ,pointerEvents: 'none'}} />
                                 <Stack direction="row"
@@ -113,6 +108,34 @@ const CartItems = ({product}) => {
                                         find similar
                                     </Button>
                                 </Stack>
+                            </CardActions>
+                        }
+
+                        {ship && pageType === 'checkout' && 
+                            <CardActions sx={{ px: 0,justifyContent: { xs: "start", sm: "space-between" }, }}>
+                                <CartButton quantity={product.quantity} product={product} sx={{opacity: 0.5 ,pointerEvents: 'none'}} />
+                            </CardActions>
+                        }
+                        {!ship && pageType === 'checkout' &&  
+                            <CardActions sx={{ px: 0,justifyContent: { xs: "start", sm: "space-between" }, }}>
+                                <Typography
+                                    color="primary"
+                                    textTransform="uppercase"
+                                    variant="body2"
+                                >
+                                    not available
+                                </Typography>
+                                <NextLink href="/checkout/shipping" passHref>
+                                    <Link color="secondary">
+                                    <Typography
+                                        variant="caption"
+                                        textTransform="capitalize"
+                                        mt={1}
+                                    >
+                                        Choose Another Location
+                                    </Typography>
+                                    </Link>
+                                </NextLink>
                             </CardActions>
                         }
                     </Box>
