@@ -28,6 +28,8 @@ const App = ({ Component, pageProps }) => {
 
   useEffect(() => {
     document.querySelector("html").dir = locale === "en" ? "ltr" : "rtl";
+    document.querySelector("body").style.fontFamily = locale === "ar" ? "'Tajawal', sans-serif" : "'Josefin Sans', sans-serif"; 
+
   }, [locale]);
 
   useEffect(() => {

@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+import {   styled } from '@mui/material/styles';
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -13,6 +15,39 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
+const SwiperStyle = styled(Swiper) ({
+  "& img": {
+objectFit:"cover"
+  },
+
+  "& .swiper-slide div::after": {
+    content: "''",
+    position: "absolute",
+    top:"0",
+    left:"0",
+    width:"100%",
+    height:"100%",
+    backgroundColor:"#00000029",
+    zIndex:"1"
+  },
+  "& .MuiTypography-root": {
+    cursor: "pointer",
+  },
+  "& .MuiTypography-h4": {
+    position: "absolute",
+    color:"#fff",
+    zIndex:"10"
+  },
+  "& .MuiButton-root": {
+    position: "absolute",
+    bottom:"52px",
+    zIndex:"10"
+  },
+  "& .swiper-pagination-bullet-active": {
+    background: "#ce1717",
+  },
+
+});
 const images = [
   {
     label: "San Francisco – Oakland Bay Bridge, United States",
@@ -37,9 +72,10 @@ const images = [
 ];
 
 const Recipes = () => {
+  const { locale } = useRouter();
   return (
     <Box sx={{ mt: 3, mb: 3 }}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} alignItems="center">
         <Grid
           item
           xs={12}
@@ -59,7 +95,7 @@ const Recipes = () => {
           </Button>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Swiper
+          <SwiperStyle
             modules={[Pagination]}
             slidesPerView={1}
             pagination={{ clickable: true }}
@@ -80,8 +116,8 @@ const Recipes = () => {
                     width="100%"
                     loading="lazy"
                     height="300"
+                    
                   />
-
                   <Typography component="h3" variant="h4">
                     Lorem Ipsum
                   </Typography>
@@ -91,7 +127,7 @@ const Recipes = () => {
                 </Stack>
               </SwiperSlide>
             ))}
-          </Swiper>
+          </SwiperStyle>
         </Grid>
       </Grid>
     </Box>

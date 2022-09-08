@@ -1,19 +1,21 @@
 // Internals
 import { useRouter } from "next/router";
 import NextLink from "next/link";
+import { useState, useEffect } from "react";
 // MUI
 import { styled } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardMedia from "@mui/material/CardMedia";
- import CardContent from "@mui/material/CardContent";
+import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Skeleton from '@mui/material/Skeleton';
 
 const CardStyle = styled(Card)(({ theme }) => ({
   transition: "0.3s ease-in-out",
   "&:hover": {
-  
+
     "& .MuiCardContent-root": {
       color: theme.palette.primary.main,
     },
@@ -32,10 +34,18 @@ const CardStyle = styled(Card)(({ theme }) => ({
 const CategorySec = ({ item }) => {
   // console.log(item)
   const { locale } = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   return (
 
-        <CardStyle >
+    <CardStyle >
+      {loading ? (
+        <Skeleton variant="rectangular" width="100%" height={150} />
+      ) : (
         <NextLink href={`/${item.uniqueName}`} passHref>
           <CardActionArea >
             <CardMedia
@@ -51,9 +61,8 @@ const CategorySec = ({ item }) => {
             </CardContent>
           </CardActionArea>
         </NextLink>
-      </CardStyle>
-  
- 
+      )}
+    </CardStyle>
   );
 };
 

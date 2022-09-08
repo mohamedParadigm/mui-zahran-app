@@ -18,6 +18,7 @@ const theme = createTheme({
     }
   },
   typography: {
+   
     h1: {
       textTransform: "capitalize",
     },
@@ -57,7 +58,7 @@ const theme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          width: 400,
+          width: "100%",
           maxWidth: "100%",
         },
       },

@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   submitLoading: false,
+  mobileDrawer: false
 };
 
 const globalSlice = createSlice({
@@ -12,9 +13,12 @@ const globalSlice = createSlice({
     toggleSubmitLoading: (state, action) => {
       state.submitLoading = action.payload;
     },
+    toggleMobileDrawer: (state, action) => {
+      state.mobileDrawer = action.payload;
+    },
   },
 });
 
-export const { toggleSubmitLoading } = globalSlice.actions;
+export const { toggleSubmitLoading , toggleMobileDrawer} = globalSlice.actions;
 
 export default globalSlice.reducer;

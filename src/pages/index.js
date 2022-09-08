@@ -16,6 +16,8 @@ import CustomMarquee from "../modules/home/CustomMarquee";
 import CategoryItem from "../modules/home/CategoryItem";
 import { withSessionSsr } from "../lib/withSession";
 import { createUser } from "../redux/features/user/userSlice";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 // Data
 import data from "../utils/data";
 import BrandHomeSec from "../components/BrandHomeSec";
@@ -26,6 +28,10 @@ import MagazineSec from "../components/MagazineSec";
 import ProductItem from "../components/items/product/ProductItem";
 import { useEffect } from "react";
 import { createCart } from "../redux/features/cart/cartSlice";
+import SliderProductsHomeSec from "../components/SliderProductsHomeSec";
+import OffersSecHome from "../components/OffersSecHome";
+import Recipes from "../components/Recipes";
+import RecipesFilter from "../components/RecipesFilter";
 
 const Home = (props) => {
   const { locale } = useRouter();
@@ -42,6 +48,7 @@ const Home = (props) => {
     category2,
     magazineSec,
     products,
+    topOffers,
   } = props;
   const { cart } = useSelector((state) => state.cart);
 
@@ -82,6 +89,7 @@ const Home = (props) => {
       <BannersHome bannersHome={bannersHome} />
       <Container sx={{ py: 4, width: "100%" }}>
         <div style={{ height: "50px" }}></div>
+
         <Grid
           container
           spacing={1}
@@ -119,27 +127,39 @@ const Home = (props) => {
           ))}
         </Grid>
         <div style={{ height: "50px" }}></div>
-        <Grid
-          container
-          spacing={1}
-          mb={3}
-          justifyContent={{ xs: "center", sm: "initial" }}
-          textAlign={{ xs: "center", sm: "initial" }}
-        >
-          <Grid item xs={12} sm>
-            <Typography component="h2" variant="h4">
-              {t("brandsHome")}
-            </Typography>
+        <div style={{ width: "100%" }}>
+          <Grid
+            container
+            spacing={1}
+            mb={3}
+            justifyContent={{ xs: "center", sm: "initial" }}
+            textAlign={{ xs: "center", sm: "initial" }}
+          >
+            <Grid item xs={12} sm>
+              <Typography component="h2" variant="h4">
+                {t("topDeals")}
+              </Typography>
+            </Grid>
+            <Grid item xs="auto">
+              <NextLink href="/all-categories">
+                <Button variant="outlined" color="primary">
+                  {t("dealsLink")}
+                </Button>
+              </NextLink>
+            </Grid>
           </Grid>
-          <Grid item xs="auto">
-            <NextLink href="/all-categories">
-              <Button variant="outlined" color="primary">
-                {t("brandsHomelink")}
-              </Button>
-            </NextLink>
-          </Grid>
-        </Grid>
-        <BrandHomeSec brands={brands} />
+          <SliderProductsHomeSec >
+            {products.map((product) => (
+              <SwiperSlide key={product.id}>
+                <ProductItem
+                  product={product}
+                  quantity={checkExistingCart(cart, product)}
+                />
+              </SwiperSlide>
+            ))}
+          </SliderProductsHomeSec >
+        </div>
+
         <div style={{ height: "50px" }}></div>
         <div style={{ width: "100%" }}>
           <Grid
@@ -168,10 +188,17 @@ const Home = (props) => {
               gap: 2,
               bgcolor: "background.paper",
               borderRadius: 1,
+              '@media screen and (max-width: 900px)': {
+                display: "block",
+              },
             }}
           >
             {category?.map((item) => (
-              <Grid key={item.id} item sx={{ flexGrow: 1 }}>
+              <Grid key={item.id} item sx={{
+                flexGrow: 1, '@media screen and (max-width: 900px)': {
+                  marginBottom: "30px",
+                },
+              }}>
                 <CategorySec item={item} />
                 <SliderCatogeryHomeSec brandsCatogery={item.brandsCatogery} />
               </Grid>
@@ -217,20 +244,105 @@ const Home = (props) => {
             ))}
           </Grid>
         </div>
-
-        <Grid container spacing={2} sx={{ mt: 5 }}>
-          {products.map((product) => (
-            <Grid item xs={3} key={product.id}>
-              <ProductItem
-                product={product}
-                quantity={checkExistingCart(cart, product)}
-              />
+        <div style={{ height: "50px" }}></div>
+        <div style={{ width: "100%" }}>
+          <Grid
+            container
+            spacing={1}
+            mb={3}
+            justifyContent={{ xs: "center", sm: "initial" }}
+            textAlign={{ xs: "center", sm: "initial" }}
+          >
+            <Grid item xs={12} sm>
+              <Typography component="h2" variant="h4">
+                {t("topOffers")}
+              </Typography>
             </Grid>
-          ))}
-        </Grid>
-
+            <Grid item xs="auto">
+              <NextLink href="/all-categories">
+                <Button variant="outlined" color="primary">
+                  {t("moreOffers")}
+                </Button>
+              </NextLink>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            {topOffers?.map((item) => (
+              <Grid
+                key={item.id}
+                item
+                xs={6}
+                sm={6}
+                md={3}
+                lg={3}
+                whiteSpace="nowrap"
+                order={item.displayOrder}
+              >
+                <OffersSecHome item={item} />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
+        <div style={{ height: "50px" }}></div>
+        <div style={{ width: "100%" }}>
+          <Grid
+            container
+            spacing={1}
+            mb={3}
+            justifyContent={{ xs: "center", sm: "initial" }}
+            textAlign={{ xs: "center", sm: "initial" }}
+          >
+            <Grid item xs={12} sm>
+              <Typography component="h2" variant="h4">
+                {t("topDeals")}
+              </Typography>
+            </Grid>
+            <Grid item xs="auto">
+              <NextLink href="/all-categories">
+                <Button variant="outlined" color="primary">
+                  {t("dealsLink")}
+                </Button>
+              </NextLink>
+            </Grid>
+          </Grid>
+          <SliderProductsHomeSec >
+            {products.map((product) => (
+              <SwiperSlide key={product.id}>
+                <ProductItem
+                  product={product}
+                  quantity={checkExistingCart(cart, product)}
+                />
+              </SwiperSlide>
+            ))}
+          </SliderProductsHomeSec >
+        </div>
         <div style={{ height: "50px" }}></div>
         <MagazineSec item={magazineSec} />
+        <div style={{ height: "50px" }}></div>
+        <Grid
+          container
+          spacing={1}
+          mb={3}
+          justifyContent={{ xs: "center", sm: "initial" }}
+          textAlign={{ xs: "center", sm: "initial" }}
+        >
+          <Grid item xs={12} sm>
+            <Typography component="h2" variant="h4">
+              {t("brandsHome")}
+            </Typography>
+          </Grid>
+          <Grid item xs="auto">
+            <NextLink href="/all-categories">
+              <Button variant="outlined" color="primary">
+                {t("brandsHomelink")}
+              </Button>
+            </NextLink>
+          </Grid>
+        </Grid>
+        <BrandHomeSec brands={brands} />
+        <div style={{ height: "50px" }}></div>
+        <Recipes />
+
       </Container>
     </Layout>
   );
@@ -248,6 +360,7 @@ export const getServerSideProps = withSessionSsr(async ({ req }) => {
     category2,
     magazineSec,
     products,
+    topOffers,
   } = data;
 
   const user = req.session.user || null;
@@ -264,6 +377,7 @@ export const getServerSideProps = withSessionSsr(async ({ req }) => {
       category2,
       magazineSec,
       products,
+      topOffers,
     },
   };
 });

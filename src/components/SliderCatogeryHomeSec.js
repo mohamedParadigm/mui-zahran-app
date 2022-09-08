@@ -70,6 +70,20 @@ const SliderCatogeryHomeSec = ({ brandsCatogery }) => {
       slidesPerView={5}
       pagination={{ clickable: true }}
       modules={[Pagination]}
+      breakpoints={{
+        300: {
+          slidesPerView: 2,
+        },
+        600: {
+          slidesPerView: 3,
+        },
+        900: {
+          slidesPerView: 4,
+        },
+        1300: {
+          slidesPerView: 5,
+        },
+      }}
       // onSlideChange={() => console.log('slide change')}
       // onSwiper={(swiper) => console.log(swiper)}
     >

@@ -1,5 +1,7 @@
 // Internals
 import { useRouter } from "next/router";
+import {  useDispatch } from "react-redux";
+
 // MUI
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
@@ -12,14 +14,16 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import PercentOutlinedIcon from "@mui/icons-material/PercentOutlined";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
+import { toggleMobileDrawer } from "../../redux/features/global/globalSlice";
 
-const PaperStyle = styled((props) => <Paper {...props} />)({
+
+const PaperStyle = styled((props) => <Paper {...props} />)(({theme}) => ({
   position: "fixed",
-  zIndex: 50,
+  zIndex: theme.zIndex.drawer + 1,
   bottom: 0,
   left: 0,
   right: 0,
-});
+}));
 
 const pages = [
   {
@@ -31,7 +35,8 @@ const pages = [
   {
     label_en: "categories",
     label_ar: "الفئات",
-    url: "/all-categories",
+    url: "",
+    // url: "/all-categories",
     icon: <MenuOutlinedIcon fontSize="small" />,
   },
   {
@@ -57,8 +62,12 @@ const pages = [
 const BottomNavigation = ({ BottomNavigationValue }) => {
   const router = useRouter();
   const { locale } = router;
-
+  const dispatch = useDispatch();
   const handleValueChange = (e, newValue) => {
+    if (!pages[newValue].url) {
+      dispatch(toggleMobileDrawer(true))
+      return
+    }
     router.push(pages[newValue].url, undefined, { locale });
   };
 

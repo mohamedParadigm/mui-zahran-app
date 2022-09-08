@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import NextLink from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+
 // MUI
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -27,6 +28,7 @@ import { updateLocation } from "../../../../redux/features/location/locationSlic
 // Data
 import data from "../../../../utils/data";
 import MobileMenu from "../../../../components/MobileMenu";
+import { toggleMobileDrawer } from "../../../../redux/features/global/globalSlice";
 
 const BrandSectionStyle = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -63,10 +65,12 @@ const BrandSection = () => {
   const { locale } = router;
   const { t } = useTranslation("common");
 
-  const [menuDrawerAnchor, setMenuDrawerAnchor] = useState(false);
+  // const [menuDrawerAnchor, setMenuDrawerAnchor] = useState(false);
 
   const { user } = useSelector((state) => state);
   const { location } = useSelector((state) => state);
+  const  {mobileDrawer} = useSelector((state) => state.global);
+  console.log(mobileDrawer)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -86,43 +90,46 @@ const BrandSection = () => {
   const areaLocation =
     location.area &&
     data.areas.find((el) => el.uniqueName === location.area)[`name_${locale}`];
-
-  const toggleMenuDrawer = (event) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setMenuDrawerAnchor((prev) => !prev);
-  };
+    
+//   const toggleMenuDrawer = (event , states) => {
+//     if (
+//       event &&
+//       event.type === "keydown" &&
+//       (event.key === "Tab" || event.key === "Shift")
+//     ) {
+//       return;
+//     }
+// dispatch(toggleMobileDrawer(states))
+//     // setMenuDrawerAnchor((prev) => !prev);
+//   };
 
   const handleRedirectToAccount = (url) => {
     router.push(url, undefined, { locale });
-    toggleMenuDrawer();
   };
 
   const [showAddressDialog, setShowAddressDialog] = useState(false);
 
   const handleToggleAddressDialog = () => setShowAddressDialog((prev) => !prev);
+ 
 
   return (
     <BrandSectionStyle>
       <IconButton
         color="inherit"
         aria-label="open menu drawer"
-        onClick={toggleMenuDrawer}
+        // onClick={toggleMenuDrawser}
         sx={{ display: { md: "none" } }}
       >
         <MenuIcon />
       </IconButton>
       <SwipeableDrawer
         anchor="left"
-        open={menuDrawerAnchor}
-        onClose={toggleMenuDrawer}
-        onOpen={toggleMenuDrawer}
+        open={mobileDrawer}
+        onClose={() => dispatch(toggleMobileDrawer(false))}
+        onOpen={() => dispatch(toggleMobileDrawer(true))}
+        // open={menuDrawerAnchor}
+        // onClose={toggleMenuDrawer}
+        // onOpen={toggleMenuDrawer}
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
       >
@@ -206,14 +213,14 @@ const BrandSection = () => {
             </Box>
           </Stack>
           <IconButton
-            onClick={toggleMenuDrawer}
+            // onClick={toggleMenuDrawer}
             sx={{ marginLeft: "auto" }}
             color="inherit"
           >
             <CloseIcon />
           </IconButton>
         </DrawerHeader>
-        <MobileMenu closeMenuDrawer={toggleMenuDrawer} />
+        <MobileMenu  />
       </SwipeableDrawer>
       <NextLink href="/" passHref>
         <Link display="flex">

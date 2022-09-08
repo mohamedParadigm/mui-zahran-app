@@ -53,7 +53,7 @@ const AccordionStyle = styled(Accordion)(({ theme }) => ({
   },
 }));
 
-const MobileMenu = ({ closeMenuDrawer }) => {
+const MobileMenu = () => {
   const router = useRouter();
   const { locale, query } = router;
   const { t } = useTranslation("common");
@@ -62,7 +62,7 @@ const MobileMenu = ({ closeMenuDrawer }) => {
   const handleCategoryChange = (url) => {
     router.push(url, undefined, { locale });
 
-    closeMenuDrawer();
+    // closeMenuDrawer();
   };
 
   return (

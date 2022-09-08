@@ -22,7 +22,7 @@ import FevIcon from "./FevIcon";
 import { useSelector, useDispatch } from "react-redux";
 import useTranslation from "next-translate/useTranslation";
 import { toast } from "react-toastify";
-import {addToCart} from "../../../redux/features/cart/cartSlice";
+import { addToCart } from "../../../redux/features/cart/cartSlice";
 
 const SpanHeader = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -41,6 +41,11 @@ const Header = styled(Box)(() => ({
   justifyContent: "space-between",
   width: "100%",
   backgroundColor: "transparent",
+}));
+const CartActionStyle = styled(CardActionArea)(() => ({
+  "&:hover h3": {
+    color: "#ce1717",
+  }
 }));
 
 const ProductItem = ({ product, quantity }) => {
@@ -99,17 +104,17 @@ const ProductItem = ({ product, quantity }) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 300, position: "relative", textAlign: "center" }}>
+    <Card sx={{ maxWidth: 300, position: "relative", textAlign: "center", flexDirection: "column", border: "1px solid #eee", boxShadow: "none" }}>
       <Header>
         {product.isFeatured !== "" ?
-        <SpanHeader>{product.isFeatured}</SpanHeader>
-        : ""}
+          <SpanHeader>{product.isFeatured}</SpanHeader>
+          : ""}
         <FevIcon />
       </Header>
       <NextLink href='/' passHref>
-        <CardActionArea>
+        <CartActionStyle>
           {renderImage()}
-          <CardContent>
+          <CardContent sx={{ height: 120 }}>
             <Typography
               component="h3"
               variant="h6"
@@ -132,35 +137,35 @@ const ProductItem = ({ product, quantity }) => {
             </Typography>
             {(product.discount !== "") ?
               <>
-              <Typography fontSize="1.1rem" fontWeight={700} color="primary.main">
-                {product.priceAfterDiscount} EGP
-              </Typography>
-              <Typography
-                variant="body2"
-                component="del"
-                color="alt.main"
-                sx={{
-                  textDecoration: "line-through",
-                  lineHeight: "10px",
-                  marginBottom: "15px",
-                }}
-              >
-                {product.Price} EGP{" "}
-              </Typography>
+                <Typography fontSize="1.1rem" fontWeight={700} color="primary.main">
+                  {product.priceAfterDiscount} EGP
+                </Typography>
+                <Typography
+                  variant="body2"
+                  component="del"
+                  color="alt.main"
+                  sx={{
+                    textDecoration: "line-through",
+                    lineHeight: "10px",
+                    marginBottom: "15px",
+                  }}
+                >
+                  {product.Price} EGP{" "}
+                </Typography>
               </>
               :
               <Typography fontSize="1.1rem" fontWeight={700} color="primary.main">
                 {product.Price} EGP
-              </Typography>        
+              </Typography>
             }
           </CardContent>
-        </CardActionArea>
+        </CartActionStyle>
       </NextLink>
 
-      {product.availability === true ? 
-        <CardActions>
-          {quantity  ? (
-            <CartButton quantity={quantity} product={product} sx={{width: '100%'}} /> 
+      {product.availability === true ?
+        <CardActions sx={{ width: '100%', padding: "0" }}>
+          {quantity ? (
+            <CartButton quantity={quantity} product={product} sx={{ width: '100%' }} />
           ) : (
             <Button
               fullWidth
@@ -171,14 +176,14 @@ const ProductItem = ({ product, quantity }) => {
             </Button>
           )}
         </CardActions>
-      : 
+        :
         <CardActions
-          sx={{ justifyContent: { xs: "center", sm: "center" } }}
+          sx={{ justifyContent: { xs: "center", sm: "center" }, width: '100%', padding: "0" }}
         >
-          <Button variant="contained" color="secondary">
+          <Button variant="contained" color="secondary" sx={{ width: "50%", padding: "5px 7px" }}>
             notify me
           </Button>
-          <Button variant="outlined" color="secondary">
+          <Button variant="outlined" color="secondary" sx={{ width: "50%", padding: "5px 7px" }}>
             find similar
           </Button>
         </CardActions>
